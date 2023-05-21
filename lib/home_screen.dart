@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_first_app/constant.dart';
-import 'package:my_first_app/modules/booking_screen.dart';
-import 'package:my_first_app/modules/profile_screen.dart';
-import 'package:my_first_app/modules/search_view/search_screen.dart';
+import 'package:venue_match/constant.dart';
+//import 'package:my_first_app/modules/booking_screen.dart';
+//import 'package:my_first_app/modules/profile_screen.dart';
+//import 'package:my_first_app/modules/search_view/search_screen.dart';
 
 class Homescreen extends StatefulWidget {
   @override
@@ -11,10 +11,10 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   List<Widget> screens = [
-    SearchScreen(),
-    const ProfileScreen(),
-    BookingScreen(),
-    const ProfileScreen(),
+   //SearchScreen(),
+    //const ProfileScreen(),
+   // BookingScreen(),
+    //const ProfileScreen(),
   ];
 
   int _selectedIndex = 0;
