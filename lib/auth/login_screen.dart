@@ -10,7 +10,6 @@ import 'package:venue_match/widgets/custom_text_field.dart';
 class LoginScreen extends StatelessWidget {
   double screenHeight = 0;
   double screenWidth = 0;
-
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
