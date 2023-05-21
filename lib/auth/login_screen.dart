@@ -90,7 +90,7 @@ class LoginScreen extends StatelessWidget {
                   // Spacer(),yo chaii button laii last ma purauna gareko ho
                   InkWell(
                     onTap: () {
-                      Get.off(SignUpScreen());
+                      // Get.off(SignUpScreen());
                     },
                     child: CustomButton(
                       screenWidth: screenWidth,
