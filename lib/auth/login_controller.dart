@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:venue_match/app_controller.dart';
 import 'package:venue_match/data/api/auth_api.dart';
 
-import '../home_screen.dart';
+import '../app_controller.dart';
+import '../data/api/auth_api.dart';
+import '../home_screen .dart';
 
 class LoginController extends GetxController {
   final emailController = TextEditingController();
