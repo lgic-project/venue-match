@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:venue_match/constant.dart';
+import 'package:my_first_app/constant.dart';
 //import 'package:my_first_app/modules/booking_screen.dart';
 //import 'package:my_first_app/modules/profile_screen.dart';
 //import 'package:my_first_app/modules/search_view/search_screen.dart';
@@ -11,9 +11,9 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   List<Widget> screens = [
-   //SearchScreen(),
+    //SearchScreen(),
     //const ProfileScreen(),
-   // BookingScreen(),
+    // BookingScreen(),
     //const ProfileScreen(),
   ];
 
