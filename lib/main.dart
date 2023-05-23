@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:venue_match/app_controller.dart';
-import 'package:venue_match/auth/login_screen.dart';
-import 'package:venue_match/constant.dart';
+import 'package:my_first_app/app_controller.dart';
+import 'package:my_first_app/auth/login_screen.dart';
+import 'package:my_first_app/constant.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
