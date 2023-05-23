@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:venue_match/constant.dart';
-import 'package:venue_match/auth/login_controller.dart';
-import 'package:venue_match/widgets/custom_button.dart';
-import 'package:venue_match/widgets/custom_text_field.dart';
+import 'package:my_first_app/constant.dart';
+import 'package:my_first_app/auth/login_controller.dart';
+import 'package:my_first_app/widgets/custom_button.dart';
+import 'package:my_first_app/widgets/custom_text_field.dart';
 
 class LoginScreen extends StatelessWidget {
   double screenHeight = 0;
