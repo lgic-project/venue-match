@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:my_first_app/app_controller.dart';
 import 'package:my_first_app/data/api/auth_api.dart';
 
-import '../app_controller.dart';
-import '../data/api/auth_api.dart';
 import '../home_screen .dart';
 
 class LoginController extends GetxController {
