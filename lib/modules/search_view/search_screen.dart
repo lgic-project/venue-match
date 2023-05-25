@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_first_app/data/model/category.dart';
 import 'package:my_first_app/modules/search_view/widgets/category_tile.dart';
 import 'package:my_first_app/modules/search_view/widgets/destination_tile.dart';
-import 'package:my_first_app/modules/widgets/details_screen%20copy.dart';
+//import 'package:my_first_app/modules/widgets/details_screen%20copy.dart';
 import '../../constant.dart';
 import '../../data/model/destination.dart';
 import '../../widgets/custom_button.dart';
@@ -103,18 +103,18 @@ class SearchScreen extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                   textAlign: TextAlign.start,
                 ),
-                InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Detailscreen()));
-                    },
-                    child: CustomButton(
-                      screenWidth: screenWidth,
-                      label: "Register with email",
-                      textColor: primary,
-                    )),
+                // InkWell(
+                //     onTap: () {
+                //       Navigator.push(
+                //           context,
+                //           MaterialPageRoute(
+                //               builder: (context) => Detailscreen()));
+                //     },
+                //     child: CustomButton(
+                //       screenWidth: screenWidth,
+                //       label: "Register with email",
+                //       textColor: primary,
+                //     )),
                 const Text("See All", style: TextStyle(fontSize: 15)),
               ],
             ),
