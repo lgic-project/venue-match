@@ -44,7 +44,7 @@ class DestinationTile extends StatelessWidget {
                 size: 18,
               ),
               const Text(
-                "India",
+                "Pokhara",
                 style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
             ],
