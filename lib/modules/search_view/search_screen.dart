@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_first_app/data/model/category.dart';
+import 'package:my_first_app/modules/search_view/categories/birthday_screen.dart';
+import 'package:my_first_app/modules/search_view/categories/concerts_screen.dart';
 import 'package:my_first_app/modules/search_view/widgets/category_tile.dart';
 import 'package:my_first_app/modules/search_view/widgets/destination_tile.dart';
-//import 'package:my_first_app/modules/widgets/details_screen%20copy.dart';
+import 'package:my_first_app/modules/single_destination/details_screen.dart';
 import '../../constant.dart';
 import '../../data/model/destination.dart';
 import '../../widgets/custom_button.dart';
@@ -17,7 +19,7 @@ class SearchScreen extends StatelessWidget {
     Category(icon: "assets/images/birthday.png", label: "Birthday"),
     Category(icon: "assets/images/festive.png", label: "Festive"),
     Category(icon: "assets/images/formal.png", label: "Formal"),
-    Category(icon: "assets/images/happy.png", label: "Happy New Year"),
+    Category(icon: "assets/images/happy.png", label: "Concerts"),
     Category(icon: "assets/images/engagement.jpg", label: "Engagement"),
   ];
   List<Destination> destinationList = [
@@ -92,7 +94,7 @@ class SearchScreen extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 15,
+              height: 50,
             ),
             Row(
               mainAxisAlignment:
@@ -103,18 +105,6 @@ class SearchScreen extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                   textAlign: TextAlign.start,
                 ),
-                // InkWell(
-                //     onTap: () {
-                //       Navigator.push(
-                //           context,
-                //           MaterialPageRoute(
-                //               builder: (context) => Detailscreen()));
-                //     },
-                //     child: CustomButton(
-                //       screenWidth: screenWidth,
-                //       label: "Register with email",
-                //       textColor: primary,
-                //     )),
                 const Text("See All", style: TextStyle(fontSize: 15)),
               ],
             ),
@@ -132,6 +122,20 @@ class SearchScreen extends StatelessWidget {
                 itemCount: destinationList.length,
               ),
             ),
+
+            SizedBox(height: 5),
+            InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => BirthdayScreen()));
+                },
+                child: CustomButton(
+                  screenWidth: screenWidth,
+                  label: "Go to detail screen ",
+                  textColor: primary,
+                )),
           ]),
         )),
       ),
