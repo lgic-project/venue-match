@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.venue_match">
+    package="com.example.my_first_app">
    <application
-        android:label="venue_match"
+        android:label="my_first_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
