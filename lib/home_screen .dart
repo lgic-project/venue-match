@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_first_app/constant.dart';
+
 //import 'package:my_first_app/modules/booking_screen.dart';
 //import 'package:my_first_app/modules/profile_screen.dart';
 //import 'package:my_first_app/modules/search_view/search_screen.dart';
+
+import 'package:my_first_app/modules/booking_screen.dart';
+import 'package:my_first_app/modules/profile_screen.dart';
+import 'package:my_first_app/modules/search_view/search_screen.dart';
 
 class Homescreen extends StatefulWidget {
   @override
@@ -14,6 +19,9 @@ class _HomescreenState extends State<Homescreen> {
     //SearchScreen(),
     //const ProfileScreen(),
     // BookingScreen(),
+    SearchScreen(),
+    //const ProfileScreen(),
+    BookingScreen(),
     //const ProfileScreen(),
   ];
 
@@ -37,9 +45,9 @@ class _HomescreenState extends State<Homescreen> {
           showUnselectedLabels: true,
           items: [
             _customBottomNavigationBarItem(Icons.search_off_outlined, "search"),
+            _customBottomNavigationBarItem(Icons.payment, "Booking"),
             _customBottomNavigationBarItem(
-                Icons.favorite_outline_outlined, "favorite"),
-            _customBottomNavigationBarItem(Icons.flight_takeoff, "Booking"),
+                Icons.notification_add_outlined, "Notification"),
             _customBottomNavigationBarItem(
                 Icons.person_outline_outlined, "Profile"),
           ]),
