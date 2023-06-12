@@ -48,6 +48,7 @@ class BirthdayScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Color.fromARGB(255, 133, 232, 220),
         body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: SafeArea(
               child: Padding(
             padding: EdgeInsets.symmetric(
