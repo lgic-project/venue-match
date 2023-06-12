@@ -25,23 +25,39 @@ class SearchScreen extends StatelessWidget {
   List<Destination> destinationList = [
     Destination(
         image: "assets/images/pokharagrandee.webp",
-        label: "Mountain",
+        label: "Pokhara Grandee",
         rupess: "Rs500"),
     Destination(
-        image: "assets/images/pokharagrandee.webp",
-        label: "Pokhara",
+        image: "assets/images/barahihotel.png",
+        label: "Barahi",
         rupess: "Rs50000"),
     Destination(
-        image: "assets/images/pokharagrandee.webp",
-        label: "Pokhara",
+        image: "assets/images/crystalmahal2.png",
+        label: "Crystal Mahal",
         rupess: "Rs50000"),
     Destination(
-        image: "assets/images/pokharagrandee.webp",
-        label: "Pokhara",
+        image: "assets/images/whitehousepartypalace.png",
+        label: "White House",
         rupess: "Rs50000"),
     Destination(
-        image: "assets/images/pokharagrandee.webp",
-        label: "Pokhara",
+        image: "assets/images/citysquare2.png",
+        label: "City Square",
+        rupess: "Rs50000"),
+    Destination(
+        image: "assets/images/golden.png",
+        label: "Golden House",
+        rupess: "Rs50000"),
+    Destination(
+        image: "assets/images/browneyes2.png",
+        label: "Brown Eyes",
+        rupess: "Rs50000"),
+    Destination(
+        image: "assets/images/rabimahal3.png",
+        label: "Rabi Mahak",
+        rupess: "Rs50000"),
+    Destination(
+        image: "assets/images/durbarthok.png",
+        label: "Durbar Thok",
         rupess: "Rs50000"),
   ]; //category rakheko string narakhi kina khi hamlaii category ko duitai value acces garna xa icon ra label testaile
 
@@ -105,7 +121,6 @@ class SearchScreen extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                   textAlign: TextAlign.start,
                 ),
-                const Text("See All", style: TextStyle(fontSize: 15)),
               ],
             ),
             SizedBox(height: 25),
