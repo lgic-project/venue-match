@@ -3,13 +3,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_first_app/constant.dart';
-import 'package:my_first_app/auth/login_controller.dart';
+import 'package:my_first_app/modules/auth/login_controller.dart';
+import 'package:my_first_app/modules/auth/sign_up_screen.dart';
 import 'package:my_first_app/widgets/custom_button.dart';
 import 'package:my_first_app/widgets/custom_text_field.dart';
 
 class LoginScreen extends StatelessWidget {
   double screenHeight = 0;
   double screenWidth = 0;
+
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -89,7 +91,7 @@ class LoginScreen extends StatelessWidget {
                   // Spacer(),yo chaii button laii last ma purauna gareko ho
                   InkWell(
                     onTap: () {
-                      // Get.off(SignUpScreen());
+                      Get.off(SignUpScreen());
                     },
                     child: CustomButton(
                       screenWidth: screenWidth,

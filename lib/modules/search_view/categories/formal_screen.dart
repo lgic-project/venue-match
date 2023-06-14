@@ -5,8 +5,8 @@ import 'package:my_first_app/modules/search_view/widgets/destination_tile.dart';
 
 import '../../../data/model/destination.dart';
 
-class EngagementScreen extends StatelessWidget {
-  EngagementScreen({super.key});
+class FormalScreen extends StatelessWidget {
+  FormalScreen({super.key});
 
   double screenHeight = 0;
   double screenWidth = 0;
@@ -48,7 +48,7 @@ class EngagementScreen extends StatelessWidget {
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text(
-              "Let's make your birthday special!",
+              "Let's organize formal seminar with us !",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
             SizedBox(

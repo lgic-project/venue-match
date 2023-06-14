@@ -5,8 +5,8 @@ import 'package:my_first_app/modules/search_view/widgets/destination_tile.dart';
 
 import '../../../data/model/destination.dart';
 
-class EngagementScreen extends StatelessWidget {
-  EngagementScreen({super.key});
+class FestiveScreen extends StatelessWidget {
+  FestiveScreen({super.key});
 
   double screenHeight = 0;
   double screenWidth = 0;
@@ -32,7 +32,7 @@ class EngagementScreen extends StatelessWidget {
         image: "assets/images/pokharagrandee.webp",
         label: "Pokhara",
         rupess: "Rs50000"),
-  ]; //category rakheko string narakhi kina khi hamlaii category ko duitai value acces garna xa icon ra label testaile
+  ];
 
   @override
   Widget build(BuildContext context) {

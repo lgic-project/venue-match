@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_first_app/app_controller.dart';
 import 'package:my_first_app/data/api/auth_api.dart';
+import 'package:my_first_app/modules/auth/login_screen.dart';
 
-import '../home_screen .dart';
-
-class LoginController extends GetxController {
+class SignupController extends GetxController {
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  final controller = Get.find<AppController>();
-
   //regex expression for email and password
-  // RegExp regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+  RegExp regex = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
   RegExp emailRegex = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
-  Future<void> login() async {
-    print(controller.getToken());
-
+  Future<void> signUp() async {
     // taking the values
+    String firstName = firstNameController.text.trim();
+    String lastName = lastNameController.text.trim();
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
     // validation part
-    if (email.isEmpty || password.isEmpty) {
+    if (firstName.isEmpty ||
+        lastName.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty) {
       Get.rawSnackbar(message: 'All Fields are required');
       return;
     }
@@ -36,16 +37,23 @@ class LoginController extends GetxController {
       return;
     }
 
+    if (!regex.hasMatch(password)) {
+      Get.rawSnackbar(
+          message:
+              "Enter Valid password!!\nPassword must contain atleast 8 characters with one Small and Capital Letter.");
+      return;
+    }
+
     try {
-      var response = await AuthApi.login(
-        email: email,
-        password: password,
-      );
+      var response = await AuthApi.signUp(
+          email: email,
+          password: password,
+          firstName: firstName,
+          lastName: lastName);
 
       if (response.error != null && response.error == false) {
-        Get.rawSnackbar(message: "You are successfully logged in");
-        controller.isLoggedIn(true);
-        Get.off(() => Homescreen());
+        Get.rawSnackbar(message: "You are successfully registered");
+        Get.off(() => LoginScreen());
       } else {
         Get.rawSnackbar(message: response.message);
       }
@@ -62,6 +70,8 @@ class LoginController extends GetxController {
 
   @override
   void onClose() {
+    firstNameController.dispose();
+    lastNameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.onClose();
