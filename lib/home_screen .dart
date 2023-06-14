@@ -5,9 +5,8 @@ import 'package:my_first_app/constant.dart';
 //import 'package:my_first_app/modules/profile_screen.dart';
 //import 'package:my_first_app/modules/search_view/search_screen.dart';
 
-import 'package:my_first_app/modules/booking_screen.dart';
-import 'package:my_first_app/modules/profile_screen.dart';
-import 'package:my_first_app/modules/search_view/search_screen.dart';
+import 'package:my_first_app/modules/booking/booking_screen.dart';
+import 'package:my_first_app/modules/search_view/explore_screen.dart';
 
 class Homescreen extends StatefulWidget {
   @override
@@ -19,7 +18,8 @@ class _HomescreenState extends State<Homescreen> {
     //SearchScreen(),
     //const ProfileScreen(),
     // BookingScreen(),
-    SearchScreen(),
+    //SearchScreen(),
+    ExploreScreen(),
     //const ProfileScreen(),
     BookingScreen(),
     //const ProfileScreen(),
