@@ -1,20 +1,27 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:my_first_app/data/model/category.dart';
 
 class CategoryTile extends StatelessWidget {
-  Category category;
+  Categories category;
 
-  CategoryTile({required this.category});
+  CategoryTile({super.key, required this.category});
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      Image.asset(
-        category.icon,
-        width: 50,
-        height: 50,
+      CachedNetworkImage(
+        imageUrl: category.image ?? '',
+        width: 30,
+        height: 30,
       ),
-      Text(category.label),
+      const SizedBox(
+        height: 5,
+      ),
+      Text(
+        category.name ?? '',
+        style: const TextStyle(fontSize: 12),
+      ),
     ]);
   }
 }
