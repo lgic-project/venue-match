@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_first_app/constant.dart';
 import 'package:my_first_app/modules/auth/login_screen.dart';
-import 'package:my_first_app/modules/auth/signup_controller.dart';
-
 import 'package:my_first_app/widgets/custom_button.dart';
 import 'package:my_first_app/widgets/custom_text_field.dart';
+
+import '../../data/controller/auth/signup_controller.dart';
 
 class SignUpScreen extends StatelessWidget {
   double screenHeight = 0;
