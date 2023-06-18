@@ -33,6 +33,8 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
           ),
         ),
       ),
+      errorWidget: (context, url, error) =>
+          Icon(Icons.person, color: Colors.grey),
     );
   }
 }
