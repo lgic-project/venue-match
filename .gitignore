@@ -43,6 +43,3 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-
-#Ignore Node_Modules
-**node_modules
