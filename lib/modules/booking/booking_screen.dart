@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:my_first_app/constant.dart';
-import 'package:my_first_app/modules/single_destination/details_screen.dart';
 
 import '../../widgets/custom_button.dart';
 
@@ -64,17 +63,7 @@ class BookingScreen extends StatelessWidget {
               "Person ",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
-            const SizedBox(height: 20),
-            InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Detailscreen()));
-                },
-                child: CustomButton(
-                    screenWidth: screenWidth,
-                    label: "Booking screen",
-                    textColor: Colors.white,
-                    backgroundColor: Colors.white)),
+
             const SizedBox(
               height: 70,
             ),

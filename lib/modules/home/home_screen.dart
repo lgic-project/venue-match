@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_first_app/constant.dart';
 import 'package:my_first_app/modules/booking/booking_screen.dart';
-import 'package:my_first_app/modules/search_view/explore_screen.dart';
+//import 'package:my_first_app/modules/search_view/explore_screen.dart';
 
+import '../explore/explore_screen.dart';
 import '../profile/profile_screen.dart';
 
 class Homescreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _HomescreenState extends State<Homescreen> {
   List<Widget> screens = [
     ExploreScreen(),
     BookingScreen(),
-    const ProfileScreen(),
+    //const ProfileScreen(),
   ];
 
   int _selectedIndex = 0;
