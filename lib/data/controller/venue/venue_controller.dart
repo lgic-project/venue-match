@@ -17,15 +17,8 @@ class VenueController extends GetxController {
   getVenues({String? id}) async {
     try {
       isLoading = true;
-      // String endUrl = "";
-      // if (id != null) {
-      //   endUrl = "/venue_id=$id";
-      // } else {
-      //   endUrl = "";
-      // }
       var url = "${baseUrl}get-venues${id != null ? '?venue_id=$id' : ''}";
       final response = await http.get(Uri.parse(url));
-      isLoading = false;
       if (id != null) {
         singleVenueList =
             VenueModel.fromJson(json.decode(response.body)).venues ?? [];
@@ -33,6 +26,7 @@ class VenueController extends GetxController {
         venuesList =
             VenueModel.fromJson(json.decode(response.body)).venues ?? [];
       }
+      isLoading = false;
       update();
     } catch (e) {
       if (e.toString().contains("SocketException")) {
@@ -42,5 +36,19 @@ class VenueController extends GetxController {
       }
       errorMessage = e.toString();
     }
+  }
+
+  String getDishes({bool isForVeg = true}) {
+    var dishes = singleVenueList.first.dishes;
+    var vegDishList = [];
+    var nonVegDishList = [];
+    for (int i = 0; i < (dishes?.length ?? 1); i++) {
+      if (dishes?[i].dishType?.toLowerCase() == 'veg') {
+        vegDishList.add(dishes?[i].dishName);
+      } else {
+        nonVegDishList.add(dishes?[i].dishName);
+      }
+    }
+    return isForVeg ? vegDishList.join('\n') : nonVegDishList.join('\n');
   }
 }
