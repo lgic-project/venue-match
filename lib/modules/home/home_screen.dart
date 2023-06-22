@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_first_app/constant.dart';
-import 'package:my_first_app/modules/booking/booking_screen.dart';
-//import 'package:my_first_app/modules/search_view/explore_screen.dart';
+import 'package:my_first_app/modules/explore/explore_screen.dart';
+import 'package:my_first_app/modules/history/history_screen.dart';
 
-import '../explore/explore_screen.dart';
 import '../profile/profile_screen.dart';
 
 class Homescreen extends StatefulWidget {
@@ -15,8 +14,9 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   List<Widget> screens = [
-    ExploreScreen(),
-    //const ProfileScreen(),
+    const ExploreScreen(),
+    const HistoryScreen(),
+    const ProfileScreen(),
   ];
 
   int _selectedIndex = 0;
@@ -39,7 +39,7 @@ class _HomescreenState extends State<Homescreen> {
           showUnselectedLabels: true,
           items: [
             _customBottomNavigationBarItem(Icons.explore_outlined, "Explore"),
-            _customBottomNavigationBarItem(Icons.payment, "Booking"),
+            _customBottomNavigationBarItem(Icons.history, "Booking"),
             _customBottomNavigationBarItem(
                 Icons.person_outline_outlined, "Profile"),
           ]),

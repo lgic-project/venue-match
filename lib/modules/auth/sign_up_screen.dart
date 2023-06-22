@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_first_app/constant.dart';
-import 'package:my_first_app/modules/auth/login_screen.dart';
+import 'package:my_first_app/data/controller/auth/signup_controller.dart';
 import 'package:my_first_app/widgets/custom_button.dart';
 import 'package:my_first_app/widgets/custom_text_field.dart';
-
-import '../../data/controller/auth/signup_controller.dart';
 
 class SignUpScreen extends StatelessWidget {
   double screenHeight = 0;
   double screenWidth = 0;
+
+  SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +32,8 @@ class SignUpScreen extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(top: screenHeight / 30),
-                      child: Align(
-                          child: const Text(
+                      child: const Align(
+                          child: Text(
                         "Sign up ",
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
@@ -42,31 +42,31 @@ class SignUpScreen extends StatelessWidget {
                     const SizedBox(
                       height: 35,
                     ),
-                    Text(
+                    const Text(
                       "Sign up with Email",
                       style: TextStyle(
                           fontSize: 22, color: Color.fromARGB(255, 19, 18, 18)),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
 
                     CustomTextField(
                       icon: Icons.person_outline,
                       hint: "Enter your name",
                       controller: controller.firstNameController,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     CustomTextField(
                       icon: Icons.person_outline,
                       hint: "Enter your last name",
                       controller: controller.lastNameController,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     CustomTextField(
                       icon: Icons.person_outline,
                       hint: "Enter your email address",
                       controller: controller.emailController,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
                     CustomTextField(
                       icon: Icons.lock_outline,
@@ -74,7 +74,7 @@ class SignUpScreen extends StatelessWidget {
                       controller: controller.passwordController,
                     ),
 
-                    Spacer(),
+                    const Spacer(),
                     InkWell(
                       onTap: () {
                         Navigator.pop(context);
@@ -82,11 +82,11 @@ class SignUpScreen extends StatelessWidget {
                       child: CustomButton(
                         screenWidth: screenWidth,
                         label: "Back",
-                        textColor: Color.fromARGB(255, 241, 240, 240),
+                        textColor: const Color.fromARGB(255, 241, 240, 240),
                         backgroundColor: primaryColor,
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     InkWell(
@@ -94,11 +94,11 @@ class SignUpScreen extends StatelessWidget {
                       child: CustomButton(
                         screenWidth: screenWidth,
                         label: "Continue",
-                        textColor: Color.fromARGB(255, 241, 240, 240),
+                        textColor: const Color.fromARGB(255, 241, 240, 240),
                         backgroundColor: primaryColor,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                   ]),
             ),
           ),
