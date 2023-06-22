@@ -51,30 +51,26 @@ class SignUpScreen extends StatelessWidget {
 
                     CustomTextField(
                       icon: Icons.person_outline,
-                      label: "Enter your name",
-                      border: null,
+                      hint: "Enter your name",
                       controller: controller.firstNameController,
                     ),
                     SizedBox(height: 10),
                     CustomTextField(
                       icon: Icons.person_outline,
-                      label: "Enter your last name",
-                      border: null,
+                      hint: "Enter your last name",
                       controller: controller.lastNameController,
                     ),
                     SizedBox(height: 10),
                     CustomTextField(
                       icon: Icons.person_outline,
-                      label: "Enter your email address",
-                      border: null,
+                      hint: "Enter your email address",
                       controller: controller.emailController,
                     ),
                     SizedBox(height: 10),
 
                     CustomTextField(
                       icon: Icons.lock_outline,
-                      label: "Enter your Password",
-                      border: null,
+                      hint: "Enter your Password",
                       controller: controller.passwordController,
                     ),
 
@@ -87,7 +83,7 @@ class SignUpScreen extends StatelessWidget {
                         screenWidth: screenWidth,
                         label: "Back",
                         textColor: Color.fromARGB(255, 241, 240, 240),
-                        backgroundColor: primary,
+                        backgroundColor: primaryColor,
                       ),
                     ),
                     SizedBox(
@@ -99,7 +95,7 @@ class SignUpScreen extends StatelessWidget {
                         screenWidth: screenWidth,
                         label: "Continue",
                         textColor: Color.fromARGB(255, 241, 240, 240),
-                        backgroundColor: primary,
+                        backgroundColor: primaryColor,
                       ),
                     ),
                     SizedBox(height: 20),

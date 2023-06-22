@@ -53,15 +53,13 @@ class LoginScreen extends StatelessWidget {
 
                   CustomTextField(
                     icon: Icons.person_outline,
-                    label: "Enter your email",
-                    border: null,
+                    hint: "Enter your email",
                     controller: controller.emailController,
                   ),
                   SizedBox(height: 15),
                   CustomTextField(
                     icon: Icons.lock_outline,
-                    label: "Enter your Password",
-                    border: null,
+                    hint: "Enter your Password",
                     controller: controller.passwordController,
                   ),
 
@@ -72,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                         screenWidth: screenWidth,
                         label: "Continue",
                         textColor: Colors.white,
-                        backgroundColor: primary,
+                        backgroundColor: primaryColor,
                       )),
                   const SizedBox(
                     height: 30,
@@ -98,7 +96,7 @@ class LoginScreen extends StatelessWidget {
                       screenWidth: screenWidth,
                       label: "Sign up",
                       textColor: Color.fromARGB(255, 241, 240, 240),
-                      backgroundColor: primary,
+                      backgroundColor: primaryColor,
                     ),
                   ),
                 ]),

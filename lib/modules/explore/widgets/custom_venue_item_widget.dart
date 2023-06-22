@@ -65,7 +65,7 @@ class CustomVenueItemWidget extends StatelessWidget {
                       Icon(
                         Icons.location_on_outlined,
                         size: 14,
-                        color: primary,
+                        color: primaryColor,
                       ),
                       Text(
                         "Pokhara",
@@ -80,7 +80,7 @@ class CustomVenueItemWidget extends StatelessWidget {
                   Text(
                     "Rs ${venues.price ?? ''}",
                     style: GoogleFonts.poppins(
-                      color: primary,
+                      color: primaryColor,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

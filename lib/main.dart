@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
           false, //side ko debug ko banner hatauna lai use gareko
 
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch().copyWith(primary: primary),
+        colorScheme: ColorScheme.fromSwatch().copyWith(primary: primaryColor),
         textTheme: GoogleFonts.poppinsTextTheme(
           Theme.of(context).textTheme,
         ),

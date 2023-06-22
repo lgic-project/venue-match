@@ -50,7 +50,7 @@ class WelcomeScreen extends StatelessWidget {
                   child: CustomButton(
                     screenWidth: screenWidth,
                     label: "Log in",
-                    backgroundColor: primary,
+                    backgroundColor: primaryColor,
                     textColor: Colors.white,
                   )),
               const SizedBox(
@@ -72,7 +72,7 @@ class WelcomeScreen extends StatelessWidget {
                   child: CustomButton(
                     screenWidth: screenWidth,
                     label: "Register with email",
-                    textColor: primary,
+                    textColor: primaryColor,
                   )),
             ],
           ),
