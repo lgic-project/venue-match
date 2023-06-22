@@ -19,7 +19,7 @@ class CategoryTile extends StatelessWidget {
           )),
       child: Column(children: [
         CachedNetworkImage(
-          imageUrl: category.image ?? '',
+          imageUrl: category.image??'',
           width: 30,
           height: 30,
         ),
