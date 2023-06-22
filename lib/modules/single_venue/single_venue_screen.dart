@@ -5,6 +5,7 @@ import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_first_app/constant.dart';
 import 'package:my_first_app/data/controller/venue/venue_controller.dart';
+import 'package:my_first_app/modules/booking/booking_screen.dart';
 import 'package:my_first_app/widgets/custom_button.dart';
 import 'package:my_first_app/widgets/custom_loading_widget.dart';
 
@@ -65,15 +66,19 @@ class SingleVenueScreen extends StatelessWidget {
                                   Positioned(
                                     left: 20,
                                     top: 30,
-                                    child: Container(
-                                      padding: const EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: Colors.white,
-                                      ),
-                                      child: const Icon(
-                                        Icons.chevron_left,
-                                        color: Colors.black54,
+                                    child: GestureDetector(
+                                      onTap: () => Get.back(),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Colors.white,
+                                        ),
+                                        child: const Icon(
+                                          Icons.chevron_left,
+                                          color: Colors.black54,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -171,10 +176,12 @@ class SingleVenueScreen extends StatelessWidget {
                                                               .spaceAround,
                                                       children: [
                                                         CustomDishTypeWidget(
+                                                          color: Colors.green,
                                                           title: 'Veg Dishes',
                                                           desc: _.getDishes(),
                                                         ),
                                                         CustomDishTypeWidget(
+                                                          color: primaryColor,
                                                           title:
                                                               'Non Veg Dishes',
                                                           desc: _.getDishes(
@@ -218,7 +225,8 @@ class SingleVenueScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(20),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () => Get.to(() =>
+                              BookingScreen(venues: _.singleVenueList.first)),
                           child: CustomButton(
                             screenWidth: appWidth,
                             label: "Book Now",
@@ -239,21 +247,33 @@ class CustomDishTypeWidget extends StatelessWidget {
     super.key,
     this.title,
     this.desc,
+    this.color,
   });
 
   final String? title, desc;
-
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title ?? '',
-          style: GoogleFonts.poppins(
-            fontWeight: FontWeight.w500,
-          ),
+        Row(
+          children: [
+            Icon(
+              Icons.circle,
+              color: color,
+              size: 6,
+            ),
+            const SizedBox(width: 5),
+            Text(
+              title ?? '',
+              style: GoogleFonts.poppins(
+                fontWeight: FontWeight.w500,
+                color: color,
+              ),
+            ),
+          ],
         ),
         const SizedBox(height: 5),
         Text(
