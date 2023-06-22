@@ -4,7 +4,8 @@ import '../constant.dart';
 
 class CustomButton extends StatelessWidget {
   CustomButton(
-      {required this.screenWidth,
+      {super.key,
+      required this.screenWidth,
       required this.label,
       this.backgroundColor,
       this.textColor,
@@ -24,10 +25,10 @@ class CustomButton extends StatelessWidget {
         decoration: BoxDecoration(
             color: backgroundColor,
             border: Border.all(
-                color: borderColor ?? primary,
+                color: borderColor ?? primaryColor,
                 width:
                     2), //?? le chaii yedi color nullable xa vanye chaii bordercolor primary pass gare vaneko
-            borderRadius: BorderRadius.all(Radius.circular(
+            borderRadius: const BorderRadius.all(Radius.circular(
                 10))), //side ma thoraii sign in ko box circular banako
         child: Text(label,
             textAlign: TextAlign.center, style: TextStyle(color: textColor)));
