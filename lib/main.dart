@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_first_app/data/controller/app_controller.dart';
 import 'package:my_first_app/constant.dart';
+import 'package:my_first_app/data/controller/app_controller.dart';
 import 'package:my_first_app/data/controller/category/category_controller.dart';
 import 'package:my_first_app/data/controller/venue/venue_controller.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'data/controller/booking/booking_controller.dart';
 import 'modules/home/home_screen.dart';
 import 'modules/welcome/welcome_screen.dart';
 
@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
           Get.put(AppController(sharedPreferences), permanent: true);
           Get.put(CategoryController());
           Get.put(VenueController());
+          Get.put(BookingController());
         },
       ),
       home: GetX<AppController>(
