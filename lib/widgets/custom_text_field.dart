@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
   String hint;
   TextEditingController controller;
   bool? hasBorder, isFilled;
+  bool readOnly;
 
   CustomTextField(
       {super.key,
@@ -14,11 +15,13 @@ class CustomTextField extends StatelessWidget {
       required this.icon,
       this.hasBorder = true,
       this.isFilled = false,
+      this.readOnly = false,
       required this.controller});
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      readOnly: readOnly,
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: const TextStyle(

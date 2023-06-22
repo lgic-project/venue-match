@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_first_app/data/controller/category/category_controller.dart';
+import 'package:my_first_app/data/controller/venue/venue_controller.dart';
 import 'package:my_first_app/modules/explore/widgets/category_tile.dart';
 import 'package:my_first_app/modules/explore/widgets/custom_venue_item_widget.dart';
-import '../../data/controller/category/category_controller.dart';
-import '../../data/controller/venue/venue_controller.dart';
-import '../../data/model/destination.dart';
 
 class ExploreScreen extends StatelessWidget {
-  ExploreScreen({super.key});
-
-  double screenHeight = 0;
-  double screenWidth = 0;
+  const ExploreScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
