@@ -1,29 +1,40 @@
 import 'package:flutter/material.dart';
 
-import '../../constant.dart';
+import '../constant.dart';
 
 class CustomTextField extends StatelessWidget {
   IconData icon;
-  String label;
+  String hint;
   TextEditingController controller;
+  bool? hasBorder, isFilled;
 
   CustomTextField(
-      {required this.label,
+      {super.key,
+      required this.hint,
       required this.icon,
-      required border,
+      this.hasBorder = true,
+      this.isFilled = false,
       required this.controller});
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
       decoration: InputDecoration(
-          // label: Text("Phone Number"),
-          hintText: label,
-          prefixIcon: Icon(
-            icon,
-            color: primary,
-          ),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
+        hintText: hint,
+        hintStyle: const TextStyle(
+          fontSize: 14,
+        ),
+        filled: isFilled,
+        fillColor: lightColor,
+        prefixIcon: Icon(
+          icon,
+          size: 18,
+        ),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide:
+                hasBorder == true ? const BorderSide() : BorderSide.none),
+      ),
     );
   }
 }
