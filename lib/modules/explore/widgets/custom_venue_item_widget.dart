@@ -16,9 +16,9 @@ class CustomVenueItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // onTap: () => Get.to(() => SingleVenueScreen(
-      //       id: "${venues.id}",
-      //     )),
+      onTap: () => Get.to(() => SingleVenueScreen(
+            id: "${venues.id}",
+          )),
       child: Container(
         padding: const EdgeInsets.all(8),
         margin: const EdgeInsets.fromLTRB(5, 5, 5, 0),
