@@ -1,3 +1,4 @@
+
 class CategoryModel {
   List<Categories>? categories;
   bool? error;
@@ -6,18 +7,14 @@ class CategoryModel {
   CategoryModel({this.categories, this.error, this.message});
 
   CategoryModel.fromJson(Map<String, dynamic> json) {
-    categories = json["categories"] == null
-        ? null
-        : (json["categories"] as List)
-            .map((e) => Categories.fromJson(e))
-            .toList();
+    categories = json["categories"] == null ? null : (json["categories"] as List).map((e) => Categories.fromJson(e)).toList();
     error = json["error"];
     message = json["message"];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> _data = <String, dynamic>{};
-    if (categories != null) {
+    if(categories != null) {
       _data["categories"] = categories?.map((e) => e.toJson()).toList();
     }
     _data["error"] = error;
