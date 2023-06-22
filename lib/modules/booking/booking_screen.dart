@@ -1,136 +1,164 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:my_first_app/constant.dart';
+import 'package:my_first_app/widgets/custom_app_bar_widget.dart';
 
+import '../../data/model/venue_model.dart';
 import '../../widgets/custom_button.dart';
+import '../../widgets/custom_text_field.dart';
+import '../single_category/widgets/custom_venue_item_by_category_widget.dart';
 
 class BookingScreen extends StatelessWidget {
-  BookingScreen({super.key});
+  final Venues venues;
 
-  double screenHeight = 0;
-  double screenWidth = 0;
+  const BookingScreen({
+    super.key,
+    required this.venues,
+  });
 
   @override
   Widget build(BuildContext context) {
-    screenHeight = MediaQuery.of(context).size.height;
-    screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
-        body: SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 30.0, left: 15.0, right: 15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Align(
-              child: Text(
-                "Booking",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        appBar: const CustomAppBarWidget(title: 'Booking'),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomVenueItemByCategoryWidget(venues: venues),
+              const SizedBox(height: 20),
+              Text(
+                "Date ",
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              "Date ",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            // Row(
-            //   children: [
-            //     Expanded(
-            //       child: CustomTextField(
-            //           label: "Start date",
-            //           icon: Icons.calendar_month,
-            //           border: null),
-            //     ),
-            //     SizedBox(width: 15),
-            //     Expanded(
-            //       child: CustomTextField(
-            //         controller: ,
-            //           label: "End date",
-            //           icon: Icons.calendar_month,
-            //           border: null),
-            //     ),
-            //   ],
-            // ),
-            const SizedBox(height: 15),
-            const Text(
-              "Person ",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            ),
-
-            const SizedBox(
-              height: 70,
-            ),
-            const Text(
-              "Price Details ",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "Travel fee: ",
-                  style: TextStyle(fontSize: 20),
+              const SizedBox(height: 10),
+              CustomTextField(
+                hint: "Start date",
+                icon: Icons.calendar_month,
+                controller: TextEditingController(),
+                isFilled: true,
+                hasBorder: false,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                "Person",
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
                 ),
-                Text(
-                  "1000*2 ",
-                  style: TextStyle(fontSize: 20),
+              ),
+              const SizedBox(height: 10),
+              CustomTextField(
+                hint: "Person",
+                icon: Icons.person,
+                controller: TextEditingController(),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                "Price Details",
+                style: GoogleFonts.poppins(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
                 ),
-              ],
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "Discount: ",
-                  style: TextStyle(fontSize: 20),
+              ),
+              const SizedBox(height: 15),
+              Container(
+                decoration: BoxDecoration(
+                  color: lightColor,
+                  borderRadius: BorderRadius.circular(6),
                 ),
-                Text(
-                  "100 ",
-                  style: TextStyle(fontSize: 20),
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Price per Plate: ",
+                          style: TextStyle(
+                            fontSize: 13,
+                          ),
+                        ),
+                        Text(
+                          "Rs ${venues.price}",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Total No. of People: ",
+                          style: TextStyle(
+                            fontSize: 13,
+                          ),
+                        ),
+                        Text(
+                          "1000",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Cost Detail: ",
+                          style: TextStyle(
+                            fontSize: 13,
+                          ),
+                        ),
+                        Text(
+                          "Rs ${venues.price} * 1000",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Total Amount: ",
+                          style: TextStyle(
+                            fontSize: 13,
+                          ),
+                        ),
+                        Text(
+                          "Rs 500000",
+                          style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  "Total: ",
-                  style: TextStyle(fontSize: 20),
-                ),
-                Text(
-                  "900 ",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ],
-            ),
-            const Spacer(),
-            InkWell(
-                onTap: () {},
-                child: CustomButton(
-                  screenWidth: screenWidth,
-                  label: "Continue",
-                  textColor: Colors.white,
-                  backgroundColor: primary,
-                )),
-            const SizedBox(
-              height: 50,
-            ),
-          ],
-        ),
-      ),
-    ));
+              ),
+              const SizedBox(height: 50),
+              InkWell(
+                  onTap: () {},
+                  child: CustomButton(
+                    screenWidth: appWidth,
+                    label: "Continue",
+                    textColor: Colors.white,
+                    backgroundColor: primaryColor,
+                  )),
+            ],
+          ),
+        ));
   }
 }
