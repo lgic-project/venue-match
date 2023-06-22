@@ -16,7 +16,6 @@ class Homescreen extends StatefulWidget {
 class _HomescreenState extends State<Homescreen> {
   List<Widget> screens = [
     ExploreScreen(),
-    BookingScreen(),
     //const ProfileScreen(),
   ];
 
@@ -36,7 +35,7 @@ class _HomescreenState extends State<Homescreen> {
           },
           currentIndex: _selectedIndex,
           unselectedItemColor: Colors.black54,
-          selectedItemColor: primary,
+          selectedItemColor: primaryColor,
           showUnselectedLabels: true,
           items: [
             _customBottomNavigationBarItem(Icons.explore_outlined, "Explore"),

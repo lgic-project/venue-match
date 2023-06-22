@@ -4,11 +4,11 @@ import 'package:get/get_navigation/get_navigation.dart';
 
 class CustomAppBarWidget extends StatelessWidget
     implements PreferredSizeWidget {
+  final String? title;
   const CustomAppBarWidget({
     super.key,
     this.title,
   });
-  final String? title;
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
@@ -25,10 +25,13 @@ class CustomAppBarWidget extends StatelessWidget
       automaticallyImplyLeading: false,
       leading: GestureDetector(
         onTap: () => Get.back(),
-        child: const Icon(
-          Icons.arrow_back_ios,
-          color: Colors.black87,
-          size: 16,
+        child: const Padding(
+          padding: EdgeInsets.all(10),
+          child: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black87,
+            size: 18,
+          ),
         ),
       ),
       elevation: 0,

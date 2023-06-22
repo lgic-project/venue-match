@@ -5,8 +5,8 @@ import '../../../data/model/venue_model.dart';
 import '../../../widgets/custom_cached_network_image_widget.dart';
 
 class CustomVenueItemByCategoryWidget extends StatelessWidget {
-  const CustomVenueItemByCategoryWidget({super.key, required this.venues});
   final Venues venues;
+  const CustomVenueItemByCategoryWidget({super.key, required this.venues});
 
   @override
   Widget build(BuildContext context) {

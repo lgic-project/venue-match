@@ -29,7 +29,7 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
           width: placeHolderWidth,
           child: const CircularProgressIndicator(
             strokeWidth: 1.5,
-            color: primary,
+            color: primaryColor,
           ),
         ),
       ),
