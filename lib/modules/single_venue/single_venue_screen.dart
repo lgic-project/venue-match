@@ -111,7 +111,7 @@ class SingleVenueScreen extends StatelessWidget {
                                                   const Icon(
                                                     Icons.location_on_outlined,
                                                     size: 14,
-                                                    color: primary,
+                                                    color: primaryColor,
                                                   ),
                                                   Expanded(
                                                     child: Text(
@@ -136,7 +136,7 @@ class SingleVenueScreen extends StatelessWidget {
                                           child: Text(
                                             "Rs ${_.singleVenueList.first.price ?? ''}",
                                             style: GoogleFonts.poppins(
-                                              color: primary,
+                                              color: primaryColor,
                                               fontWeight: FontWeight.w500,
                                             ),
                                             textAlign: TextAlign.end,
@@ -223,7 +223,7 @@ class SingleVenueScreen extends StatelessWidget {
                             screenWidth: appWidth,
                             label: "Book Now",
                             textColor: const Color.fromARGB(255, 241, 240, 240),
-                            backgroundColor: primary,
+                            backgroundColor: primaryColor,
                           ),
                         ),
                       ),
@@ -284,7 +284,7 @@ class CustomVenueInfoWidget extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: primary,
+          color: primaryColor,
           size: 22,
         ),
         Text(
