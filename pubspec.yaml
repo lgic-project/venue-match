@@ -21,6 +21,8 @@ dependencies:
   google_fonts: ^4.0.4
   lottie: ^2.3.2
   intl: ^0.18.1
+  khalti_flutter: ^2.2.1
+  flutter_svg: ^2.0.5
 
 dev_dependencies:
   flutter_test:
@@ -39,3 +41,5 @@ flutter:
   assets:
     - assets/images/
     - assets/lottie/
+    - assets/icons/
+
