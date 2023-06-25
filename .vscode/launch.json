@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "projectve",
+            "name": "venue_match",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "projectve (profile mode)",
+            "name": "venue_match",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "projectve (release mode)",
+            "name": "venue_match",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
