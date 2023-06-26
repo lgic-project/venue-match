@@ -21469,11 +21469,77 @@ a:hover{
     border-color: #f4a492 !important;
 }
 
-@media only screen and (max-width:484px){
-      .navbar{
-        justify-content: flex-end;
-      }
-}
+
 h2#mantine-rn9xd4f8j-title{
   font-size: 2rem;
+}
+
+
+
+@media only screen and  (min-width:700px){
+  .venueCard{
+    padding-top:50px;
+    padding-right: 100px;
+    padding-left: 100px;
+  }
+}
+
+@media only screen and  (max-width:699px){
+  .venueCard{
+    padding-top:30px;
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+}
+
+@media only screen and (min-width:1200px){
+  .home-banner-section.overflow-hidden.position-relative.hero{
+  padding-top: 100px !important;
+  
+  }
+}
+
+button.btn.btn-primary.venue:hover{
+transform: none;
+}
+@media only screen and  (min-width:700px){
+  .venueCategory{
+    padding-top:60px;
+    padding-right: 100px;
+    padding-left: 100px;
+  }
+}
+
+@media only screen and  (max-width:699px){
+  .venueCategory{
+    padding-top:30px;
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+}
+.mantine-SimpleGrid-root.mantine-qvr8fy{
+  justify-items: center;
+}
+.categoryCard{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+height:max-content;
+max-height: max-content;
+  align-items: center;
+}
+
+.header.header{
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (min-width:992px){
+  .main-header{
+    display: flex !important;
+    align-items: center !important;
+    padding-left: 100px !important;
+    padding-right: 100px !important;
+  }
 }
