@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppController extends GetxController {
+  static AppController controller = Get.find();
   final SharedPreferences sharedPreferences;
   final isLoggedIn = false.obs; //obs le chai observable
   //observable ko value chai tmle app through access grna milyo
