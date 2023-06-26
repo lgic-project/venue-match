@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
-    <div className="home-banner-section overflow-hidden position-relative">
+    <div className="home-banner-section overflow-hidden position-relative hero">
       <figure className="banner-img1 mb-0">
         <img
           src="../src/assets/images/banner-img1.png"
