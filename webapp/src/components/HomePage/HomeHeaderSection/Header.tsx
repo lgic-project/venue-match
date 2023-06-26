@@ -60,7 +60,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 export default function Header() {
-  const [toggle, setToggle] = useState(true);
+  const [toggle] = useState(true);
   const { classes } = useStyles();
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
@@ -149,18 +149,7 @@ export default function Header() {
                         : "nav-item dropdown redlight-dropdown show"
                     }
                   >
-                    <NavLink
-                      onClick={() => setToggle(!toggle)}
-                      className="nav-link dropdown-toggle"
-                      to="#"
-                      id="navbarDropdown"
-                      role="button"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded={toggle ? "false" : "true"}
-                    >
-                      Categories
-                    </NavLink>
+                   
                     <div
                       className={
                         toggle
