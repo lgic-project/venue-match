@@ -9,15 +9,23 @@ class CustomTextFormField extends StatelessWidget {
   bool? hasBorder, isFilled;
   bool readOnly;
   Function()? onTap;
+  TextInputAction? textInputAction;
+  TextInputType? keyboardType;
+  Function(String)? onChanged;
+  Function? validator;
 
   CustomTextFormField(
       {super.key,
       required this.hint,
       required this.icon,
       this.onTap,
+      this.keyboardType,
       this.hasBorder = true,
       this.isFilled = false,
       this.readOnly = false,
+      this.textInputAction,
+      this.validator,
+      this.onChanged,
       required this.controller});
   @override
   Widget build(BuildContext context) {
@@ -25,6 +33,12 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       readOnly: readOnly,
       onTap: onTap,
+      textInputAction: textInputAction,
+      keyboardType: keyboardType,
+      onChanged: onChanged,
+      validator: (value) {
+        return validator == null ? null : validator!(value);
+      },
       decoration: InputDecoration(
         hintText: hint,
         hintStyle: const TextStyle(
