@@ -1,3 +1,22 @@
+class Dishes {
+  String? dishType;
+  String? dishName;
+
+  Dishes({this.dishType, this.dishName});
+
+  Dishes.fromJson(Map<String, dynamic> json) {
+    dishType = json["dish_type"];
+    dishName = json["dish_name"];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["dish_type"] = dishType;
+    data["dish_name"] = dishName;
+    return data;
+  }
+}
+
 class VenueModel {
   List<Venues>? venues;
   bool? error;
@@ -34,17 +53,20 @@ class Venues {
   String? image;
   int? categoryId;
   List<Dishes>? dishes;
+  String? bookingStatus;
 
-  Venues(
-      {this.id,
-      this.name,
-      this.location,
-      this.price,
-      this.description,
-      this.capacity,
-      this.image,
-      this.categoryId,
-      this.dishes});
+  Venues({
+    this.id,
+    this.name,
+    this.location,
+    this.price,
+    this.description,
+    this.capacity,
+    this.image,
+    this.categoryId,
+    this.dishes,
+    this.bookingStatus,
+  });
 
   Venues.fromJson(Map<String, dynamic> json) {
     id = json["id"];
@@ -58,6 +80,7 @@ class Venues {
     dishes = json["dishes"] == null
         ? null
         : (json["dishes"] as List).map((e) => Dishes.fromJson(e)).toList();
+    bookingStatus = json["booking_status"];
   }
 
   Map<String, dynamic> toJson() {
@@ -73,25 +96,6 @@ class Venues {
     if (dishes != null) {
       data["dishes"] = dishes?.map((e) => e.toJson()).toList();
     }
-    return data;
-  }
-}
-
-class Dishes {
-  String? dishType;
-  String? dishName;
-
-  Dishes({this.dishType, this.dishName});
-
-  Dishes.fromJson(Map<String, dynamic> json) {
-    dishType = json["dish_type"];
-    dishName = json["dish_name"];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data["dish_type"] = dishType;
-    data["dish_name"] = dishName;
     return data;
   }
 }

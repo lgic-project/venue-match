@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:my_first_app/data/controller/app_controller.dart';
 import 'package:my_first_app/data/api/auth_api.dart';
+import 'package:my_first_app/data/controller/app_controller.dart';
 import 'package:my_first_app/modules/home/home_screen.dart';
 
 class LoginController extends GetxController {
@@ -43,7 +43,7 @@ class LoginController extends GetxController {
       if (response.error != null && response.error == false) {
         Get.rawSnackbar(message: "You are successfully logged in");
         controller.isLoggedIn(true);
-        Get.off(() => Homescreen());
+        Get.off(() => const HomeScreen());
       } else {
         Get.rawSnackbar(message: response.message);
       }

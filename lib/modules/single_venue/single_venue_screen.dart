@@ -10,22 +10,25 @@ import 'package:my_first_app/widgets/custom_button.dart';
 import 'package:my_first_app/widgets/custom_loading_widget.dart';
 
 import '../../widgets/custom_cached_network_image_widget.dart';
+import 'widgets/custom_dish_type_widget.dart';
+import 'widgets/custom_venue_info_widget.dart';
 
 class SingleVenueScreen extends StatelessWidget {
+  final String? id, categoryId;
+  final bool isFromCategory;
+  var controller = VenueController.controller;
   SingleVenueScreen({
     super.key,
     this.id,
+    this.categoryId,
+    this.isFromCategory = false,
   });
-  final String? id;
-  var controller = VenueController.controller;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: GetBuilder<VenueController>(initState: (state) {
         controller.getVenues(id: id);
       }, builder: (_) {
-        // var model =_.singleVenueList.first;
-        // print(_.singleVenueList.first.id);
         return SafeArea(
             child: _.isLoading
                 ? const CustomLoadingWidget()
@@ -197,6 +200,25 @@ class SingleVenueScreen extends StatelessWidget {
                                             title: 'Catering',
                                           ),
                                         ),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
+                                        CustomVenueInfoWidget(
+                                          // isSvg: true,
+                                          // svgIcon:
+                                          //     'assets/icons/status_booked.svg',
+                                          icon: Icons.calendar_month,
+                                          iconColor: _.singleVenueList.first
+                                                      .bookingStatus ==
+                                                  "booked"
+                                              ? primaryColor
+                                              : Colors.green,
+                                          title: _.singleVenueList.first
+                                                      .bookingStatus ==
+                                                  "booked"
+                                              ? "Booked"
+                                              : "Available",
+                                        ),
                                       ],
                                     ),
                                     const SizedBox(height: 20),
@@ -225,8 +247,20 @@ class SingleVenueScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(20),
                         child: InkWell(
-                          onTap: () => Get.to(() =>
-                              BookingScreen(venues: _.singleVenueList.first)),
+                          onTap:
+                              _.singleVenueList.first.bookingStatus == "booked"
+                                  ? () {
+                                      Get.rawSnackbar(
+                                        backgroundColor: secondaryColor,
+                                        message:
+                                            "Sorry, this venue is already booked!!",
+                                        duration: const Duration(seconds: 1),
+                                      );
+                                    }
+                                  : () => Get.to(() => BookingScreen(
+                                        venues: _.singleVenueList.first,
+                                        categoryId: categoryId,
+                                      )),
                           child: CustomButton(
                             screenWidth: appWidth,
                             label: "Book Now",
@@ -238,83 +272,6 @@ class SingleVenueScreen extends StatelessWidget {
                     ],
                   ));
       }),
-    );
-  }
-}
-
-class CustomDishTypeWidget extends StatelessWidget {
-  const CustomDishTypeWidget({
-    super.key,
-    this.title,
-    this.desc,
-    this.color,
-  });
-
-  final String? title, desc;
-  final Color? color;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(
-              Icons.circle,
-              color: color,
-              size: 6,
-            ),
-            const SizedBox(width: 5),
-            Text(
-              title ?? '',
-              style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w500,
-                color: color,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 5),
-        Text(
-          desc ?? '',
-          style: GoogleFonts.poppins(
-            fontSize: 13,
-          ),
-          overflow: TextOverflow.ellipsis,
-        ),
-      ],
-    );
-  }
-}
-
-class CustomVenueInfoWidget extends StatelessWidget {
-  const CustomVenueInfoWidget({
-    super.key,
-    this.title,
-    this.icon,
-  });
-
-  final String? title;
-  final IconData? icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Icon(
-          icon,
-          color: primaryColor,
-          size: 22,
-        ),
-        Text(
-          "$title",
-          style: const TextStyle(
-            fontSize: 12,
-            color: Colors.grey,
-          ),
-        ),
-      ],
     );
   }
 }

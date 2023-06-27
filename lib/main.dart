@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:my_first_app/constant.dart';
 import 'package:my_first_app/data/controller/app_controller.dart';
 import 'package:my_first_app/data/controller/category/category_controller.dart';
@@ -23,30 +24,42 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner:
-          false, //side ko debug ko banner hatauna lai use gareko
+    return KhaltiScope(
+        publicKey: 'test_public_key_43dabfc075a847408d6858446f85b937',
+        builder: (context, navigatorKey) {
+          return GetMaterialApp(
+            navigatorKey: navigatorKey,
+            debugShowCheckedModeBanner:
+                false, //side ko debug ko banner hatauna lai use gareko
+            supportedLocales: const [
+              Locale('en', 'US'),
+              Locale('ne', 'NP'),
+            ],
+            localizationsDelegates: const [
+              KhaltiLocalizations.delegate,
+            ],
+            theme: ThemeData(
+              colorScheme:
+                  ColorScheme.fromSwatch().copyWith(primary: primaryColor),
+              textTheme: GoogleFonts.poppinsTextTheme(
+                Theme.of(context).textTheme,
+              ),
+            ),
 
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch().copyWith(primary: primaryColor),
-        textTheme: GoogleFonts.poppinsTextTheme(
-          Theme.of(context).textTheme,
-        ),
-      ),
-
-      initialBinding: BindingsBuilder(
-        () {
-          Get.put(AppController(sharedPreferences), permanent: true);
-          Get.put(CategoryController());
-          Get.put(VenueController());
-          Get.put(BookingController());
-        },
-      ),
-      home: GetX<AppController>(
-          init: AppController(sharedPreferences),
-          builder: (controller) => controller.isLoggedIn.isFalse
-              ? WelcomeScreen()
-              : const Homescreen()),
-    );
+            initialBinding: BindingsBuilder(
+              () {
+                Get.put(AppController(sharedPreferences), permanent: true);
+                Get.put(CategoryController());
+                Get.put(VenueController());
+                Get.put(BookingController());
+              },
+            ),
+            home: GetX<AppController>(
+                init: AppController(sharedPreferences),
+                builder: (controller) => controller.isLoggedIn.isFalse
+                    ? WelcomeScreen()
+                    : const HomeScreen()),
+          );
+        });
   }
 }
