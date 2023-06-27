@@ -16,6 +16,7 @@ export default function Venue() {
   if (isLoading) {
     return <h2>isLoadin....</h2>;
   }
+  
   return (
     <>
       <div className="home-header-section">
