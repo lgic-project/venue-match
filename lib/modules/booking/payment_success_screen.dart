@@ -45,4 +45,133 @@ class PaymentSucessScreen extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-                
+                const SizedBox(height: 10),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Text(
+                    'You have successfully rented your Venue, you can go there.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 13,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 30),
+                Container(
+                  decoration: BoxDecoration(
+                    color: lightColor,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  padding: const EdgeInsets.all(15),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Venue: ",
+                            style: TextStyle(
+                              fontSize: 13,
+                            ),
+                          ),
+                          Text(
+                            "${venuesList?.name}",
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Location: ",
+                            style: TextStyle(
+                              fontSize: 13,
+                            ),
+                          ),
+                          Text(
+                            venuesList?.location ?? '',
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Booked Date: ",
+                            style: TextStyle(
+                              fontSize: 13,
+                            ),
+                          ),
+                          Text(
+                            bookedDate ?? '',
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Person: ",
+                            style: TextStyle(
+                              fontSize: 13,
+                            ),
+                          ),
+                          Text(
+                            person ?? '',
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "Total Amount: ",
+                            style: TextStyle(
+                              fontSize: 13,
+                            ),
+                          ),
+                          Text(
+                            totalAmt.toString(),
+                            style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            InkWell(
+              onTap: () => Get.offAll(() => const HomeScreen()),
+              child: CustomButton(
+                screenWidth: appWidth,
+                label: 'Back to home',
+                backgroundColor: primaryColor,
+                textColor: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
