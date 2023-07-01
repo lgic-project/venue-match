@@ -46,10 +46,11 @@ class SignupController extends GetxController {
 
     try {
       var response = await AuthApi.signUp(
-          email: email,
-          password: password,
-          firstName: firstName,
-          lastName: lastName);
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+      );
 
       if (response.error != null && response.error == false) {
         Get.rawSnackbar(message: "You are successfully registered");
