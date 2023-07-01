@@ -11,6 +11,11 @@ import { Analytics } from "./components/Admin/Analytics/Analytics";
 import { Contracts } from "./components/Admin/Contracts/Contracts";
 import { Settings } from "./components/Admin/Settings/Settings";
 import Venue from "./components/Venue/Venue";
+import About from "./components/About/About";
+import { Gallery } from "./components/Gallery/Gallery";
+
+
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -28,7 +33,10 @@ function App() {
             <Route path ="/contracts" element={<Contracts/>}/>
             <Route path ="/settings" element={<Settings/>}/>
             <Route path = "/venues" element={<Venue/>}/>
+            <Route path="/about" element={<About/>} />
+            <Route path="/gallery" element={<Gallery/>} />
             <Route path="*" element={<Error404 />} />
+
           </Routes>
         
       </Router>
