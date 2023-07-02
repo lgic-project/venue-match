@@ -21423,40 +21423,36 @@ a.text-dark:hover {
   }
 }
 
-a:hover{
+a:hover {
   text-decoration: none !important;
 }
 
-a:-webkit-any-link{
+a:-webkit-any-link {
   text-decoration: none !important;
-} 
-
-a:-webkit-any-link:hover{
-  text-decoration: none !important;
-
 }
 
-.mantine-a4ubkh:hover{
+a:-webkit-any-link:hover {
   text-decoration: none !important;
-
 }
 
-.mantine-1ps5huk{
+.mantine-a4ubkh:hover {
+  text-decoration: none !important;
+}
+
+.mantine-1ps5huk {
   height: 45px !important;
 }
 .mantine-ubr6i9 {
   height: 45px !important;
-
 }
-.mantine-15vtssg{
+.mantine-15vtssg {
   height: 45px !important;
-  
 }
 
-a{
+a {
   color: #9accc9;
 }
-a:hover{
+a:hover {
   color: #f4a492;
 }
 
@@ -21466,89 +21462,129 @@ a:hover{
 }
 
 .mantine-1hher0m[data-active] {
-    border-color: #f4a492 !important;
+  border-color: #f4a492 !important;
 }
 
-
-h2#mantine-rn9xd4f8j-title{
+h2#mantine-rn9xd4f8j-title {
   font-size: 2rem;
 }
 
-
-
-@media only screen and  (min-width:700px){
-  .venueCard{
-    padding-top:50px;
+@media only screen and (min-width: 700px) {
+  .venueCard {
+    padding-top: 50px;
     padding-right: 100px;
     padding-left: 100px;
   }
 }
 
-@media only screen and  (max-width:699px){
-  .venueCard{
-    padding-top:30px;
+@media only screen and (max-width: 699px) {
+  .venueCard {
+    padding-top: 30px;
     padding-right: 30px;
     padding-left: 30px;
   }
 }
 
-@media only screen and (min-width:1200px){
-  .home-banner-section.overflow-hidden.position-relative.hero{
-  padding-top: 150px !important;
-  
+@media only screen and (min-width: 1200px) {
+  .home-banner-section.overflow-hidden.position-relative.hero {
+    padding-top: 100px !important;
   }
 }
 
-button.btn.btn-primary.venue:hover{
-transform: none;
+button.btn.btn-primary.venue:hover {
+  transform: none;
 }
-@media only screen and  (min-width:700px){
-  .venueCategory{
-    padding-top:60px;
+@media only screen and (min-width: 700px) {
+  .venueCategory {
+    padding-top: 60px;
     padding-right: 100px;
     padding-left: 100px;
   }
 }
 
-@media only screen and  (max-width:699px){
-  .venueCategory{
-    padding-top:30px;
+@media only screen and (max-width: 699px) {
+  .venueCategory {
+    padding-top: 30px;
     padding-right: 30px;
     padding-left: 30px;
   }
 }
-.mantine-SimpleGrid-root.mantine-qvr8fy{
+.mantine-SimpleGrid-root.mantine-qvr8fy {
   justify-items: center;
 }
-.categoryCard{
+.categoryCard {
   display: flex;
   justify-content: center;
   flex-direction: column;
-height:max-content;
-max-height: max-content;
+  height: max-content;
+  max-height: max-content;
   align-items: center;
 }
 
-.header.header{
+.header.header {
   align-items: center;
   display: flex;
   justify-content: center;
 }
 
-@media only screen and (min-width:992px){
-  .main-header{
+@media only screen and (min-width: 992px) {
+  .main-header {
     display: flex !important;
     align-items: center !important;
     padding-left: 100px !important;
     padding-right: 100px !important;
   }
 }
-#myContentDIV{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+
+span.mantine-1ryt1ht.mantine-Button-label {
+  height: 162%;
 }
-.about-content-img{
-  display: flex;
+
+.mantine-1wpc1xj.mantine-Button-inner {
+  height: 105%;
+}
+
+@media only screen and (min-width: 768px) {
+  .tickIcon {
+    height: 120px;
+  }
+}
+
+.scrollToTop{
+  position: fixed;
+    bottom: 40px;
+    z-index: 1;
+    cursor: pointer;
+    left:90%;
+}
+
+@media only screen and (max-width:600px){
+  .scrollToTop{
+   display:none
+  }
+}
+
+@media only screen and (min-width:1024px){
+  .scrollToTop{
+    left:94%;
+  }
+}
+
+@media only screen and (max-width:576px){
+  .footer-section .marginLeft{
+    height: 14px;
+  }
+  .footer-section .footer-section-text{
+    margin-bottom: 0;
+  }
+}
+
+@media only screen and (max-width:353px){
+  .learn-btn{
+    margin-top: 10px;
+  }
+}
+
+.mantine-8528oy {
+  height: 45px;
 }

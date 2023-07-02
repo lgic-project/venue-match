@@ -1,13 +1,19 @@
-import { Grid } from '@mantine/core';
+import Footer from "../HomePage/FooterSection/Footer";
+import Header from "../HomePage/HomeHeaderSection/Header";
+import TopHeader from "../HomePage/HomeHeaderSection/TopHeader";
+import InstagramFeeds from "../HomePage/InstaFeeds/InstagramFeeds";
+import GalleryTop from "./GalleryTop";
+import GetInTouch from "./GetInTouch";
 
-export function Gallery() {
+export default function Gallery() {
   return (
-    <Grid grow>
-      <Grid.Col span={4}> <img src="../src/assets/images/waterfront.png"/></Grid.Col>
-      <Grid.Col span={4}><img src="../src/assets/images/pokharaGrande2.png"/></Grid.Col>
-      <Grid.Col span={4}><img src="../src/assets/images/galaxybanquet2.png"/></Grid.Col>
-      <Grid.Col span={4}><img src="../src/assets/images/banner-img2.png"/></Grid.Col>
-      <Grid.Col span={4}><img src="../src/assets/images/banner-img2.png"/></Grid.Col>
-    </Grid>
+    <div className="home-header-section sub-header-section">
+      <TopHeader />
+      <Header />
+      <GalleryTop />
+      <GetInTouch />
+      <InstagramFeeds/>
+      <Footer/>
+    </div>
   );
 }

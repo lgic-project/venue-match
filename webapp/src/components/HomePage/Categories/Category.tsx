@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 export default function Category() {
   return (
@@ -9,7 +10,7 @@ export default function Category() {
             <img src="../src/assets/images/categories-img6.png" alt="" className="star"/>
         </figure>
         <div className="container">
-            <div className="row">
+            <div className="row" style={{marginLeft:"-25px"}}>
                 <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 order-lg-1 order-1">
                     <div className="about-us-content aos-init aos-animate" data-aos="fade-up">
                         <div className="cate-icon-outer">
@@ -22,7 +23,7 @@ export default function Category() {
                         <p className="aboutus-p">
                             Explore different categories.</p>
                         <div className="banner-btn discover-btn-banner">
-                            <a href="about.html" className="text-decoration-none">learn more</a>
+                            <Link to="/venues" className="text-decoration-none">learn more</Link>
                         </div>
                     </div>
                 </div>

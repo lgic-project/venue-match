@@ -17,7 +17,7 @@ export default function AboutSection() {
                 Whether you're planning a wedding, corporate conference, or social gathering, our comprehensive venue management services are designed to make your event a resounding success.{" "}
                 </p>
                 <div className="banner-btn discover-btn-banner">
-                  <Link to ="#" className="text-decoration-none">
+                  <Link to ="/about" className="text-decoration-none">
                     learn more
                   </Link>
                 </div>

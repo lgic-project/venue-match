@@ -6,25 +6,34 @@ import {
   Divider,
   Checkbox,
   Stack,
+  InputBase,
 } from "@mantine/core";
 
-import { FacebookButton, GoogleButton } from "../SocialButtons/SocialButtons";
+// import { FacebookButton, GoogleButton } from "../SocialButtons/SocialButtons";
 import { hasLength, isEmail, matchesField, useForm } from "@mantine/form";
 import { Link } from "react-router-dom";
+import { PostQuery } from "../utils/ApiCall";
+import { SIGNUP } from "../utils/ApiRoutes";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../Spinner/Spinner";
+import { showNotification } from "@mantine/notifications";
+import { IconChevronDown } from "@tabler/icons-react";
 
-
-
-
+const handlRegisterationPost = async (data: any) => {
+  return (await PostQuery(SIGNUP, data))?.data;
+};
 export function Registration() {
   const form = useForm({
     initialValues: {
       firstName: "",
       lastName: "",
       email: "",
-      mobileNumber: "",
+      // mobileNumber: "",
       password: "",
       confirmPassword: "",
       terms: false,
+      role:"",
     },
     validate: {
       firstName: hasLength(
@@ -36,7 +45,7 @@ export function Registration() {
         "Name must be 2-10 characters long"
       ),
       email: isEmail("Invalid email"),
-      mobileNumber: hasLength({ min: 2, max: 10 }, "Invalid mobile number"),
+      // mobileNumber: hasLength({ min: 2, max: 10 }, "Invalid mobile number"),
       password: hasLength(
         { min: 6 },
         "Password must have 6  or more characters"
@@ -47,27 +56,46 @@ export function Registration() {
     },
   });
 
-  // const formValues = form.values;
-
-  // const [post, setPost] = useState(formValues);
-
-  // const handleInput = (event: any) => {
-  //   setPost({ ...post, [event.target.name]: event.target.value });
-  // };
-
-
+  const navigate = useNavigate();
+  const { mutate, isLoading } = useMutation(handlRegisterationPost);
+  const handleRegister = (data: any) => {
+    const selectedRole = data.role;
+    if (selectedRole !== "user" && selectedRole !== "venue_owner" && selectedRole !== "admin") {
+     " Handle invalid role value here (e.g., display an error message)"
+      return;
+    }
+    data.role = selectedRole;
+    console.log(selectedRole)
+    mutate(data, {
+      onSuccess: async (data) => {
+        if (data.error === true) {
+          showNotification({
+            title: "Login Error",
+            message: data.message,
+            color: "red",
+          });
+        } else {
+          navigate("/success");
+        }
+      },
+      // onError: (e: any) => {
+      //   console.log(e.response.data);
+      // },
+    });
+  };
 
   return (
-    <section className="form-section overflow-hidden" style={{padding:0}}>
-      <Divider label="Sign up with" labelPosition="center" my="lg" />
+    <section className="form-section overflow-hidden" style={{ padding: 0 }}>
+      {/* <Divider label="Sign up with" labelPosition="center" my="lg" />
       <Group grow mb="md">
         <GoogleButton radius="xl">Google</GoogleButton>
         <FacebookButton radius="xl">FaceBook</FacebookButton>
-      </Group>
-      <Divider label="Or continue with" labelPosition="center" my="lg" />
+      </Group> */}
+      <Divider label="Venue Match" labelPosition="center" my="lg" />
       <Paper withBorder shadow="md" p={30} radius="md">
         <form
-          onSubmit={form.onSubmit(() => {
+          onSubmit={form.onSubmit((values) => {
+            handleRegister(values);
           })}
         >
           <Stack>
@@ -95,15 +123,18 @@ export function Registration() {
               {...form.getInputProps("email")}
               radius={"100px"}
               height={"45px"}
+              autoCapitalize="none"
+              autoCorrect="off"
+              autoComplete="off"
             />
-            <TextInput
+            {/* <TextInput
               label="Mobile Number"
               placeholder="Enter Mobile Number"
               withAsterisk
               {...form.getInputProps("mobileNumber")}
               radius={"100px"}
               height={"45px"}
-            />
+            /> */}
             <PasswordInput
               label="Password"
               placeholder="Enter Password"
@@ -111,6 +142,9 @@ export function Registration() {
               {...form.getInputProps("password")}
               radius={"100px"}
               height={"45px"}
+              autoCapitalize="none"
+              autoCorrect="off"
+              autoComplete="off"
             />
             <PasswordInput
               label="Confirm Password"
@@ -119,7 +153,27 @@ export function Registration() {
               {...form.getInputProps("confirmPassword")}
               radius={"100px"}
               height={"45px"}
+              autoCapitalize="none"
+              autoCorrect="off"
+              autoComplete="off"
             />
+            <InputBase
+            
+              label="You are ?"
+              // style={{height:"45px !important"}}
+              withAsterisk
+              component="select"
+              radius={"100px"}
+              autoCapitalize="none"
+              autoCorrect="off"
+              autoComplete="off"
+              {...form.getInputProps("role")}
+              placeholder="I amd"
+              rightSection={<IconChevronDown size={14} stroke={1.5} />}
+            >
+              <option value="user">Client</option>
+              <option value="venue_owner">Venue Owner</option>
+            </InputBase>
             <Group>
               <Checkbox
                 checked={form.values.terms}
@@ -127,10 +181,22 @@ export function Registration() {
               />
               <Link to="/">I accept terms and conditions</Link>
             </Group>
+
             <div className="banner-btn discover-btn-banner">
-            <button type="submit"  className="btn btn-primary" style={{width:"100%",paddingTop:"10px",paddingBottom:"10px"}}>
-              Sign up
-            </button>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                style={{
+                  width: "100%",
+                  paddingTop: "10px",
+                  paddingBottom: "10px",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                }}
+              >
+                Sign up {isLoading && <Spinner width="25px" />}
+              </button>
             </div>
           </Stack>
         </form>
