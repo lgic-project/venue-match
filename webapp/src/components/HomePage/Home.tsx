@@ -6,9 +6,10 @@ import AboutSection from "./HomeHeaderSection/AboutSection";
 import Header from "./HomeHeaderSection/Header";
 import HeroSection from "./HomeHeaderSection/HeroSection";
 import TopHeader from "./HomeHeaderSection/TopHeader";
-import InstagramFeeds from "./InstaFeeds/InstagramFeeds";
+
 import Reservation from "./ReservationSection/Reservation";
 import VedioSection from "./VedioSection/VedioSection";
+import AppDemo from "./AppDemo/AppDemo";
 
 export default function Home() {
   return (
@@ -27,7 +28,7 @@ export default function Home() {
       <Reservation />
       <Event />
       <RegisterForm />
-      <InstagramFeeds />
+      <AppDemo />
       <Footer />
 
      </div>
