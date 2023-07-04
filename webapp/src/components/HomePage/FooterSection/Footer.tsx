@@ -32,12 +32,12 @@ export default function Footer() {
               </div>
               <div className="col-lg-6 col-md-6 col-sm-12">
                 <div className="banner-btn discover-btn-banner">
-                  <Link to="about.html" className="text-decoration-none">
+                  <Link to="/venues" className="text-decoration-none">
                   <FontAwesomeIcon icon={faClipboardList} style={{marginRight:"4px"}}/>Make Reservations
                   </Link>
                 </div>
                 <div className="learn-btn">
-                  <Link to="about.html" className="text-decoration-none">
+                  <Link to="/about" className="text-decoration-none">
                     learn more
                   </Link>
                 </div>
@@ -60,8 +60,7 @@ export default function Footer() {
                   </figure>
                 </Link>
                 <p className="footer-section-text">
-                  Lorem ipsum dolor sit amet, consectetur adipg iscing elitsed
-                  do eiusmod tempororem ipsumf dolor sit ame consect amet.
+                  We offer exceptional spaces, professional services, and unforgettable experiences. Contact us today to bring your vision to life.
                 </p>
                 <ul className="list-unstyled footer-social-icons">
                   <li className="list-item">
@@ -101,7 +100,7 @@ export default function Footer() {
                   <li>
                     <FontAwesomeIcon icon={faCaretRight}  style={{color:"#555555",marginRight:"6px"}}/>
                     <Link
-                      to="#"
+                      to="/about"
                       className="text-decoration-none footer-link-p"
                     >
                       About
@@ -166,7 +165,7 @@ export default function Footer() {
                   <li>
                     <FontAwesomeIcon icon={faCaretRight}  style={{color:"#555555",marginRight:"6px"}}/>
                     <Link
-                      to="single_gallery.html"
+                      to="#"
                       className="text-decoration-none footer-link-p"
                     >
                       Gallery Single
@@ -183,20 +182,20 @@ export default function Footer() {
                     <FontAwesomeIcon icon={faPhoneVolume} className="fa-sharp fa-solid fa-phone-volume footer-location3" />
                       <p className="contact-title">Call Us: </p>
                       <Link
-                        to="tel:+4733378901"
+                        to="#"
                         className="text-decoration-none footer-link-auto"
                       >
-                        (123)456-789-00
+                        (061)456-789-00
                       </Link>
                     </li>
                     <li className="list-item">
                     <FontAwesomeIcon icon={faEnvelope} className="fa fa-envelope footer-location3" />
                       <p className="contact-title">Email Us:</p>
                       <Link
-                        to="mailto:webmaster@example.com"
+                        to="#"
                         className="text-decoration-none footer-link-auto"
                       >
-                        help@Bridely.com
+                        help@VenueMatch.com
                       </Link>
                     </li>
                   </ul>
@@ -208,7 +207,7 @@ export default function Footer() {
             <div className="col-lg-5 col-md-6 col-sm-12"></div>
             <div className="col-lg-7 col-md-6 col-sm-12">
               <p className="footer-end-text">
-                Copyright ©2022 Bridely.com All Rights Reserved
+                Copyright ©2023 VenueMatch.com All Rights Reserved
               </p>
             </div>
           </div>

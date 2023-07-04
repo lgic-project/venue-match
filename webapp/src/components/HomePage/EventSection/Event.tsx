@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function Event() {
   return (
     <section className="event-section overflow-hidden position-relative">
-        <div className="container">
+        <div className="container" style={{display:"flex",justifyContent:"center"}}>
             <div className="row">
                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 order-lg-2 order-2">
                     <div className="about-us-content aos-init aos-animate" data-aos="fade-up">
@@ -16,7 +16,7 @@ export default function Event() {
                         </h2>
                         <p className="aboutus-p">With our expertise, attention to detail, and extensive network of partner venues, we can help you find and manage the ideal location for your next event.</p>
                         <div className="banner-btn discover-btn-banner">
-                            <Link to="about.html" className="text-decoration-none">learn more</Link>
+                            <Link to="#" className="text-decoration-none">learn more</Link>
                         </div>
                     </div>
                 </div>

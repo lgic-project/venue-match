@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 export default function Reservation() {
   return (
@@ -28,7 +29,7 @@ export default function Reservation() {
             </div>
 
             <div className="banner-btn discover-btn-banner">
-                <a href="about.html" className="text-decoration-none">Make Reservations</a>
+                <Link to="/venues" className="text-decoration-none">Make Reservations</Link>
             </div>
         </div>
     </div>

@@ -9,6 +9,7 @@ import {
   createStyles,
   rem,
 } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -36,17 +37,19 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface BadgeCardProps {
+  id:number;
   image: string;
   name: string;
   location: string;
   price: string;
 }
 
-export function VenueCard({ image, name, price, location, }: BadgeCardProps) {
+export function VenueCard({ image, name, price, location, id}: BadgeCardProps) {
   const { classes } = useStyles();
 
 
   return (
+    
     <Card withBorder radius="lg" p="md" className={classes.card}>
       <Card.Section>
         <Image src={image} alt={name} height={180} />
@@ -68,9 +71,11 @@ export function VenueCard({ image, name, price, location, }: BadgeCardProps) {
       <Group mt="xs" style={{justifyContent:"center"}}>
         <div className="form-section overflow-hidden" style={{padding:0,background:"transparent"}}>
          <div className="banner-btn discover-btn-banner">
-            <button type="submit" className="btn btn-primary venue" style={{width:"100%",paddingTop:"10px",paddingBottom:"10px"}}>
+          <Link  to={`detail/${id}`}>
+            <button  type="submit" className="btn btn-primary venue" style={{width:"100%",paddingTop:"10px",paddingBottom:"10px"}}>
                Show details
             </button>
+          </Link>
           </div>
           </div>
       </Group>

@@ -2,10 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import { FetchQuery } from "../utils/ApiCall";
 import { VENUES } from "../utils/ApiRoutes";
 import { VenueCard } from "./VenueCard";
-import {Image, SimpleGrid } from "@mantine/core";
+import { Image, SimpleGrid } from "@mantine/core";
 import TopHeader from "../HomePage/HomeHeaderSection/TopHeader";
 import Header from "../HomePage/HomeHeaderSection/Header";
 import { Link } from "react-router-dom";
+import Spinner from "../Spinner/Spinner";
 import Footer from "../HomePage/FooterSection/Footer";
 const fetchVenue = async () => {
   return await FetchQuery(VENUES);
@@ -13,19 +14,15 @@ const fetchVenue = async () => {
 export default function Venue() {
   const { isLoading, data } = useQuery(["venues"], fetchVenue);
 
-  if (isLoading) {
-    return <h2>isLoadin....</h2>;
-  }
-  
+
   return (
     <>
-      <div className="home-header-section">
+      <div className="home-header-section sub-header-section">
         <TopHeader />
         <Header />
-        <div className="home-header-section">
           <div
             className="home-banner-section overflow-hidden position-relative"
-            style={{ paddingTop: "0" ,paddingBottom:"0"}}
+            style={{ paddingTop: "0",paddingBottom:"0" }}
           >
             <figure className="banner-img1 mb-0">
               <img
@@ -41,6 +38,7 @@ export default function Venue() {
                 className="star"
               />
             </figure>
+
             <div className="venueCategory">
               <SimpleGrid
                 cols={6}
@@ -120,6 +118,7 @@ export default function Venue() {
             </div>
 
             
+        {isLoading && <Spinner width="50px"/>}
 
             <div className="venueCard">
               <SimpleGrid
@@ -145,15 +144,17 @@ export default function Venue() {
                         name={venue.name}
                         location={venue.location}
                         price={venue.price}
+                        id={venue.id}
                       />
                     </div>
                   ))}
               </SimpleGrid>
             </div>
           </div>
-        </div>
+          
       </div>
       <Footer/>
-    </>
+      </>
+    
   );
 }

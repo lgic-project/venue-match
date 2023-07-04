@@ -64,7 +64,7 @@ import Footer from "../HomePage/FooterSection/Footer";
         <div className="home-header-section">
         <div
           className="home-banner-section overflow-hidden position-relative"
-          style={{ paddingTop: "0" }}
+          style={{ paddingTop: "0" ,paddingBottom:"0"}}
         >
           <figure className="banner-img1 mb-0">
             <img

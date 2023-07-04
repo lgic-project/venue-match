@@ -12,6 +12,7 @@ import {
   rem,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import logo from "../../../assets/images/download.png"
 
 const useStyles = createStyles((theme) => ({
   dropdownFooter: {
@@ -73,7 +74,7 @@ export default function Header() {
             <nav className="navbar navbar-expand-lg navbar-light p-0">
               <Link className="navbar-brand pt-0" to="/">
                 <img
-                  src="../src/assets/images/download.png"
+                  src={logo}
                   alt=""
                   className="img-fluid diverge-logo okxa"
                 />
@@ -250,7 +251,7 @@ export default function Header() {
               Home
             </NavLink>
             <NavLink
-              to="/venue"
+              to="/venues"
               onClick={closeDrawer}
               style={({ isActive, isPending }) => {
                 return {
@@ -292,6 +293,17 @@ export default function Header() {
             </NavLink>
           </div>
           <Divider my="sm" color="red" />
+          <NavLink
+              to="/auth"
+              onClick={closeDrawer}
+              style={({ isActive, isPending }) => {
+                return {
+                  fontWeight: isActive ? "normal" : "normal",
+                  color: isActive ? "#9accc9" : "black",
+                  margin: isPending ? "0" : "5px 0px",
+                };
+              }}
+            >
           <section className="form-section" style={{padding:"10px",background:"none"}}>
           <div className="banner-btn discover-btn-banner">
             <button type="submit"  className="btn btn-primary" style={{width:"100%",paddingTop:"10px",paddingBottom:"10px"}}>
@@ -299,6 +311,7 @@ export default function Header() {
             </button>
           </div>
           </section>
+          </NavLink>
         </ScrollArea>
       </Drawer>
     </>

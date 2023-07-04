@@ -20,7 +20,7 @@ export default function RegisterForm() {
                         <img src="../src/assets/images/categories-logo-img.png" alt=""/>
                     </figure>
                     <h2 className="contact-us-title">Make Reservations</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipiscing elit sed doeiusm tempor incididunt </p>
+                    <p>"Discover the perfect venue for your event." </p>
                     <form id="form_id" method="post" action="./contact-form.php">
                         <div className="row">
                             <div className="col-lg-6 col-md-6 col-sm-12">
@@ -62,11 +62,11 @@ export default function RegisterForm() {
                         <div className="form-group special">
                             <select className="form-control select-icon select-event">
                                 <option value="0"> Select Event:</option>
-                                <option>America</option>
-                                <option>Australia</option>
-                                <option>America</option>
-                                <option>Saudia</option>
-                                <option>Belgium</option>
+                                <option>Wedding</option>
+                                <option>Birthday</option>
+                                <option>Engagement</option>
+                                <option>Concert</option>
+                                <option>Formal</option>
                             </select>
                         </div>
                         <div className="banner-btn discover-btn-banner">
