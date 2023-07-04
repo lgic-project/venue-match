@@ -51,7 +51,7 @@ class SignUpScreen extends StatelessWidget {
 
                     CustomTextField(
                       icon: Icons.person_outline,
-                      hint: "Enter your name",
+                      hint: "Enter your first name",
                       controller: controller.firstNameController,
                     ),
                     const SizedBox(height: 10),
