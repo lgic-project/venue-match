@@ -71,7 +71,7 @@ export function VenueCard({ image, name, price, location, id}: BadgeCardProps) {
       <Group mt="xs" style={{justifyContent:"center"}}>
         <div className="form-section overflow-hidden" style={{padding:0,background:"transparent"}}>
          <div className="banner-btn discover-btn-banner">
-          <Link  to={`detail/${id}`}>
+          <Link  to={`${id}`}>
             <button  type="submit" className="btn btn-primary venue" style={{width:"100%",paddingTop:"10px",paddingBottom:"10px"}}>
                Show details
             </button>
