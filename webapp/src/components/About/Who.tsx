@@ -9,11 +9,11 @@ export default function Who() {
                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 order-lg-1 order-1">
                         <div className="about-us-content aos-init aos-animate" data-aos="fade-up">
                             <h5 className="autorix-text"><span className="ityped">Who We Are</span><span className="ityped-cursor">|</span></h5>
-                            <h2>Planner for Your Perfect Venue</h2>
-                            <p className="aboutus-p">"At Venue Match, we believe that our clients' success is our success. We take a collaborative approach, working closely with each client to understand their objectives, challenges, and vision. Our team of dedicated professionals goes above and beyond to deliver personalized solutions, creating memorable experiences for guests while maximizing the venue's potential." </p>
+                            <h2>Planner for Your Perfect Wedding</h2>
+                            <p className="aboutus-p">Lorem ipsum dolor sit amet consectetur adipiscing elit sed  doeiusm tempor incididunt donec quam felis ultri cies nec, pellentesque eu, pretium quis sem </p>
                             
                             <div className="banner-btn discover-btn-banner">
-                                <Link to="/venues" className="text-decoration-none">Get Started</Link>
+                                <Link to="#" className="text-decoration-none">Get a Free Quote</Link>
                             </div>
                         </div>
                     </div>
