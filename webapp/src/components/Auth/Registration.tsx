@@ -33,7 +33,7 @@ export function Registration() {
       password: "",
       confirmPassword: "",
       terms: false,
-      role:"",
+      role: "",
     },
     validate: {
       firstName: hasLength(
@@ -60,21 +60,30 @@ export function Registration() {
   const { mutate, isLoading } = useMutation(handlRegisterationPost);
   const handleRegister = (data: any) => {
     const selectedRole = data.role;
-    if (selectedRole !== "user" && selectedRole !== "venue_owner" && selectedRole !== "admin") {
-     " Handle invalid role value here (e.g., display an error message)"
+    if (
+      selectedRole !== "user" &&
+      selectedRole !== "venue_owner" &&
+      selectedRole !== "admin"
+    ) {
+      (" Handle invalid role value here (e.g., display an error message)");
       return;
     }
     data.role = selectedRole;
-    console.log(selectedRole)
+    console.log(selectedRole);
     mutate(data, {
       onSuccess: async (data) => {
         if (data.error === true) {
           showNotification({
-            title: "Login Error",
+            title: "Registeration Error",
             message: data.message,
             color: "red",
           });
         } else {
+          showNotification({
+            title: "Registeration Success",
+            message: data.message,
+            color: "green",
+          });
           navigate("/success");
         }
       },
@@ -158,7 +167,6 @@ export function Registration() {
               autoComplete="off"
             />
             <InputBase
-            
               label="You are ?"
               // style={{height:"45px !important"}}
               withAsterisk
@@ -168,9 +176,12 @@ export function Registration() {
               autoCorrect="off"
               autoComplete="off"
               {...form.getInputProps("role")}
-              placeholder="I amd"
               rightSection={<IconChevronDown size={14} stroke={1.5} />}
             >
+              {" "}
+              <option value="" disabled hidden>
+                I am
+              </option>
               <option value="user">Client</option>
               <option value="venue_owner">Venue Owner</option>
             </InputBase>
