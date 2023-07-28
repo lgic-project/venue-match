@@ -6,7 +6,6 @@ import {
   TextInput,
   Container,
   Group,
-  Anchor,
   Center,
   Box,
   rem,
@@ -79,14 +78,14 @@ export function ForgotPassword() {
         <TextInput label="Your email" placeholder="me@mantine.dev" required  radius={"100px"}
               height={"45px"}/>
         <Group position="apart" mt="lg" className={classes.controls}>
-          <Anchor color="dimmed" size="sm" className={classes.control}>
+          {/* <Anchor color="dimmed" size="sm" className={classes.control}> */}
             <Center inline>
               <IconArrowLeft size={rem(12)} stroke={1.5} />
               <Box ml={5}>
                 <Link to="/auth">Back to the login page</Link>
               </Box>
             </Center>
-          </Anchor>
+          {/* </Anchor> */}
           <div className="banner-btn discover-btn-banner">
           <button type="submit"  className="btn btn-primary" style={{width:"100%",paddingTop:"10px",paddingBottom:"10px"}}>
               Reset password

@@ -54,7 +54,29 @@ export function Login() {
          
         } else {
           Cookies.set("apikey", data.apiKey);
+          Cookies.set("role",data.role)
+          if(data.role==="admin"){
+            showNotification({
+              title: "Login Sucess",
+              message: "Welcome Admin",
+              color: "green",
+            });
           navigate("/admin");
+          }else if(data.role==="venue_owner"){
+            showNotification({
+              title: "Login Sucess",
+              message: "Welcome Venue Owner",
+              color: "green",
+            });
+          navigate("/venue-owner");
+          }else{
+            showNotification({
+              title: "Access Denied",
+              message: "User role is low ",
+              color: "red",
+            });
+          navigate("/");
+          }
         }
       },
       onError: async (error: any) => {
@@ -95,7 +117,7 @@ export function Login() {
             <Group position="apart">
               <Checkbox label="Remember me" />
               <Anchor component="button" size="sm">
-                <Link to="/forgot-password">Forgot password?</Link>
+                <Link to="forgot-password">Forgot password?</Link>
               </Anchor>
             </Group>
             <div className="banner-btn discover-btn-banner">

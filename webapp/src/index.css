@@ -21588,3 +21588,98 @@ span.mantine-1ryt1ht.mantine-Button-label {
 .mantine-8528oy {
   height: 45px;
 }
+
+/* @media only screen and (max-width:767px){
+  button.mantine-UnstyledButton-root.mantine-1a87q50{
+    padding:0
+  }
+  .groupNavBar{
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  .drawerNav{
+    margin-right: 0;
+  }
+  .mantine-1nbod7e {
+    top:60px !important
+  }
+}
+
+.mantine-1nbod7e {
+  left:60px !important
+}
+.mantine-auidlw {
+  width: -webkit-fill-available;
+}
+.mantine-auidlw {
+  padding: 1rem;
+}
+.mantine-1nbod7e {
+  top:75px !important
+} */
+
+/* @media only screen and (min-width: 62em)
+{
+.mantine-1mnxfzd {
+    height: 4.375rem;
+    min-height: 6.575rem;
+}
+.mantine-rtavg4{
+  padding-top: 8rem;
+}
+} */
+/* .mantine-1mnxfzd{
+  padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.mantine-AppShell-root.mantine-1udmbix {
+  padding-top: 70px;
+} */
+
+
+@media only screen and (max-width:600px){
+.navbar1 .wrapper1 .items1 .mobilenone {
+  display: none;
+}
+.navbar1 .wrapper1 .items1 .item1 {
+  margin-right: 0;
+}
+.logoImg{
+  margin-right: 10px;
+}
+}
+
+.sideIcon{
+  height: 20px;
+  color: rgb(255, 123, 95);
+}
+
+.listContainer{
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0,0,0,0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201,201,201,0.47);
+  padding: 10px;
+}
+.listTitle{
+  color: gray;
+  margin-bottom: 15px;
+}
+
+path.CircularProgressbar-path{
+  stroke: rgb(255, 123, 95) !important;
+}
+
+
+@media only screen and (min-width:576px){
+.normalChart{
+  display: flex;
+    align-items: center;
+}
+}
+
+@media only screen and (max-width:331px){
+  .registerImage{
+    width: 70px !important;
+    height: 70px !important;
+  }
+}
