@@ -10,7 +10,7 @@ export default function Who() {
                         <div className="about-us-content aos-init aos-animate" data-aos="fade-up">
                             <h5 className="autorix-text"><span className="ityped">Who We Are</span><span className="ityped-cursor">|</span></h5>
                             <h2>Planner for Your Perfect Wedding</h2>
-                            <p className="aboutus-p">Lorem ipsum dolor sit amet consectetur adipiscing elit sed  doeiusm tempor incididunt donec quam felis ultri cies nec, pellentesque eu, pretium quis sem </p>
+                            <p className="aboutus-p">Your vision drives us. We listen, understand, and transform your dreams into reality. Our commitment to your happiness is at the heart of everything we do.See our success stories come alive through transformed venues and beaming testimonials from delighted clients. Let your event become the next chapter in our book of accomplishments. </p>
                             
                             <div className="banner-btn discover-btn-banner">
                                 <Link to="#" className="text-decoration-none">Get a Free Quote</Link>
