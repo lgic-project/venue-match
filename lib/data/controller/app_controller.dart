@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../modules/auth/login_screen.dart';
+
 class AppController extends GetxController {
   static AppController controller = Get.find();
   final SharedPreferences sharedPreferences;
@@ -20,5 +22,15 @@ class AppController extends GetxController {
 
   String getToken() {
     return sharedPreferences.getString('apiKey') ?? '';
+  }
+
+  String getUserType() {
+    return sharedPreferences.getString('role') ?? '';
+  }
+
+  void logout() {
+    sharedPreferences.clear();
+    isLoggedIn(false);
+    Get.offAll(() => LoginScreen());
   }
 }
