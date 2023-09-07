@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../constant.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  IconData icon;
+  IconData? icon;
   String hint;
   TextEditingController controller;
   bool? hasBorder, isFilled;
@@ -13,11 +13,12 @@ class CustomTextFormField extends StatelessWidget {
   TextInputType? keyboardType;
   Function(String)? onChanged;
   Function? validator;
+  int? maxLines;
 
   CustomTextFormField(
       {super.key,
       required this.hint,
-      required this.icon,
+      this.icon,
       this.onTap,
       this.keyboardType,
       this.hasBorder = true,
@@ -26,10 +27,12 @@ class CustomTextFormField extends StatelessWidget {
       this.textInputAction,
       this.validator,
       this.onChanged,
+      this.maxLines,
       required this.controller});
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: maxLines,
       controller: controller,
       readOnly: readOnly,
       onTap: onTap,
@@ -46,10 +49,12 @@ class CustomTextFormField extends StatelessWidget {
         ),
         filled: isFilled,
         fillColor: lightColor,
-        prefixIcon: Icon(
-          icon,
-          size: 18,
-        ),
+        prefixIcon: icon == null
+            ? null
+            : Icon(
+                icon,
+                size: 18,
+              ),
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide:
