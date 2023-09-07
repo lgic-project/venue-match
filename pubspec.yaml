@@ -23,6 +23,8 @@ dependencies:
   intl: ^0.18.1
   khalti_flutter: ^2.2.1
   flutter_svg: ^2.0.5
+  image_picker: ^1.0.2
+  dotted_border: ^2.0.0+3
 
 dev_dependencies:
   flutter_test:
@@ -42,4 +44,3 @@ flutter:
     - assets/images/
     - assets/lottie/
     - assets/icons/
-
