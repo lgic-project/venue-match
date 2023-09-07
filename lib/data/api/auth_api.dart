@@ -26,6 +26,9 @@ class AuthApi {
       await Get.find<AppController>()
           .sharedPreferences
           .setString("apiKey", loginResponse.apiKey ?? '');
+      await Get.find<AppController>()
+          .sharedPreferences
+          .setString("role", loginResponse.role ?? '');
       return loginResponse;
     } else if (response.statusCode == 401) {
       throw Exception('some of the fields are missing');
@@ -38,7 +41,8 @@ class AuthApi {
       {required String email,
       required String password,
       required String firstName,
-      required String lastName}) async {
+      required String lastName,
+      String? role}) async {
     const url = "${baseUrl}register";
 
     Map<String, String> requestBody = <String, String>{
@@ -46,7 +50,7 @@ class AuthApi {
       "password": password,
       "firstName": firstName,
       "lastName": lastName,
-      "role": 'user',
+      "role": role ?? '',
     };
 
     final response =
