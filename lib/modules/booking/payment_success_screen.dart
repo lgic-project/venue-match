@@ -39,7 +39,7 @@ class PaymentSucessScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
                 Text(
-                  'Successful Place Rental',
+                  'Venue Rented Successfully',
                   style: GoogleFonts.poppins(
                     fontWeight: FontWeight.w500,
                     fontSize: 16,
@@ -93,10 +93,13 @@ class PaymentSucessScreen extends StatelessWidget {
                               fontSize: 13,
                             ),
                           ),
-                          Text(
-                            venuesList?.location ?? '',
-                            style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w500,
+                          Expanded(
+                            child: Text(
+                              venuesList?.location ?? '',
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w500,
+                              ),
+                              textAlign: TextAlign.end,
                             ),
                           ),
                         ],
@@ -148,7 +151,7 @@ class PaymentSucessScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            totalAmt.toString(),
+                            "Rs $totalAmt",
                             style: GoogleFonts.poppins(
                               fontWeight: FontWeight.w500,
                             ),
