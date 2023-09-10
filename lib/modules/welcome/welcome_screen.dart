@@ -29,7 +29,7 @@ class WelcomeScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: screenHeight / 20),
                 child: const Text(
-                  "Sign in and plan your trip",
+                  "Join the Venue Revolution – Sign In Today.",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
