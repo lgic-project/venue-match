@@ -45,7 +45,7 @@ class LoginScreen extends StatelessWidget {
                   ),
 
                   const Text(
-                    "Welcome to our Travel App",
+                    "Welcome to Venue Match",
                     style: TextStyle(
                         fontSize: 15,
                         color: Color.fromARGB(255, 122, 119, 119)),
