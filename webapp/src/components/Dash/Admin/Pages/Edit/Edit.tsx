@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AppShell,
   Navbar,
@@ -12,22 +12,179 @@ import {
 } from "@mantine/core";
 import { Sidebar } from "../../Components/Sidebar/Sidebar";
 import DashNavbar from "../../Components/Navabar/Navbar";
-import Normal from "../../Components/Charts/Normal/Normal";
-import BasicTable from "../../Components/Table/Table";
 import "./Edit.scss";
 import { IconChevronDown } from "@tabler/icons-react";
 import { useForm } from "@mantine/form";
+import SingleUserBookingsTable from "../../Components/Table/SingelUserBookingTable";
+import SingleNormal from "../../Components/Charts/Normal/SingleNormal";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import { showNotification } from "@mantine/notifications";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../../../../Spinner/Spinner";
 
 export default function Edit() {
   const form = useForm({
     initialValues: {
-      role: "",
-      ownerStatus: "",
-      status: "",
+      newRole: "",
+      // ownerStatus: "",
+      // status: "",
     },
   });
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
+  const { userId } = useParams();
+  const [userFirstName, setUserFirstName] = useState();
+  const [userLastName, setUserLastName] = useState();
+  const [role, setRole] = useState();
+  const [userApiKey, setUserApiKey] = useState<string | undefined>();
+  const [totalAmountSum, setTotalAmountSum] = useState(0);
+  const navigate = useNavigate();
+  let userName = userFirstName + " " + userLastName;
+  const [selectedRole, setSelectedRole] = useState("");
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  
+  useEffect(() => {
+    axios
+      .get(
+        `https://kritisubedi.com.np/SnTravels/api/index//get-users?user_id=${userId}`
+      )
+      .then((response) => {
+        const userArray = response.data.users;
+        if (userArray.length > 0) {
+          const user = userArray[0];
+          setUserFirstName(capitalizeFirstLetter(user.firstName));
+          setUserLastName(capitalizeFirstLetter(user.lastName));
+          setUserApiKey(user.api_key);
+          setRole(user.role);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data", error);
+      });
+  });
+
+  useEffect(() => {
+    const fetchBookingDetails = async () => {
+      if (userApiKey) {
+        try {
+          const response = await axios.get(
+            "https://kritisubedi.com.np/SnTravels/api/index/booking",
+            {
+              headers: {
+                api_key: userApiKey,
+              },
+            }
+          );
+
+          const bookingsArray = response.data.bookings;
+
+          if (bookingsArray && bookingsArray.length > 0) {
+            const sum = bookingsArray.reduce(
+              (total: any, booking: any) => total + booking.total_amount,
+              0
+            );
+            setTotalAmountSum(sum);
+          }
+        } catch (error) {
+          console.error("Error fetching booking data", error);
+        }
+      }
+    };
+
+    fetchBookingDetails();
+  }, [userApiKey]);
+
+  const capitalizeFirstLetter = (word: any) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  };
+
+  const handleUpdateUser = () => {
+    // Check if a role is selected
+    if (!selectedRole) {
+      alert("Please select a role before updating.");
+      return;
+    }
+
+    // Start the loading state
+    setIsUpdating(true);
+
+    // Send a PUT request to update the user's role
+    axios
+      .put(`https://kritisubedi.com.np/SnTravels/api/index//update-user-role/${userId}`, {
+        newRole: selectedRole, // Send the selected role to the server
+      })
+      .then((response) => {
+        // Handle the response as needed
+        if (response.status === 200) {
+          // Role updated successfully
+          showNotification({
+            title: `${userName} Role Updated Successfully`,
+            message: response.data.message,
+            color: "green",
+          });
+        } else {
+          showNotification({
+            title: "Update Error",
+            message: response.data.message,
+            color: "red",
+          });
+          console.log(response.data.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error updating user role", error);
+      })
+      .finally(() => {
+        // Stop the loading state regardless of success or failure
+        setIsUpdating(false);
+      });
+  };
+
+  const handleDeleteUser = () => {
+    // Show a confirmation dialog
+    const confirmDelete = window.confirm("Are you sure you want to delete this user?");
+    
+    if (confirmDelete) {
+       // Start the loading state
+       setIsDeleting(true);
+      // Make a DELETE request to your server endpoint with the user's ID
+      axios
+        .delete(
+          `https://kritisubedi.com.np/SnTravels/api/index//delete-user/${userId}`
+        )
+        .then((response) => {
+          // Check the response from the server
+          if (response.status === 200) {
+            // User deleted successfully
+            // You can handle this as needed, e.g., show a success message or redirect
+            showNotification({
+              title: "User Deleted Successfully",
+              message: response.data.message,
+              color: "green",
+            });
+            navigate("/users");
+          } else {
+            showNotification({
+              title: "Delete Error",
+              message: response.data.message,
+              color: "red",
+            });
+            console.log(response.data.error);
+          }
+        })
+        .catch((error) => {
+          // Handle any network or request errors
+          console.error("Error deleting user", error);
+        })
+        .finally(() => {
+          // Stop the loading state regardless of success or failure
+          setIsDeleting(false);
+        });
+    }
+  };
+
   return (
     <AppShell
       style={{ backgroundColor: "#f8f9fa" }}
@@ -98,11 +255,13 @@ export default function Edit() {
           breakpoints={[{ maxWidth: "36rem", cols: 1, spacing: "sm" }]}
         >
           <div className="left1">
-            <div className="listTitle">Edit: <span style={{color:"black",fontSize:"20px"}}>Jhon Doe</span></div>
+            <div className="listTitle">
+              Edit: <span style={{ color: "black", fontSize: "20px" }}>{userName}</span>
+            </div>
             <form onSubmit={form.onSubmit(() => {})}>
               <Stack>
                 <InputBase
-                  label="Change User Role -- current (Admin)"
+                  label={`Change User Role -- current (${role})`}
                   // style={{height:"45px !important"}}
                   withAsterisk
                   component="select"
@@ -110,14 +269,15 @@ export default function Edit() {
                   autoCorrect="off"
                   autoComplete="off"
                   {...form.getInputProps("role")}
-                  placeholder="I amd"
                   rightSection={<IconChevronDown size={14} stroke={1.5} />}
+                  onChange={(event) => setSelectedRole(event.target.value)} // Update selected role
                 >
-                  <option value="user">Client</option>
+                   <option value="">Select a role</option>
+                  <option value="user">User</option>
                   <option value="venue_owner">Venue Owner</option>
                   <option value="admin">Admin</option>
                 </InputBase>
-                <InputBase
+                {/* <InputBase
                   label="Change User Owner Status -- current (Verified)"
                   // style={{height:"45px !important"}}
                   withAsterisk
@@ -147,40 +307,68 @@ export default function Edit() {
                 >
                   <option value="false">False</option>
                   <option value="verified">True</option>
-                </InputBase>
-                <div
-                  style={{
-                    width: "100%",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <button
-                    type="submit"
+                </InputBase> */}
+                <div style={{ display: "flex" }}>
+                  <div
                     style={{
-                      width: "150px",
-                      padding: "10px",
-                      border: "none",
-                      backgroundColor: "teal",
-                      color: "white",
-                      fontWeight: "bold",
+                      width: "100%",
                       display: "flex",
-                      cursor: "pointer",
                       justifyContent: "center",
                     }}
                   >
-                    Update{" "}
-                  </button>
+                    <button
+                      type="button"
+                      onClick={handleUpdateUser} // Use type="button" to prevent form submission
+                      style={{
+                        width: "150px",
+                        padding: "10px",
+                        border: "none",
+                        backgroundColor: "teal",
+                        color: "white",
+                        fontWeight: "bold",
+                        display: "flex",
+                        cursor: "pointer",
+                        justifyContent: "center",
+                      }}
+                    >
+                      Update{" "}{isUpdating && <Spinner width="25px" />}
+                    </button>
+                  </div>
+                  <div
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <button
+                      type="button" // Use type="button" to prevent form submission
+                      onClick={handleDeleteUser}
+                      style={{
+                        width: "150px",
+                        padding: "10px",
+                        border: "none",
+                        backgroundColor: "red",
+                        color: "white",
+                        fontWeight: "bold",
+                        display: "flex",
+                        cursor: "pointer",
+                        justifyContent: "center",
+                      }}
+                    >
+                     Delete User{" "} {isDeleting && <Spinner width="25px" />}
+                    </button>
+                  </div>
                 </div>
               </Stack>
             </form>
           </div>
-          <Normal aspect={3 / 1} title="User Spending (Last 6 Months)" />
+          <SingleNormal aspect={3 / 1} title="User Spending (Last 6 Months)" totalSpent={totalAmountSum} />
         </SimpleGrid>
         <div style={{ paddingTop: "20px" }}>
           <div className="listContainer">
             <div className="listTitle">Latest Transaction</div>
-            <BasicTable />
+            <SingleUserBookingsTable />
           </div>
         </div>
       </div>
