@@ -69,7 +69,6 @@ export function Registration() {
       return;
     }
     data.role = selectedRole;
-    console.log(selectedRole);
     mutate(data, {
       onSuccess: async (data) => {
         if (data.error === true) {
@@ -87,9 +86,6 @@ export function Registration() {
           navigate("/success");
         }
       },
-      // onError: (e: any) => {
-      //   console.log(e.response.data);
-      // },
     });
   };
 

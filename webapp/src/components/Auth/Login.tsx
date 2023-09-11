@@ -17,18 +17,16 @@ import { useMutation } from "@tanstack/react-query";
 import Cookies from "js-cookie";
 import Spinner from "../Spinner/Spinner";
 import { showNotification } from "@mantine/notifications";
-
 const handleLoginPost = async (data: any) => {
   return (await PostQuery(LOGIN, data))?.data;
 };
 
 export function Login() {
-
   const form = useForm({
     initialValues: {
-      email: "",
-      password: "",
-      terms: true,
+      email: Cookies.get("rememberedEmail") || "", // Get the remembered email from the cookie
+      password: Cookies.get("rememberedPassword") || "",// Get the remembered password from the cookie
+      remember: false,
     },
 
     validate: {
@@ -43,39 +41,50 @@ export function Login() {
   const handleLogin = (data: any) => {
     mutate(data, {
       onSuccess: async (data) => {
-        // const {data:user}= await FetchQuery(ME);
-        // console.log(data.access_token);
-        if ((data.error === true)) {
+        if (data.error === true) {
           showNotification({
             title: "Login Error",
             message: data.message,
             color: "red",
           });
-         
         } else {
+          if (form.values.remember === true) {
+            Cookies.set("rememberedEmail", data.email, { expires: 365 });
+            Cookies.set("rememberedPassword", data.password, { expires: 365 }); // Store email & password for 1 year (adjust as needed)
+          } else {
+            // If not checked, remove the email from the cookie
+            Cookies.remove("rememberedEmail");
+            Cookies.remove("rememberedPassword");
+          }
+          Cookies.remove("apikey");
           Cookies.set("apikey", data.apiKey);
-          Cookies.set("role",data.role)
-          if(data.role==="admin"){
+          Cookies.set("role", data.role);
+          if (data.role === "admin") {
             showNotification({
-              title: "Login Sucess",
-              message: "Welcome Admin",
+              title: "Login Success",
+              message: "Welcome Back Admin, Please Wait",
               color: "green",
             });
-          navigate("/admin");
-          }else if(data.role==="venue_owner"){
+            // Delay the page reload by 1 second (1000 milliseconds)
+            setTimeout(() => {
+              window.location.href = "/admin";
+            }, 1000);
+          } else if (data.role === "venue_owner") {
             showNotification({
               title: "Login Sucess",
-              message: "Welcome Venue Owner",
+              message: "Welcome Back Venue Owner, Please wait",
               color: "green",
             });
-          navigate("/venue-owner");
-          }else{
+            setTimeout(() => {
+              window.location.href = "/venue-owner";
+            }, 1000);
+          } else {
             showNotification({
               title: "Access Denied",
               message: "User role is low ",
               color: "red",
             });
-          navigate("/");
+            navigate("/");
           }
         }
       },
@@ -115,7 +124,11 @@ export function Login() {
               height="45px"
             />
             <Group position="apart">
-              <Checkbox label="Remember me" />
+              <Checkbox
+                checked={form.values.remember}
+                {...form.getInputProps("remember")}
+                label="Remember me"
+              />
               <Anchor component="button" size="sm">
                 <Link to="forgot-password">Forgot password?</Link>
               </Anchor>
