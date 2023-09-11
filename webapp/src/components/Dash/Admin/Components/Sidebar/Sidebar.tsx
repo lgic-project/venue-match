@@ -24,6 +24,8 @@ import {
   IconUsers,
 } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import { showNotification } from "@mantine/notifications";
 
 const useStyles = createStyles((theme) => ({
   navbar: {
@@ -147,7 +149,24 @@ const useStyles = createStyles((theme) => ({
 
 export function Sidebar() {
   const { classes } = useStyles();
-
+  const handleLogout = () => {
+    // Remove the "apikey" cookie to log the user out
+    Cookies.set('apikey', '', { expires: new Date(0) });
+    showNotification({
+      title: "Log out Successfully",
+      message: "Thank you for your service",
+      color: "green",
+    });
+  };
+  const handleChangeAccount = () => {
+    // Remove the "apikey" cookie to log the user out
+    Cookies.set('apikey', '', { expires: new Date(0) });
+    showNotification({
+      title: "Change account Here",
+      message: "Thank you for your service",
+      color: "green",
+    });
+  };
   return (
     <Navbar
       height={700}
@@ -282,20 +301,20 @@ export function Sidebar() {
           </Text>
         </Group>
         <div className={classes.collections}>
-          <Link to="profile">
+          <Link to="/admin-profile">
             <div className={classes.collectionLink}>
               <IconUserCircle className="sideIcon" />
               <span style={{ marginLeft: "10px" }}>Profile</span>
             </div>
           </Link>
           <Link to="/auth">
-            <div className={classes.collectionLink}>
+            <div className={classes.collectionLink} onClick={handleChangeAccount}>
               <IconArrowsExchange2 className="sideIcon" />
               <span style={{ marginLeft: "10px" }}>Change Account</span>
             </div>
           </Link>
           <Link to="/auth">
-            <div className={classes.collectionLink}>
+            <div className={classes.collectionLink} onClick={handleLogout}>
               <IconLogout className="sideIcon" />
               <span style={{ marginLeft: "10px" }}>Logout</span>
             </div>
