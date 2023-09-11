@@ -9,11 +9,11 @@ import {
   SimpleGrid,
 } from "@mantine/core";
 import { VenueOwnerSiderbar } from "../../Components/Sidebar/VenueOwnerSidebar";
-import DashNavbar from "../../../Admin/Components/Navabar/Navbar";
 import Widget from "../../../Admin/Components/Widget/Widget";
-import Featured from "../../../Admin/Components/Charts/Featured/Featured";
-import Normal from "../../../Admin/Components/Charts/Normal/Normal";
-import BasicTable from "../../../Admin/Components/Table/Table";
+import VenueOwnerNavbar from "../../Components/Navbar/VenueOwnerNavbar";
+import VenueOwnerBasicTable from "../../../Admin/Components/Table/VenueOwnerBasicTable";
+import VenueOwnerFeatured from "../../Components/Charts/Featured/VenueOwnerFeatured";
+import VenueOwnerNormal from "../../Components/Charts/Normal/VenueOwnerNormal";
 
 export default function VenueOwnerHome() {
   const theme = useMantineTheme();
@@ -71,7 +71,7 @@ export default function VenueOwnerHome() {
                 mr="xl"
               />
             </MediaQuery>
-            <DashNavbar />
+            <VenueOwnerNavbar />
           </div>
         </Header>
       }
@@ -93,9 +93,9 @@ export default function VenueOwnerHome() {
           ]}
         >
           <Widget type="myvenue" />
-          <Widget type="mycategories" />
           <Widget type="dishes" />
-          <Widget type="bookings" />
+          <Widget type="myvenuebookings" />
+          <Widget type="myearning" />
           {/* <Widget type="categories" />
           <Widget type="bookings" /> */}
         </SimpleGrid>
@@ -108,14 +108,14 @@ export default function VenueOwnerHome() {
               { maxWidth: "36rem", cols: 1, spacing: "sm" },
             ]}
           >
-            <Featured />
-            <Normal aspect={2 / 1} title="Last 6 Months (Revenue)" />
+            <VenueOwnerFeatured />
+            <VenueOwnerNormal aspect={2 / 1} title="Last 6 Months (Revenue)" />
           </SimpleGrid>
         </div>
         <div style={{ paddingTop: "20px" }}>
         <div className="listContainer">
-          <div className="listTitle">Latest Transaction</div>
-          <BasicTable/>
+          <div className="listTitle">Latest Bookings For My Venues</div>
+          <VenueOwnerBasicTable/>
         </div>
       </div>
       </div>
