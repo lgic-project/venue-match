@@ -39,7 +39,6 @@ export default function SingleCategory() {
         `https://kritisubedi.com.np/SnTravels/api/index//get-categories?id=${categoryId}`
       )
       .then((response) => {
-        console.log(response.data.category.name)
             setTitle(response.data.category.name)
            setCategoryImage(response.data.category.image)
       })

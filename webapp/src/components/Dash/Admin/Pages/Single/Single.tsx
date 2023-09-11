@@ -10,20 +10,23 @@ import {
 } from "@mantine/core";
 import { Sidebar } from "../../Components/Sidebar/Sidebar";
 import DashNavbar from "../../Components/Navabar/Navbar";
-import Normal from "../../Components/Charts/Normal/Normal";
-import BasicTable from "../../Components/Table/Table";
 import "./Single.scss"
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import SingleUserBookingsTable from "../../Components/Table/SingelUserBookingTable";
+import SingleNormal from "../../Components/Charts/Normal/SingleNormal";
 
 export default function Single() {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
-  const  {userId} = useParams()
+  const  {userId} = useParams();
+  const [userImage,setUserImage]=useState();
   const [userFirstName,setUserFirstName]=useState();
   const [userLastName,setUserLastName]=useState();
   const [email,setEmail]=useState();
   const [role,setRole]=useState();
+  const [userApiKey, setUserApiKey] = useState<string | undefined>();
+  const [totalAmountSum, setTotalAmountSum] = useState(0);
   let userName = userFirstName + " " + userLastName
   useEffect(() => {
     axios
@@ -34,8 +37,10 @@ export default function Single() {
           const userArray = response.data.users;
           if (userArray.length > 0){
               const user = userArray[0];
-              setUserFirstName(user.firstName)
-              setUserLastName(user.lastName)
+              setUserImage(user.profile_picture)
+              setUserFirstName(capitalizeFirstLetter(user.firstName))
+              setUserLastName(capitalizeFirstLetter(user.lastName))
+              setUserApiKey(user.api_key);
              setEmail(user.email)
              setRole(user.role)
         }
@@ -45,6 +50,42 @@ export default function Single() {
           console.error("Error fetching data", error);
       });
   });
+  useEffect(() => {
+    const fetchBookingDetails = async () => {
+      if (userApiKey) {
+        try {
+          const response = await axios.get(
+            "https://kritisubedi.com.np/SnTravels/api/index/booking",
+            {
+              headers: {
+                api_key: userApiKey,
+              },
+            }
+          );
+
+          const bookingsArray = response.data.bookings;
+
+          if (bookingsArray && bookingsArray.length > 0) {
+              const sum = bookingsArray.reduce(
+              (total:any, booking:any) => total + booking.total_amount,
+              0
+            );
+            setTotalAmountSum(sum);
+          }
+        } catch (error) {
+          console.error("Error fetching booking data", error);
+        }
+      }
+    };
+
+    fetchBookingDetails();
+  }, [userApiKey]);
+
+  const capitalizeFirstLetter = (word:any) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+};
+
+
   return (
     <AppShell
       style={{ backgroundColor: "#f8f9fa" }}
@@ -124,7 +165,7 @@ export default function Single() {
             <div className="listTitle">Information <span style={{textDecoration:"underline"}}>( {role} )</span></div>
             <div className="item1">
               <img
-                src="https://images.unsplash.com/photo-1529665253569-6d01c0eaf7b6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=785&q=80"
+                src={userImage ?? "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAHBgsIBw8QEBAPGBYYDw0YDRUgFQogIBsgIiAbKB8kIS8lJCYmJR8fMDYtMTA3PkFAIytBOEE4N0AtLisBCgoKBQUFDgUFDisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIAOYAzQMBIgACEQEDEQH/xAAbAAEAAwEBAQEAAAAAAAAAAAAABAUGAgEDB//EADIQAQACAQIEBAMHBAMAAAAAAAABAgMEEgURITETQVFhIlKBFCMyYqGxwUJxkaIzktH/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A/RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQdZxKunmaU+K3p5VBOeTaK95iPqzmbiGXL3ttj0jojTabTztMz9Qanxq/NX/tD2MlbdrRP1ZQBrhlseovin7u0x9U/TcXmsxXURzj5o7guhxiyVzUi+OYmPV2AAAAAAAAAAAAAAADjLeMeO17doiZkFfxbW+FHg4p+KfxT8qkd5ck5clr37y4AAAAAABI0WrnS5d0dp/FX1aSl4yUi9J5xPaWTXXA8+7HbDb+nrALQAAAAAAAAAAAAABB4xfZorRH9UxCcq+Oz9xjj3/gFKAAAAAAAAmcKvs11PfnCG+2jnlq8U/mj9wagAAAAAAAAAAAAABV8ej7nHPvP7LRXcbrz0kT6TH8gogAAAAAAAH10sc9Tjj80fu+STw6u7W4o9waUAAAAAAAAAAAAABF4nTfockekc/8JTm9d9JrPn0Bkx1euy81ny5xLkAAAAAABP4LTdrN3yxP/iAueBY+WPJknznlALUAAAAAAAAAAAAAAAGe4vi8LWTaO1uqEvuM4PE03iR3p+yhAAAAAAAabQ4vB0lKT35dVFw7B4+rrWe0dZaUAAAAAAAAAAAAAAAAHlo3Vmtu092Y1eCdPqLY58u0+sNQgcV0n2jDvpHxV/2j0BQAAAAAl8O0v2nPyn8Netvf2BZ8H0/hafxLd7/pCweRHKOj0AAAAAAAAAAAAAAAAB5adtZtPk8veKV3XmIj1mVTxHiUXxzh0/Xn3t/AKu9t17W9ZlyAAACy4HflqL0nzjp9Fa+mHLOHLXJTvANUIml19NRERE8rfLKWAAAAAAAAAAAD46jU008c8toj285B9nNrRWOdpiI9ean1HGJt0wV5fmnur8ua2aeeW0z9QXmbimPF0rM2n2hAzcXvfpiiK/rKuAd5Mtstt2S0z/eXAAAAAAAAJODX5MHStpmPSesIwC4w8ZiemevL3hYYdVTP/wAVon282XP7A1wzmn4jkw9Oe6PSVnpuK0y8oyfBP6f5BYDyJ5xzh6AAA5vaKVm155RHefR0oOKazx8nh45+Cv8AsD7azi025003SPn85VdrTad1pmZnvPq8AAAAAAAAAAAAAAAAAAASNNrL6afu56fLPaV3otfXVfD2t8vqzj2szWYmvSY8/QGtELhus+1Ytt/x17/m900EHi2o8DTcq979I9vVn0/jOXxNXNY7VjkgAAAAAAAAAAAAAAAAAAAAAAA+2lzzp89ctfLvHq09bRasWr2nsyTQcHy+Jo4rM9azyBR6i/iZ739Zl8wAAAAAAAAAAAAAAAAAAAAAAATuG6r7PF4nz5IIDrabQA2m0ANptADabQA2m0ANptADabQA2m0ANptADabQA2m0ANptADabQB//2Q=="}
                 alt=""
                 className="itemImage1"
               />
@@ -149,12 +190,12 @@ export default function Single() {
               </div>
             </div>
           </div>
-            <Normal aspect={3 / 1} title="User Spending (Last 6 Months)"/>
+            <SingleNormal aspect={3 / 1} title="User Spending (Last 6 Months)" totalSpent={totalAmountSum}/>
       </SimpleGrid>
         <div style={{ paddingTop: "20px" }}>
         <div className="listContainer">
           <div className="listTitle">Latest Transaction</div>
-          <BasicTable/>
+          <SingleUserBookingsTable/>
         </div>
       </div>
       </div>

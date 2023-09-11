@@ -30,11 +30,13 @@ import {
   faUserGroup,
   faUtensils,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FetchQuery } from "../../../../utils/ApiCall";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../../../Spinner/Spinner";
-
+import Cookies from "js-cookie";
+import axios from "axios";
+import { showNotification } from "@mantine/notifications";
 const useStyles = createStyles((theme) => ({
   root: {
     // backgroundColor: "#11284b",
@@ -221,6 +223,54 @@ export default function SingleVenue() {
   ));
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const navigate = useNavigate();
+  const deleteVenue = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this venue?");
+    if (confirmDelete){
+      setIsDeleting(true);
+    try {
+      // Send a DELETE request to the /delete-my-account endpoint
+      const response = await axios.delete(
+        `https://kritisubedi.com.np/SnTravels/api/index//delete-venue/${venueId}`,
+        {
+          headers: {
+            api_key: Cookies.get("apikey"),
+          },
+        }
+      );
+  
+      // Check the response and handle it accordingly
+      if (response.status === 200 && response.data.error === false) {
+        showNotification({
+          title: "Venue Deleted Successfully",
+          message: response.data.message,
+          color: "green",
+        });
+        navigate("/venue");
+      } else {
+        showNotification({
+          title: "Update Error",
+          message: response.data.message,
+          color: "red",
+        });
+        console.log(response.data.error);
+      }
+    } catch (error) {
+      // Handle network or request errors
+      showNotification({
+        title: "Access Denied",
+        message: "You don't own this venue",
+        color: "red",
+      });
+      setIsDeleting(false);
+      console.error("Error deleting venue", error);
+    } finally {() => {
+      // Stop the loading state regardless of success or failure
+      setIsDeleting(false);
+    }};
+  }
+  };
   return (
     <AppShell
       style={{ backgroundColor: "#f8f9fa" }}
@@ -520,27 +570,116 @@ export default function SingleVenue() {
                             <Text className={classes.description} mt={0}>
                               {dessert}
                             </Text>
-                              <Link to={"dish"}>
-                            <div
-                              className="form-section overflow-hidden"
-                              style={{ padding: 0, background: "transparent" }}
+                            <SimpleGrid
+                              cols={3}
+                              spacing="28px"
+                              verticalSpacing="0px"
+                              mt={"25px"}
+                              mb={"20px"}
+                              breakpoints={[
+                                {
+                                  maxWidth: "70rem",
+                                  cols: 2,
+                                  spacing: "40px",
+                                  verticalSpacing: "30px",
+                                },
+                                { maxWidth: "48rem", cols: 2, spacing: "40px" },
+                                { maxWidth: "36rem", cols: 1, spacing: "sm" },
+                              ]}
                             >
-                              <div className="banner-btn discover-btn-banner" style={{display:"flex",justifyContent:"center"}}>
-                                <button
-                                  type="submit"
-                                  className="btn btn-primary venue"
+                          
+                              {/* update venue button */}
+                          <Link to={"update-venue"}>
+                              <div
+                                className="form-section overflow-hidden"
+                                style={{
+                                  padding: 0,
+                                  background: "transparent",
+                                }}
+                              >
+                                <div
+                                  className="banner-btn discover-btn-banner"
                                   style={{
-                                    // width: "100%",
-                                    paddingTop: "10px",
-                                    paddingBottom: "10px",
-                                    marginTop: "30px",
+                                    display: "flex",
+                                    justifyContent: "center",
                                   }}
                                 >
-                                  Add Venue Dish
-                                </button>
+                                  <button
+                                    type="submit"
+                                    className="btn btn-primary venue venueUpdate"
+                                    style={{
+                                      // width: "100%",
+                                      paddingTop: "10px",
+                                      paddingBottom: "10px",
+                                      backgroundColor:"Orange",
+                                    }}
+                                  >
+                                     Update Venue
+                                  </button>
+                                </div>
                               </div>
-                            </div>
-                            </Link>
+                          </Link>
+                            {/* add dish */}
+                            <Link to={"dish"}>
+                              <div
+                                className="form-section overflow-hidden"
+                                style={{
+                                  padding: 0,
+                                  background: "transparent",
+                                }}
+                              >
+                                <div
+                                  className="banner-btn discover-btn-banner"
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <button
+                                    type="submit"
+                                    className="btn btn-primary venue"
+                                    style={{
+                                      // width: "100%",
+                                      paddingTop: "10px",
+                                      paddingBottom: "10px",
+                                    }}
+                                  >
+                                    Add Venue Dish
+                                  </button>
+                                </div>
+                              </div>
+                              </Link>
+                                 {/* delete venue button */}
+                              <div
+                                className="form-section overflow-hidden"
+                                style={{
+                                  padding: 0,
+                                  background: "transparent",
+                                }}
+                              >
+                                <div
+                                  className="banner-btn discover-btn-banner"
+                                  style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                  }}
+                                >
+                                  <button
+                                      type="button"
+                                      onClick={deleteVenue}
+                                    className="btn btn-primary venue venueUpdate"
+                                    style={{
+                                      // width: "100%",
+                                      paddingTop: "10px",
+                                      paddingBottom: "10px",
+                                      backgroundColor:"red",
+                                    }}
+                                  >
+                                     Delete Venue{" "} {isDeleting && <Spinner width="25px" />}
+                                  </button>
+                                </div>
+                              </div>
+                            </SimpleGrid>
                           </div>
                         </SimpleGrid>
                       </div>
