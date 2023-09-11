@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import "./Normal.scss";
 import {
   AreaChart,
@@ -9,29 +8,15 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import axios from "axios";
 
-
-
-export default function Normal({ aspect, title }: any) {
-  const [totalAmount, setTotalAmount] = useState();
-  useEffect(() => {
-    axios
-      .get("https://kritisubedi.com.np/SnTravels/api/index//total-amount")
-      .then((response) => {
-        setTotalAmount(response.data.total_amount);
-      })
-      .catch((error) => {
-        console.error("Error fetching data", error);
-      });
-  }, []);
+export default function SingleNormal({ aspect, title, totalSpent }: any) {
   const data = [
     { name: "April", total: 0 },
     { name: "May", total: 0 },
     { name: "June", total: 0 },
     { name: "July", total: 0 },
     { name: "August", total: 0 },
-    { name: "September", total: totalAmount },
+    { name: "September", total: totalSpent },
   ];
   return (
     <div className="normal">
