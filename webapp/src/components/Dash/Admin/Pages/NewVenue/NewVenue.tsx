@@ -17,7 +17,7 @@ import {
 import { Sidebar } from "../../Components/Sidebar/Sidebar";
 import DashNavbar from "../../Components/Navabar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { PostQuery } from "../../../../utils/ApiCall";
+import {PostQueryWithAPI } from "../../../../utils/ApiCall";
 import { UPLOAD_VENUE } from "../../../../utils/ApiRoutes";
 import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
@@ -25,9 +25,13 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "@mantine/form";
 import { IconChevronDown } from "@tabler/icons-react";
 import Spinner from "../../../../Spinner/Spinner";
+import Cookies from "js-cookie";
 
+const customHeaders = {
+  "api_key": `${Cookies.get("apikey")}`,
+};
 const handleVenuePost = async (data: any) => {
-  return (await PostQuery(UPLOAD_VENUE, data))?.data;
+  return (await PostQueryWithAPI(UPLOAD_VENUE, data,customHeaders))?.data;
 };
 
 export default function NewVenue() {
@@ -53,7 +57,6 @@ export default function NewVenue() {
       category_id: "",
     },
   });
-  console.log({ ...form.getInputProps("image") });
   const navigate = useNavigate();
   const { mutate, isLoading } = useMutation(handleVenuePost);
   const handleVenue = (data: any) => {

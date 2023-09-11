@@ -63,7 +63,7 @@ export default function NewCategory() {
             message: data.message,
             color: "green",
           });
-          navigate("/venue");
+          navigate("/categories");
         }
       },
       onError: (e: any) => {
