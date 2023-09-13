@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:khalti_flutter/khalti_flutter.dart';
 import 'package:my_first_app/constant.dart';
 import 'package:my_first_app/data/controller/app_controller.dart';
+import 'package:my_first_app/data/model/booking_model.dart';
 import 'package:my_first_app/data/model/login_response.dart';
 
 import '../../../modules/booking/payment_success_screen.dart';
@@ -22,6 +23,12 @@ class BookingController extends GetxController {
   Venues? venuesList;
   String? ocassionId;
   final GlobalKey<FormState> _bookingFormKey = GlobalKey<FormState>();
+
+  bool isLoading = false;
+
+  String? errorMessage;
+  var bookingList = <Bookings>[];
+
   GlobalKey<FormState> get bookingFormKey => _bookingFormKey;
 
   checkBookingFields(BuildContext context) {
@@ -53,6 +60,30 @@ class BookingController extends GetxController {
     bookingPersonController.clear();
   }
 
+  getBookings() async {
+    try {
+      isLoading = true;
+      var url = "${baseUrl}booking";
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'api_key': AppController.controller.getToken(),
+        },
+      );
+      bookingList =
+          BookingModel.fromJson(json.decode(response.body)).bookings ?? [];
+      isLoading = false;
+      update();
+    } catch (e) {
+      if (e.toString().contains("SocketException")) {
+        errorMessage = "No Internet Connection";
+      } else {
+        errorMessage = "Failed to load venues";
+      }
+      errorMessage = e.toString();
+    }
+  }
+
   onBookingPersonChanged() {
     if (bookingPersonController.text.isNotEmpty) {
       bookingPeopleNum = bookingPersonController.text;
@@ -73,8 +104,6 @@ class BookingController extends GetxController {
   }
 
   proceedBooking(BuildContext context) {
-    // double bookingPrice = double.parse(venuesList?.price.toString() ?? '0');
-    // double totalAmount = double.parse(bookingTotalAmt.toString());
     Map data = {
       'bookingDate': bookingDateController.text,
       'bookingPeople': bookingPersonController.text,
@@ -102,9 +131,13 @@ class BookingController extends GetxController {
       onSuccess: (successModel) async {
         // Perform Server Verification
         try {
-          var response = await http.post(Uri.parse(url), body: data, headers: {
-            'api_key': AppController.controller.getToken(),
-          });
+          var response = await http.post(
+            Uri.parse(url),
+            body: data,
+            headers: {
+              'api_key': AppController.controller.getToken(),
+            },
+          );
 
           var jsonResp = LoginResponse.fromJson(json.decode(response.body));
 
