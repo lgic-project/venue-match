@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:my_first_app/constant.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_first_app/constant.dart';
 import 'package:my_first_app/data/model/category.dart';
 import 'package:my_first_app/data/model/venue_model.dart';
 

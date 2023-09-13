@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import '../constant.dart';
 
 class CustomCachedNetworkImageWidget extends StatelessWidget {
+  final String? image;
+
+  final double? height, width, placeHolderWidth, placeHolderHeight;
   const CustomCachedNetworkImageWidget({
     super.key,
     this.image,
@@ -12,9 +15,6 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
     this.placeHolderHeight,
     this.placeHolderWidth,
   });
-
-  final String? image;
-  final double? height, width, placeHolderWidth, placeHolderHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class CustomCachedNetworkImageWidget extends StatelessWidget {
         ),
       ),
       errorWidget: (context, url, error) =>
-          Icon(Icons.person, color: Colors.grey),
+          const Icon(Icons.person, color: Colors.grey),
     );
   }
 }

@@ -36,22 +36,21 @@ class LoginScreen extends StatelessWidget {
                     child: Align(
                         child: Text(
                       "Log in ",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Color.fromARGB(255, 19, 18, 18),
+                      ),
                     )),
                   ), //bold garna use gareko ani tyo paxadi ko f chaii attributes vara capital va
-                  const SizedBox(
-                    height: 40,
-                  ),
-
+                  const SizedBox(height: 30),
                   const Text(
                     "Welcome to Venue Match",
                     style: TextStyle(
-                        fontSize: 15,
-                        color: Color.fromARGB(255, 122, 119, 119)),
+                      fontSize: 16,
+                      color: Color.fromARGB(255, 122, 119, 119),
+                    ),
                   ),
-                  SizedBox(height: 10),
-
+                  SizedBox(height: 20),
                   CustomTextField(
                     icon: Icons.person_outline,
                     hint: "Enter your email",
@@ -61,10 +60,10 @@ class LoginScreen extends StatelessWidget {
                   CustomTextField(
                     icon: Icons.lock_outline,
                     hint: "Enter your Password",
+                    isPassword: true,
                     controller: controller.passwordController,
                   ),
-
-                  SizedBox(height: 50),
+                  SizedBox(height: 30),
                   InkWell(
                       onTap: controller.login,
                       child: CustomButton(
@@ -73,22 +72,14 @@ class LoginScreen extends StatelessWidget {
                         textColor: Colors.white,
                         backgroundColor: primaryColor,
                       )),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 15),
                   Align(
                       child: const Text(
                     "or",
                     style: TextStyle(
                         fontSize: 15, color: Color.fromARGB(255, 75, 73, 73)),
                   )),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  // Spacer(),yo chaii button laii last ma purauna gareko ho
+                  const SizedBox(height: 15),
                   InkWell(
                     onTap: () {
                       Get.off(SignUpScreen());

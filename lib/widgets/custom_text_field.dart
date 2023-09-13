@@ -1,43 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:my_first_app/data/controller/auth/signup_controller.dart';
 
 import '../constant.dart';
 
 class CustomTextField extends StatelessWidget {
-  IconData icon;
-  String hint;
-  TextEditingController controller;
-  bool? hasBorder, isFilled;
-  bool readOnly;
+  final IconData icon;
+  final String? hint;
+  final TextEditingController controller;
+  final bool? hasBorder, isFilled, isPassword;
+  final bool readOnly;
 
-  CustomTextField(
+  const CustomTextField(
       {super.key,
-      required this.hint,
+      this.hint,
       required this.icon,
       this.hasBorder = true,
       this.isFilled = false,
       this.readOnly = false,
+      this.isPassword = false,
       required this.controller});
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      readOnly: readOnly,
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: const TextStyle(
-          fontSize: 14,
+    return GetBuilder<SignupController>(initState: (state) {
+      SignupController.controller.hidePass = false;
+    }, builder: (_) {
+      return TextField(
+        controller: controller,
+        readOnly: readOnly,
+        obscureText: isPassword == true ? !_.hidePass : false,
+        decoration: InputDecoration(
+          hintText: hint,
+          hintStyle: const TextStyle(
+            fontSize: 14,
+          ),
+          filled: isFilled,
+          fillColor: lightColor,
+          prefixIcon: Icon(
+            icon,
+            size: 18,
+          ),
+          suffixIcon: isPassword == true
+              ? GestureDetector(
+                  onTap: _.changePasswordStatus,
+                  child: Icon(
+                    _.hidePass
+                        ? Icons.visibility_outlined
+                        : Icons.visibility_off_outlined,
+                    size: 18,
+                  ),
+                )
+              : null,
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide:
+                  hasBorder == true ? const BorderSide() : BorderSide.none),
         ),
-        filled: isFilled,
-        fillColor: lightColor,
-        prefixIcon: Icon(
-          icon,
-          size: 18,
-        ),
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide:
-                hasBorder == true ? const BorderSide() : BorderSide.none),
-      ),
-    );
+      );
+    });
   }
 }

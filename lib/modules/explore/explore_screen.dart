@@ -6,6 +6,42 @@ import 'package:my_first_app/data/controller/venue/venue_controller.dart';
 import 'package:my_first_app/modules/explore/widgets/category_tile.dart';
 import 'package:my_first_app/modules/explore/widgets/custom_venue_item_widget.dart';
 
+class CustomSearchBarWidget extends StatelessWidget {
+  const CustomSearchBarWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        border: Border.all(
+          width: .3,
+          color: Colors.grey,
+        ),
+      ),
+      child: const Row(children: [
+        Icon(
+          Icons.search_outlined,
+          size: 18,
+          color: Colors.grey,
+        ),
+        SizedBox(
+          width: 2,
+        ),
+        Text(
+          'Search',
+          style: TextStyle(
+            color: Colors.grey,
+          ),
+        ),
+      ]),
+    );
+  }
+}
+
 class ExploreScreen extends StatelessWidget {
   const ExploreScreen({super.key});
 
@@ -96,42 +132,6 @@ class ExploreScreen extends StatelessWidget {
           ]),
         ),
       ),
-    );
-  }
-}
-
-class CustomSearchBarWidget extends StatelessWidget {
-  const CustomSearchBarWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        border: Border.all(
-          width: .3,
-          color: Colors.grey,
-        ),
-      ),
-      child: Row(children: const [
-        Icon(
-          Icons.search_outlined,
-          size: 18,
-          color: Colors.grey,
-        ),
-        SizedBox(
-          width: 2,
-        ),
-        Text(
-          'Search',
-          style: TextStyle(
-            color: Colors.grey,
-          ),
-        ),
-      ]),
     );
   }
 }
