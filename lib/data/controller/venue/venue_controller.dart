@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:my_first_app/data/model/venue_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_first_app/data/model/venue_model.dart';
+
 import '../../../constant.dart';
 
 class VenueController extends GetxController {
@@ -13,6 +14,20 @@ class VenueController extends GetxController {
   var venuesList = <Venues>[];
   var singleVenueList = <Venues>[];
   String errorMessage = '';
+
+  String getDishes({bool isForVeg = true}) {
+    var dishes = singleVenueList.first.dishes;
+    var vegDishList = [];
+    var nonVegDishList = [];
+    for (int i = 0; i < (dishes?.length ?? 1); i++) {
+      if (dishes?[i].dishType?.toLowerCase() == 'veg') {
+        vegDishList.add(dishes?[i].dishName);
+      } else {
+        nonVegDishList.add(dishes?[i].dishName);
+      }
+    }
+    return isForVeg ? vegDishList.join('\n') : nonVegDishList.join('\n');
+  }
 
   getVenues({String? id}) async {
     try {
@@ -36,19 +51,5 @@ class VenueController extends GetxController {
       }
       errorMessage = e.toString();
     }
-  }
-
-  String getDishes({bool isForVeg = true}) {
-    var dishes = singleVenueList.first.dishes;
-    var vegDishList = [];
-    var nonVegDishList = [];
-    for (int i = 0; i < (dishes?.length ?? 1); i++) {
-      if (dishes?[i].dishType?.toLowerCase() == 'veg') {
-        vegDishList.add(dishes?[i].dishName);
-      } else {
-        nonVegDishList.add(dishes?[i].dishName);
-      }
-    }
-    return isForVeg ? vegDishList.join('\n') : nonVegDishList.join('\n');
   }
 }
