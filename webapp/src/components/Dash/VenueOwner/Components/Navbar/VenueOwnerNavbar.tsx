@@ -11,7 +11,7 @@ import Cookies from "js-cookie";
 // import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 // import ListIcon from "@mui/icons-material/List";
 
-export default function DashNavbar() {
+export default function VenueOwnerNavbar() {
   const [userImage, setUserImage] = useState();
   const [userFirstName, setUserFirstName] = useState();
   const [userLastName, setUserLastName] = useState();
@@ -65,7 +65,7 @@ export default function DashNavbar() {
             <ListIcon className="icon1"/>
             </div> */}
           <div className="item1">
-            <Link to="/admin-profile" style={{display:"flex"}}>
+            <Link to="/venue-owner-profile" style={{display:"flex"}}>
             <img
               src={
                 userImage ??

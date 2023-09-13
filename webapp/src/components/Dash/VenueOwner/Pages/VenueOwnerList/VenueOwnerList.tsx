@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   AppShell,
   Navbar,
@@ -7,45 +7,15 @@ import {
   Burger,
   useMantineTheme,
 } from "@mantine/core";
-import { Sidebar } from "../../Components/Sidebar/Sidebar";
-import DashNavbar from "../../Components/Navabar/Navbar";
-import DataTable from "../../Components/Datatable/DataTable";
-import { useParams } from "react-router-dom";
-import axios from "axios";
-import { venueColumns } from "../../Components/Datatable/DataTableSource";
+import { VenueOwnerSiderbar } from "../../Components/Sidebar/VenueOwnerSidebar";
+import VenueOwnerNavbar from "../../Components/Navbar/VenueOwnerNavbar";
+import DataTable from "../../../Admin/Components/Datatable/DataTable";
 
-export default function SingleCategory() {
+
+
+export default function VenueOwnerList({title,tableColumns,tableRows,showAddNewButton}:any) {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
-  const [singleCategoryData, setSingleCategoryData] = useState({});
-  const { categoryId } = useParams();
-  const [title, setTitle] = useState("");
-  const [categoryImage,setCategoryImage]=useState();
-  useEffect(() => {
-    axios
-      .get(
-        `https://kritisubedi.com.np/SnTravels/api/index//get-venues-by-category?category_id=${categoryId}`
-      )
-      .then((response) => {
-        setSingleCategoryData(response.data.venues);
-      })
-      .catch((error) => {
-        console.error("Error fetching data", error);
-      });
-  });
-  useEffect(() => {
-    axios
-      .get(
-        `https://kritisubedi.com.np/SnTravels/api/index//get-categories?id=${categoryId}`
-      )
-      .then((response) => {
-            setTitle(response.data.category.name)
-           setCategoryImage(response.data.category.image)
-      })
-      .catch((error) => {
-        console.error("Error fetching data", error);
-      });
-  });
   return (
     <AppShell
       style={{ backgroundColor: "#f8f9fa" }}
@@ -82,7 +52,7 @@ export default function SingleCategory() {
               }}
             />
           </MediaQuery>
-          <Sidebar />
+          <VenueOwnerSiderbar />
         </Navbar>
       }
       header={
@@ -103,21 +73,14 @@ export default function SingleCategory() {
                 mr="xl"
               />
             </MediaQuery>
-            <DashNavbar />
+            <VenueOwnerNavbar  />
           </div>
         </Header>
       }
     >
       <div style={{ display: "flex", width: "100%" }}>
         <div>
-          <DataTable
-          showCategoryImage={true}
-          categoryImage={categoryImage}
-            title={`Category ${title}`}
-            tableColumns={venueColumns}
-            tableRows={singleCategoryData}
-            showAddNewButton={true}
-          />
+          <DataTable title={title} tableColumns={tableColumns} tableRows={tableRows} showAddNewButton={showAddNewButton}/>
         </div>
       </div>
     </AppShell>

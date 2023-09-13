@@ -24,6 +24,7 @@ export default function BasicTable() {
         <TableHead>
           <TableRow>
             <TableCell className="tableCell">ID</TableCell>
+            <TableCell className="tableCell">Venue Id</TableCell>
             <TableCell className="tableCell">Booked Date</TableCell>
             <TableCell className="tableCell">Booked For</TableCell>
             <TableCell className="tableCell">Venue Price</TableCell>
@@ -37,6 +38,7 @@ export default function BasicTable() {
                   data?.data.bookings.map((booking: any) => (
             <TableRow key={booking.id}>
               <TableCell className="tableCell">{booking.id}</TableCell>
+              <TableCell className="tableCell">{booking.venue_id}</TableCell>
               <TableCell className="tableCell">{booking.booked_date}</TableCell>
               <TableCell className="tableCell">{booking.person} people</TableCell>
               <TableCell className="tableCell">Nrs {booking.venue_price}</TableCell>

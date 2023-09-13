@@ -9,7 +9,7 @@ import { faBowlFood } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import Cookies from "js-cookie";
 
 interface WidgetData {
   title: string;
@@ -27,14 +27,109 @@ interface WidgetProps {
 export default function Widget({ type }: WidgetProps) {
 
   let data: WidgetData | undefined;
-  const [userCount, setUserCount] = useState();
-  const [venueCount, setVenueCount] = useState();
-  const [categoryCount, setCategoryCount] = useState();
-  const [bookingCount, setBookingCount] = useState();
-  const [totalAmount, setTotalAmount] = useState();
+  const [userCount, setUserCount] = useState(0);
+  const [venueCount, setVenueCount] = useState(0);
+  const [categoryCount, setCategoryCount] = useState(0);
+  const [bookingCount, setBookingCount] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [myVenueIds, setMyVenueIds] = useState([0]);
+  const[myVenueBookingsCount,setMyVenueBookingsCount]=useState(0);
+  const[myVenueCount,setMyVenueCount]=useState(0);
+  const [totalAmountSum, setTotalAmountSum] = useState(0);
+  const [totalDishes, setTotalDishes] = useState(0);
   // temp data
   const diff = 20;
+  useEffect(() => {
+    axios
+      .get("https://kritisubedi.com.np/SnTravels/api/index/get-all-venues-by-user", {
+        headers: {
+          api_key: Cookies.get("apikey"),
+        },
+      })
+      .then((response) => {
+        if (response.status === 200 && response.data && Array.isArray(response.data.venues)) {
+          // Extract venue IDs
+          const venueIds = response.data.venues.map((venueItem: any) => venueItem.id);
+          // Extract venues and venue IDs
+          const myVenues = response.data.venues.map((venueItem: any) => venueItem.venues);
+          const flattenedVenues = myVenues.flat();
+          setMyVenueCount(flattenedVenues.length);
+          // Update state with venue data and IDs
+          setMyVenueIds(venueIds);
+          // Call fetchBookingDetailsForVenues only if venueIds are available
+        if (venueIds.length > 0) {
+          fetchBookingDetailsForVenues(venueIds);
+        }
+        } else {
+          console.error("Invalid response format: No 'venues' found in the response.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching venue data:", error);
+      });
+  }, []);
+  const fetchBookingDetailsForVenues = async (venueIds: number[]) => {
+    try {
+      const response = await axios.post(
+        "https://kritisubedi.com.np/SnTravels/api/index/bookings-for-venues",
+        { venueIds }
+      );
 
+      if (response.status === 200) {
+        // Handle successful response here
+        const bookingDetails = response.data.bookings;
+        setMyVenueBookingsCount(bookingDetails.length);
+        const sum = bookingDetails.reduce(
+          (total:any, booking:any) => total + booking.total_amount,
+          0
+        );
+        setTotalAmountSum(sum);
+      } else {
+        // Handle error response here
+        console.error("Error fetching booking details for venues");
+      }
+    } catch (error) {
+      // Handle network or other errors here
+      console.error("Error:", error);
+    }
+  };
+  // fetchBookingDetailsForVenues(myVenueIds);
+  useEffect(() => {
+    if (myVenueIds.length > 0) {
+      fetchMyDishes(myVenueIds);
+    }
+  }, [myVenueIds]);
+  const fetchMyDishes = async (venueIds: number[]) => {
+    try {
+      const response = await axios.post(
+        "https://kritisubedi.com.np/SnTravels/api/index//all-my-dishes",
+        { venueIds }
+      );
+  
+      if (response.status === 200) {
+        // Handle successful response here
+        const myDishesData = response.data.all_dishes_by_venue;
+        
+        // Transform the data to include unique IDs
+        const transformedData = Object.keys(myDishesData).map((venueId) => {
+          return myDishesData[venueId].map((dish:any, index:any) => ({
+            id: `${venueId}-${index}`, // Generate a unique ID using venueId and index
+            ...dish,
+          }));
+        }).flat();
+  
+        const itemCount = transformedData.length;
+        setTotalDishes(itemCount)
+      } else {
+        // Handle error response here
+        console.error("Error fetching booking details for venues");
+      }
+    } catch (error) {
+      // Handle network or other errors here
+      console.error("Error:", error);
+    }
+  };
+  // fetchMyDishes(myVenueIds);
   useEffect(() => {
     axios
       .get("https://kritisubedi.com.np/SnTravels/api/index//total-users")
@@ -129,8 +224,8 @@ export default function Widget({ type }: WidgetProps) {
               style={{ color: "goldenrod", backgroundColor: "rgba(218,165,32,0.2)" }}
             />
           ),
-          amount:"100",
-          linkto:"#"
+          amount:`${myVenueCount}`,
+          linkto:"/my-venues"
         };
         break;
     case "earning":
@@ -146,6 +241,22 @@ export default function Widget({ type }: WidgetProps) {
         ),
         amount:`${totalAmount}`,
         linkto:"/bookings"
+
+      };
+      break;
+      case "myearning":
+      data = {
+        title: "TOTAL EARNINGS",
+        isMoney: true,
+        link: "View net earnings",
+        icon: (
+          <MonetizationOnOutlinedIcon
+            className="icon"
+            style={{ color: "green", backgroundColor: "rgba(0,128,0,0.2)" }}
+          />
+        ),
+        amount:`${totalAmountSum}`,
+        linkto:"/my-venue-bookings"
 
       };
       break;
@@ -199,6 +310,23 @@ export default function Widget({ type }: WidgetProps) {
 
           };
           break;
+          case "myvenuebookings":
+        data = {
+          title: "MY VENUE BOOKINGS",
+          isMoney: false,
+          link: "See details",
+  
+          icon: (
+            <IconBrandBooking
+              className="icon"
+              style={{ color: "green", backgroundColor: "rgba(0,128,0,0.2)" }}
+            />
+          ),
+          amount:`${myVenueBookingsCount}`,
+          linkto:"/my-venue-bookings"
+
+        };
+        break;
       case "bookings":
         data = {
           title: "BOOKINGS",
@@ -228,8 +356,8 @@ export default function Widget({ type }: WidgetProps) {
             />
 
           ),
-          amount:"100",
-          linkto:"#"
+          amount:`${totalDishes}`,
+          linkto:"/my-dishes"
 
         };
         break;

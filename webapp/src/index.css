@@ -21683,3 +21683,7 @@ path.CircularProgressbar-path{
     height: 70px !important;
   }
 }
+
+.venueUpdate:hover{
+  background-color: #f4a492 !important;
+}

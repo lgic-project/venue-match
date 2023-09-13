@@ -21,6 +21,7 @@ import List from "./components/Dash/Admin/Pages/List/List";
 import {
   bookingColumns,
   categoryColumns,
+  dishColumns,
   userColumns,
   venueColumns,
 } from "./components/Dash/Admin/Components/Datatable/DataTableSource";
@@ -34,27 +35,51 @@ import SingleCategory from "./components/Dash/Admin/Pages/SingleCategory/SingleC
 import NewCategory from "./components/Dash/Admin/Pages/NewCategory/NewCategory";
 import VenueOwnerRoute from "./components/utils/VenueOwnerRoute";
 import VenueOwnerHome from "./components/Dash/VenueOwner/Pages/Home/VenueOwnerHome";
-import SingleBookingDetail from "./components/Dash/Admin/Pages/SingleBookingDetail/SingelBookingDetail";
+import SingleBookingDetail from "./components/Dash/Admin/Pages/SingleBookingDetail/SingleBookingDetail";
 import Stats from "./components/Dash/Admin/Pages/Stats/Stats";
+import Profile from "./components/Dash/Admin/Pages/Profile/Profile";
+import ProfileEdit from "./components/Dash/Admin/Pages/Profile/EditProfile";
+import VenueOwnerProfile from "./components/Dash/VenueOwner/Pages/VenueOwnerProfile/VenueOwnerProfile";
+import VenueOwnerProfileEdit from "./components/Dash/VenueOwner/Pages/VenueOwnerProfile/VenueOwnerProfileEdit";
+import VenueOwnerList from "./components/Dash/VenueOwner/Pages/VenueOwnerList/VenueOwnerList";
+import Cookies from "js-cookie";
+import VenueOwnerSingleVenue from "./components/Dash/VenueOwner/Pages/VenueOwnerSingleVenue/VenueOwnerSingleVenue";
+import VenueOwnerDish from "./components/Dash/VenueOwner/Pages/VenueOwnerDish/VenueOwnerDish";
+import VenueOwnerNewVenue from "./components/Dash/VenueOwner/Pages/VenueOwnerNewVenue/VenueOwnerNewVenue";
+import VenueOwnerSingleBookingDetail from "./components/Dash/VenueOwner/Pages/VenueOwnerSingleBookingDetail/VenueOwnerSingleBookingDetail";
+import VenueOwnerDishesLists from "./components/Dash/VenueOwner/Pages/VenueOwnerDishesLists/VenueOwnerDishesLists";
+import VenueOwnerUpadateVenue from "./components/Dash/VenueOwner/Pages/VenueOwnerUpdateVenue/VenueOwnerUpadateVenue";
+import UpadateVenue from "./components/Dash/Admin/Pages/UpdateVenue/UpadateVenue";
+import MyStats from "./components/Dash/VenueOwner/Pages/MyStats/MyStats";
 
 const queryClient = new QueryClient();
-
+interface Dish {
+  id: string; // Make sure 'id' matches the expected type in your data grid component
+  dish_id: number;
+  dish_type: string;
+  dish_name: string;
+}
 function App() {
   const [allUsersData, setAllUsersData] = useState([]);
   const [venueData, setVenueData] = useState([]);
   const [categoryData, setCategoryData] = useState({});
   const [bookingData, setBookingData] = useState({});
+  const [myVenuebookingData, setMyVenueBookingData] = useState([]);
+  const [myDishData, setMyDishData] = useState<Dish[]>([]);
+  const [myVenueData, setMyVenueData] = useState({});
+  const [myVenueIds, setMyVenueIds] = useState([0]);
+  
   useEffect(() => {
     axios
       .get("https://kritisubedi.com.np/SnTravels/api/index/get-users")
       .then((response) => {
-         // Extract the users data from the response
+        // Extract the users data from the response
         //  const { users } = response.data;
 
-         // Extract the user_id values and store them in an array
+        // Extract the user_id values and store them in an array
         //  const userIds = users.map((user:any) => user.user_id);
- 
-         // Set the user_id values in the state
+
+        // Set the user_id values in the state
         setAllUsersData(response.data.users);
       })
       .catch((error) => {
@@ -71,6 +96,93 @@ function App() {
         console.error("Error fetching data", error);
       });
   }, []);
+  useEffect(() => {
+    axios
+      .get("https://kritisubedi.com.np/SnTravels/api/index/get-all-venues-by-user", {
+        headers: {
+          api_key: Cookies.get("apikey"),
+        },
+      })
+      .then((response) => {
+        if (response.status === 200 && response.data && Array.isArray(response.data.venues)) {
+          // Extract venue IDs
+          const venueIds = response.data.venues.map((venueItem: any) => venueItem.id);
+          // Extract venues and venue IDs
+          const myVenues = response.data.venues.map((venueItem: any) => venueItem.venues);
+          const flattenedVenues = myVenues.flat();
+          setMyVenueData(flattenedVenues);
+          // Update state with venue data and IDs
+          setMyVenueIds(venueIds);
+          if (venueIds.length > 0) {
+            fetchBookingDetailsForVenues(venueIds);
+          }
+        } else {
+          console.error("Invalid response format: No 'venues' found in the response.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching venue data:", error);
+      });
+  }, []);
+  
+  const fetchBookingDetailsForVenues = async (venueIds: number[]) => {
+    try {
+      const response = await axios.post(
+        "https://kritisubedi.com.np/SnTravels/api/index/bookings-for-venues",
+        { venueIds }
+      );
+
+      if (response.status === 200) {
+        // Handle successful response here
+        const bookingDetails = response.data.bookings;
+        setMyVenueBookingData(bookingDetails);
+      } else {
+        // Handle error response here
+        console.error("Error fetching booking details for venues");
+      }
+    } catch (error) {
+      // Handle network or other errors here
+      console.error("Error:", error);
+    }
+  };
+  // fetchBookingDetailsForVenues(myVenueIds);
+  const fetchMyDishes = async (venueIds: number[]) => {
+    try {
+      const response = await axios.post(
+        "https://kritisubedi.com.np/SnTravels/api/index//all-my-dishes",
+        { venueIds }
+      );
+  
+      if (response.status === 200) {
+        // Handle successful response here
+        const myDishesData = response.data.all_dishes_by_venue;
+         // Initialize an incrementing counter
+      let counter = 1;
+        // Transform the data to include unique IDs
+        const transformedData = Object.keys(myDishesData).map((venueId) => {
+          return myDishesData[venueId].map((dish:any, index:any) => ({
+            index: counter++,
+            id: `${venueId}-${index}`, // Generate a unique ID using venueId and index
+            ...dish,
+          }));
+        }).flat();
+  
+        setMyDishData(transformedData);
+      } else {
+        // Handle error response here
+        console.error("Error fetching booking details for venues");
+      }
+    } catch (error) {
+      // Handle network or other errors here
+      console.error("Error:", error);
+    }
+  };
+  useEffect(() => {
+    if (myVenueIds.length > 0) {
+      fetchMyDishes(myVenueIds);
+    }
+  }, [myVenueIds]);
+  // fetchMyDishes(myVenueIds);
   useEffect(() => {
     axios
       .get("https://kritisubedi.com.np/SnTravels/api/index/get-categories")
@@ -91,7 +203,6 @@ function App() {
         console.error("Error fetching data", error);
       });
   }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
@@ -113,6 +224,10 @@ function App() {
             </Route>
             <Route element={<AdminRoute />}>
               <Route path="admin" element={<DashHome />} />
+              <Route path="admin-profile">
+                <Route index element={<Profile />} />
+                <Route path="edit" element={<ProfileEdit />} />
+              </Route>
               <Route path="users">
                 <Route
                   index
@@ -140,13 +255,13 @@ function App() {
                       tableColumns={venueColumns}
                       tableRows={venueData}
                       showAddNewButton={true}
-
                     />
                   }
                 />
                 <Route path=":venueId">
                   <Route index element={<SingleVenue />} />
                   <Route path="dish" element={<Dish />} />
+                  <Route path="update-venue" element={<UpadateVenue/>}/>
                 </Route>
                 <Route path="new" element={<NewVenue />} />
               </Route>
@@ -167,6 +282,7 @@ function App() {
                   <Route path=":venueId">
                     <Route index element={<SingleVenue />} />
                     <Route path="dish" element={<Dish />} />
+                  <Route path="update-venue" element={<UpadateVenue/>}/>
                   </Route>
                   <Route path="new" element={<NewVenue />} />
                 </Route>
@@ -183,13 +299,55 @@ function App() {
                     />
                   }
                 />
-                <Route path=":bookingId" element={<SingleBookingDetail/>}/>
+                <Route path=":bookingId" element={<SingleBookingDetail />} />
               </Route>
-              <Route path="stats" element={<Stats/>}/>
-              <Route path="profile" element={<Single />} />
+              <Route path="stats" element={<Stats />} />
+              {/* <Route path="profile" element={<Single />} /> */}
             </Route>
             <Route element={<VenueOwnerRoute />}>
               <Route path="venue-owner" element={<VenueOwnerHome />} />
+              <Route path="venue-owner-profile">
+                <Route index element={<VenueOwnerProfile />} />
+                <Route path="edit" element={<VenueOwnerProfileEdit />} />
+              </Route>
+              <Route path="my-venues">
+                <Route
+                  index
+                  element={
+                    <VenueOwnerList
+                      title="My Venue Table"
+                      tableColumns={venueColumns}
+                      tableRows={myVenueData}
+                     showAddNewButton={true }
+                    />
+                  }
+                />
+                <Route path=":venueId">
+                  <Route index element={<VenueOwnerSingleVenue />} />
+                  <Route path="dish" element={<VenueOwnerDish />} />
+                  <Route path="update-my-venue" element={<VenueOwnerUpadateVenue/>}/>
+                </Route>
+                <Route path="new" element={<VenueOwnerNewVenue />} />
+              </Route>
+              <Route path="my-venue-bookings">
+                <Route
+                  index
+                  element={
+                    <VenueOwnerList
+                      title="Current Bookings"
+                      tableColumns={bookingColumns}
+                      tableRows={myVenuebookingData}
+                    />
+                  }
+                />
+                <Route path=":bookingId" element={<VenueOwnerSingleBookingDetail />} />
+              </Route>
+              <Route path="my-dishes">
+                <Route index element={<VenueOwnerDishesLists title="My Dishes"
+                      tableColumns={dishColumns}
+                      tableRows={myDishData}/>}/>
+              </Route>
+              <Route path="my-stats" element={<MyStats />} />
             </Route>
             <Route path="*" element={<Error404 />} />
           </Route>

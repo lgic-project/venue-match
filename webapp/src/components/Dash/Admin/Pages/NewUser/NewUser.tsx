@@ -17,7 +17,7 @@ import {
 } from "@mantine/core";
 import { Sidebar } from "../../Components/Sidebar/Sidebar";
 import DashNavbar from "../../Components/Navabar/Navbar";
-import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
+// import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { PostQuery } from "../../../../utils/ApiCall";
 import { SIGNUP } from "../../../../utils/ApiRoutes";
 import { showNotification } from "@mantine/notifications";
@@ -32,14 +32,14 @@ const handlRegisterationPost = async (data: any) => {
 };
 
 export default function NewUser() {
-  const [file, setFile] = useState<File | null>(null);
+  // const [file, setFile] = useState<File | null>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files && e.target.files[0];
-    if (selectedFile) {
-      setFile(selectedFile);
-    }
-  };
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const selectedFile = e.target.files && e.target.files[0];
+  //   if (selectedFile) {
+  //     setFile(selectedFile);
+  //   }
+  // };
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   const form = useForm({
@@ -88,17 +88,19 @@ export default function NewUser() {
       onSuccess: async (data) => {
         if (data.error === true) {
           showNotification({
-            title: "Login Error",
+            title: "Register Error",
             message: data.message,
             color: "red",
           });
         } else {
-          navigate("/success");
+          navigate("/users");
+          showNotification({
+            title: "Register Success",
+            message: "New User Added Successfully",
+            color: "green",
+          });
         }
       },
-      // onError: (e: any) => {
-      //   console.log(e.response.data);
-      // },
     });
   };
   return (
@@ -172,7 +174,7 @@ export default function NewUser() {
         >
           <Paper withBorder shadow="md" p={30} radius="md" style={{backgroundColor:"#f8f9fa"}}>
             <Grid>
-              <Grid.Col style={{ display: "flex", justifyContent: "center" }}>
+              {/* <Grid.Col style={{ display: "flex", justifyContent: "center" }}>
                 {file ? (
                   <img src={URL.createObjectURL(file)} alt="" width={"100%"} />
                 ) : (
@@ -183,7 +185,7 @@ export default function NewUser() {
                     height={"400px"}
                   />
                 )}
-              </Grid.Col>
+              </Grid.Col> */}
               <Grid.Col>
                 <form
                   onSubmit={form.onSubmit((values) => {
@@ -191,7 +193,7 @@ export default function NewUser() {
                   })}
                 >
                   <Stack>
-                    <div>
+                    {/* <div>
                       <label htmlFor="file" style={{cursor:"pointer"}}>
                         Image:{" "}
                         <DriveFolderUploadOutlinedIcon className="icon" />
@@ -228,7 +230,7 @@ export default function NewUser() {
                         onChange={handleFileChange}
                         style={{ display: "none" }}
                       />
-                    </div>
+                    </div> */}
                     <SimpleGrid cols={2}  breakpoints={[
                  
                   { maxWidth: "36rem", cols: 1, spacing: "sm" },
@@ -305,6 +307,7 @@ export default function NewUser() {
                       placeholder="I amd"
                       rightSection={<IconChevronDown size={14} stroke={1.5} />}
                     >
+                      <option value="user">Select Role</option>
                       <option value="user">Client</option>
                       <option value="venue_owner">Venue Owner</option>
                       <option value="admin">Admin</option>
@@ -322,7 +325,7 @@ export default function NewUser() {
                           justifyContent: "center",
                         }}
                       >
-                        Sign up {isLoading && <Spinner width="25px" />}
+                        Add User {isLoading && <Spinner width="25px" />}
                       </button>
                     </div>
                   </Stack>

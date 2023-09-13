@@ -7,15 +7,16 @@ import {
   Burger,
   useMantineTheme,
   SimpleGrid,
+  Paper,
+  Text,
 } from "@mantine/core";
 import { VenueOwnerSiderbar } from "../../Components/Sidebar/VenueOwnerSidebar";
-import Widget from "../../../Admin/Components/Widget/Widget";
 import VenueOwnerNavbar from "../../Components/Navbar/VenueOwnerNavbar";
-import VenueOwnerBasicTable from "../../../Admin/Components/Table/VenueOwnerBasicTable";
 import VenueOwnerFeatured from "../../Components/Charts/Featured/VenueOwnerFeatured";
 import VenueOwnerNormal from "../../Components/Charts/Normal/VenueOwnerNormal";
 
-export default function VenueOwnerHome() {
+
+export default function MyStats() {
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   return (
@@ -77,28 +78,16 @@ export default function VenueOwnerHome() {
       }
     >
       <div style={{padding:"10px"}}>
-        <SimpleGrid
-          cols={4}
-          spacing="28px"
-          verticalSpacing="20px"
-          breakpoints={[
-            {
-              maxWidth: "70rem",
-              cols: 2,
-              spacing: "40px",
-              verticalSpacing: "30px",
-            },
-            { maxWidth: "48rem", cols: 2, spacing: "40px" },
-            { maxWidth: "36rem", cols: 1, spacing: "sm" },
-          ]}
-        >
-          <Widget type="myvenue" />
-          <Widget type="dishes" />
-          <Widget type="myvenuebookings" />
-          <Widget type="myearning" />
-          {/* <Widget type="categories" />
-          <Widget type="bookings" /> */}
-        </SimpleGrid>
+      <Paper
+        withBorder
+        shadow="md"
+        p={10}
+        radius="md"
+        mb={10}
+        style={{ backgroundColor: "#f8f9fa" }}
+      >
+        <Text>Venue Match Stats</Text>
+      </Paper>
         <div style={{ paddingTop: "20px" }}>
           <SimpleGrid
             cols={2}
@@ -112,12 +101,16 @@ export default function VenueOwnerHome() {
             <VenueOwnerNormal aspect={2 / 1} title="Last 6 Months (Revenue)" />
           </SimpleGrid>
         </div>
-        <div style={{ paddingTop: "20px" }}>
-        <div className="listContainer">
-          <div className="listTitle">Latest Bookings For My Venues</div>
-          <VenueOwnerBasicTable/>
-        </div>
-      </div>
+        <Paper
+        withBorder
+        shadow="md"
+        p={10}
+        radius="md"
+        mt={30}
+        style={{ backgroundColor: "#f8f9fa" }}
+      >
+        <Text>More Stats and Functions Comming Soon...</Text>
+      </Paper>
       </div>
     </AppShell>
   );

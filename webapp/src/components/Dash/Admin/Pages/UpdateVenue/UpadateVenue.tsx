@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AppShell,
   Navbar,
@@ -14,29 +14,61 @@ import {
   Grid,
   SimpleGrid,
 } from "@mantine/core";
-import { Sidebar } from "../../Components/Sidebar/Sidebar";
-import DashNavbar from "../../Components/Navabar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import {PostQueryWithAPI } from "../../../../utils/ApiCall";
+import { PostQueryWithAPI } from "../../../../utils/ApiCall";
 import { UPLOAD_VENUE } from "../../../../utils/ApiRoutes";
 import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "@mantine/form";
 import { IconChevronDown } from "@tabler/icons-react";
 import Spinner from "../../../../Spinner/Spinner";
 import Cookies from "js-cookie";
+import axios from "axios";
+import { Sidebar } from "../../Components/Sidebar/Sidebar";
+import DashNavbar from "../../Components/Navabar/Navbar";
 
 const customHeaders = {
-  "api_key": `${Cookies.get("apikey")}`,
+  api_key: `${Cookies.get("apikey")}`,
 };
 const handleVenuePost = async (data: any) => {
-  return (await PostQueryWithAPI(UPLOAD_VENUE, data,customHeaders))?.data;
+  return (await PostQueryWithAPI(UPLOAD_VENUE, data, customHeaders))?.data;
 };
 
-export default function NewVenue() {
+export default function UpadateVenue() {
   const [image, setImage] = useState<File | null>(null);
+  const { venueId } = useParams();
+  const [venueImage, setVenueImage] = useState('');
 
+  useEffect(() => {
+    axios
+      .get(
+        `https://kritisubedi.com.np/SnTravels/api/index/get-venues?venue_id=${venueId}`
+      )
+      .then((response) => {
+        const venueName = response.data.venues[0]?.name || "";
+        const venueLocation = response.data.venues[0]?.location || "";
+        const venuePrice = response.data.venues[0]?.price || "";
+        const venueDescription = response.data.venues[0]?.description || "";
+        const venueCapacity = response.data.venues[0]?.capacity || "";
+        const venueCategoryId = response.data.venues[0]?.category_id || "";
+        const venueImage = response.data.venues.map(
+          (venue: any) => venue.image
+        );
+        setVenueImage(venueImage);
+        form.setValues({
+          name: venueName,
+          location: venueLocation,
+          price: `${venuePrice}`,
+          description: venueDescription,
+          capacity: venueCapacity,
+          category_id: `${venueCategoryId}`,
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching data", error);
+      });
+  }, [venueId]); // Include venueId in the dependency array if it's being used in this effect
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files && e.target.files[0];
     if (selectedFile) {
@@ -48,35 +80,36 @@ export default function NewVenue() {
   const [opened, setOpened] = useState(false);
   const form = useForm({
     initialValues: {
-      //   image: image,
-      name: "",
-      location: "",
-      price: "",
-      description: "",
-      capacity: "",
+      name: "", 
+      location:  "", 
+      price:  "", 
+      description:  "", 
+      capacity: "", 
       category_id: "",
+      isForUpdate: true,
+      venue_id: venueId,
     },
   });
   const navigate = useNavigate();
   const { mutate, isLoading } = useMutation(handleVenuePost);
   const handleVenue = (data: any) => {
-    const requestData = { ...data, image: image };
+    const requestData = { ...data, image:image };
     mutate(requestData, {
       onSuccess: async (data) => {
         if (data.error === true) {
           showNotification({
-            title: "Upload Error",
+            title: "Update Error",
             message: data.message,
             color: "red",
           });
           console.log(data.error);
         } else {
           showNotification({
-            title: "Upload Success",
+            title: "Upadate Success",
             message: data.message,
             color: "green",
           });
-          navigate("/venue");
+          navigate(`/venue/${venueId}`);
         }
       },
       onError: (e: any) => {
@@ -175,7 +208,10 @@ export default function NewVenue() {
                 <img src={URL.createObjectURL(image)} alt="" width={"100%"} />
               ) : (
                 <img
-                  src="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+                  src={
+                    `${venueImage}` ||
+                    "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+                  }
                   alt=""
                   width={"400px"}
                   height={"400px"}
@@ -315,7 +351,10 @@ export default function NewVenue() {
                       <option value="19">Meeting</option>
                     </InputBase>
                   </SimpleGrid>
-                  <div className="banner-btn discover-btn-banner"  style={{display:"flex",justifyContent:"center"}}>
+                  <div
+                    className="banner-btn discover-btn-banner"
+                    style={{ display: "flex", justifyContent: "center" }}
+                  >
                     <button
                       type="submit"
                       className="btn btn-primary"
@@ -327,7 +366,7 @@ export default function NewVenue() {
                         justifyContent: "center",
                       }}
                     >
-                      Upload Venue {isLoading && <Spinner width="25px" />}
+                      Update Venue {isLoading && <Spinner width="25px" />}
                     </button>
                   </div>
                 </Stack>
