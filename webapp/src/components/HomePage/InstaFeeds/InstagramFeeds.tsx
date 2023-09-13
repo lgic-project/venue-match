@@ -1,5 +1,5 @@
 
-export default function AppDemo() {
+export default function InstagramFeeds() {
   return (
     <section className="insta-feed-section">
     <figure className="mb-0 insta-feed-img">
@@ -16,7 +16,7 @@ export default function AppDemo() {
             </figure>
           </div>
       </div>
-      <h2>GET FIMILAR WITH OUR APP</h2>
+      <h2>Venue Match Feed</h2>
       <div className="row">
           <div className="col-lg-3 col-md-3 col-sm-6">
             <figure className="mb-0 insta-section-imgs">
