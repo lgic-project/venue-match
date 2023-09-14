@@ -3,11 +3,11 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_first_app/data/controller/venue_owner/venue_owner_controller.dart';
 import 'package:my_first_app/modules/venue_owner/add_venue/add_update_venue_screen.dart';
 import 'package:my_first_app/widgets/custom_app_bar_widget.dart';
 
 import '../../../constant.dart';
-import '../../../data/controller/venue owner/venue_owner_controller.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_cached_network_image_widget.dart';
 import '../../../widgets/custom_loading_widget.dart';

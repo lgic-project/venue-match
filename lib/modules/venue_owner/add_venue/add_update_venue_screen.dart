@@ -4,12 +4,12 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_first_app/data/controller/venue_owner/venue_owner_controller.dart';
 import 'package:my_first_app/widgets/custom_app_bar_widget.dart';
 import 'package:my_first_app/widgets/custom_text_form_field.dart';
 
 import '../../../constant.dart';
 import '../../../data/controller/category/category_controller.dart';
-import '../../../data/controller/venue owner/venue_owner_controller.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_cached_network_image_widget.dart';
 

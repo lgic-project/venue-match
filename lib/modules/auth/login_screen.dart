@@ -44,7 +44,7 @@ class LoginScreen extends StatelessWidget {
                   ), //bold garna use gareko ani tyo paxadi ko f chaii attributes vara capital va
                   const SizedBox(height: 30),
                   const Text(
-                    "Welcome to Venue Match",
+                    "Welcome to our Travel App",
                     style: TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 122, 119, 119),

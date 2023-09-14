@@ -8,10 +8,10 @@ import 'package:my_first_app/data/controller/auth/signup_controller.dart';
 import 'package:my_first_app/data/controller/category/category_controller.dart';
 import 'package:my_first_app/data/controller/profile/profile_controller.dart';
 import 'package:my_first_app/data/controller/venue/venue_controller.dart';
+import 'package:my_first_app/data/controller/venue_owner/venue_owner_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'data/controller/booking/booking_controller.dart';
-import 'data/controller/venue owner/venue_owner_controller.dart';
 import 'modules/home/home_screen.dart';
 import 'modules/welcome/welcome_screen.dart';
 
