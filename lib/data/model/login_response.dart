@@ -4,9 +4,15 @@ class LoginResponse {
   String? password;
   String? apiKey;
   String? message;
+  String? role;
 
   LoginResponse(
-      {this.error, this.email, this.password, this.apiKey, this.message});
+      {this.error,
+      this.role,
+      this.email,
+      this.password,
+      this.apiKey,
+      this.message});
 
   LoginResponse.fromJson(Map<String, dynamic> json) {
     error = json["error"];
@@ -14,15 +20,16 @@ class LoginResponse {
     password = json["password"];
     apiKey = json["apiKey"];
     message = json["message"];
+    role = json["role"];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> _data = <String, dynamic>{};
-    _data["error"] = error;
-    _data["email"] = email;
-    _data["password"] = password;
-    _data["apiKey"] = apiKey;
-    _data["message"] = message;
-    return _data;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["error"] = error;
+    data["email"] = email;
+    data["password"] = password;
+    data["apiKey"] = apiKey;
+    data["message"] = message;
+    return data;
   }
 }
