@@ -6,6 +6,8 @@ import 'package:my_first_app/data/controller/venue/venue_controller.dart';
 import 'package:my_first_app/modules/explore/widgets/category_tile.dart';
 import 'package:my_first_app/modules/explore/widgets/custom_venue_item_widget.dart';
 
+import '../search/custom_venue_search_delegate.dart';
+
 class CustomSearchBarWidget extends StatelessWidget {
   const CustomSearchBarWidget({
     super.key,
@@ -63,7 +65,10 @@ class ExploreScreen extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            const CustomSearchBarWidget(),
+            InkWell(
+                onTap: () => showSearch(
+                    context: context, delegate: CustomVenueSearchDelegate()),
+                child: const CustomSearchBarWidget()),
             const SizedBox(
               height: 15,
             ),
