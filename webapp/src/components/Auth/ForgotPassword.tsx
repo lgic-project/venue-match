@@ -75,7 +75,7 @@ export function ForgotPassword() {
       </Text>
 
       <Paper withBorder shadow="md" p={30} radius="md" mt="xl">
-        <TextInput label="Your email" placeholder="me@mantine.dev" required  radius={"100px"}
+        <TextInput label="Your email" placeholder="me@gmail.com" required  radius={"100px"}
               height={"45px"}/>
         <Group position="apart" mt="lg" className={classes.controls}>
           {/* <Anchor color="dimmed" size="sm" className={classes.control}> */}

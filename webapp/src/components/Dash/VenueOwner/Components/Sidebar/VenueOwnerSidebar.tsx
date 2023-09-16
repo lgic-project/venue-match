@@ -285,12 +285,12 @@ export function VenueOwnerSiderbar() {
               <span style={{ marginLeft: "10px" }}>Profile</span>
             </div>
           </Link>
-          <Link to="/auth">
+          {/* <Link to="/auth">
             <div className={classes.collectionLink} onClick={handleChangeAccount}>
               <IconArrowsExchange2 className="sideIcon" />
               <span style={{ marginLeft: "10px" }}>Change Account</span>
             </div>
-          </Link>
+          </Link> */}
           <Link to="/auth">
             <div className={classes.collectionLink} onClick={handleLogout}>
               <IconLogout className="sideIcon" />

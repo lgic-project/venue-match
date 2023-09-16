@@ -313,7 +313,7 @@ export default function UpdateBookings() {
                       {...form.getInputProps("categoryId")}
                       placeholder="I amd"
                       rightSection={<IconChevronDown size={14} stroke={1.5} />}
-                      disabled
+                      
                     >
                       <option value="" disabled hidden>
                         Choose Venue Category
