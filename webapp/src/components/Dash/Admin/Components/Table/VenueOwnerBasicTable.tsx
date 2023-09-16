@@ -73,7 +73,7 @@ export default function VenueOwnerBasicTable() {
   return (
     <div>
     {/* Display the sum of totalAmount */}
-    <p>Total Amount Sum Made: Nrs {totalAmountSum}</p>
+    <p>Total Amount Made: Nrs {totalAmountSum}</p>
     <TableContainer component={Paper} className="table"style={{backgroundColor:"#f8f9fa"}}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>

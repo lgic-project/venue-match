@@ -51,6 +51,9 @@ import VenueOwnerDishesLists from "./components/Dash/VenueOwner/Pages/VenueOwner
 import VenueOwnerUpadateVenue from "./components/Dash/VenueOwner/Pages/VenueOwnerUpdateVenue/VenueOwnerUpadateVenue";
 import UpadateVenue from "./components/Dash/Admin/Pages/UpdateVenue/UpadateVenue";
 import MyStats from "./components/Dash/VenueOwner/Pages/MyStats/MyStats";
+import PublicProfile from "./components/Dash/Admin/Pages/Single/PublicProfile";
+import UpadateBookings from "./components/Dash/Admin/Pages/SingleBookingDetail/UpdateBookings";
+import VenueOwnerUpdateBooking from "./components/Dash/VenueOwner/Pages/VenueOwnerSingleBookingDetail/VenueOwnerUpdateBookings";
 
 const queryClient = new QueryClient();
 interface Dish {
@@ -261,7 +264,10 @@ function App() {
                 <Route path=":venueId">
                   <Route index element={<SingleVenue />} />
                   <Route path="dish" element={<Dish />} />
-                  <Route path="update-venue" element={<UpadateVenue/>}/>
+                  <Route path="update-venue">
+                    <Route index  element={<UpadateVenue/>}/>
+                  <Route path="update-bookings" element={<UpadateBookings/>}/>
+                  </Route>
                 </Route>
                 <Route path="new" element={<NewVenue />} />
               </Route>
@@ -306,6 +312,7 @@ function App() {
             </Route>
             <Route element={<VenueOwnerRoute />}>
               <Route path="venue-owner" element={<VenueOwnerHome />} />
+              <Route path="show-user/:userId" element={<PublicProfile/>}/>
               <Route path="venue-owner-profile">
                 <Route index element={<VenueOwnerProfile />} />
                 <Route path="edit" element={<VenueOwnerProfileEdit />} />
@@ -325,7 +332,10 @@ function App() {
                 <Route path=":venueId">
                   <Route index element={<VenueOwnerSingleVenue />} />
                   <Route path="dish" element={<VenueOwnerDish />} />
-                  <Route path="update-my-venue" element={<VenueOwnerUpadateVenue/>}/>
+                  <Route path="update-my-venue" >
+                    <Route index element={<VenueOwnerUpadateVenue/>}/>
+                  <Route path="update-my-booking" element={<VenueOwnerUpdateBooking/>}/>
+                  </Route>
                 </Route>
                 <Route path="new" element={<VenueOwnerNewVenue />} />
               </Route>

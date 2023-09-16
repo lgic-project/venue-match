@@ -68,7 +68,7 @@ export default function MyBookingTable() {
   return (
     <div>
       {/* Display the sum of totalAmount */}
-      <p>Total Amount Sum: Nrs {totalAmountSum}</p>
+      <p>Total Amount Spent: Nrs {totalAmountSum}</p>
 
       <TableContainer
         component={Paper}
