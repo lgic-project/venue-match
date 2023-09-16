@@ -20,6 +20,7 @@ class WelcomeScreen extends StatelessWidget {
     screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -29,19 +30,28 @@ class WelcomeScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(top: screenHeight / 20),
                 child: const Text(
-                  "Sign in and plan your Venue",
+                  "Sign In and Plan Your Venue",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               const Text(
                   "By continuing, you accept our Terms of Use and Privacy Statement",
                   style: TextStyle(fontSize: 15)),
               const SizedBox(
                 //gap haneko
-                height: 30,
+                height: 0,
+              ),
+              Image.asset(
+                "assets/images/venuee.jpg",
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                height: 10,
               ),
               InkWell(
                   onTap: () => Get.to(() => LoginScreen()),
@@ -55,7 +65,7 @@ class WelcomeScreen extends StatelessWidget {
                   //gap haneko
                   height: 20),
               const Text(
-                "Don't you have an account? Register in a convenient way.",
+                "Don't you have an account ? Register in a convenient way.",
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
