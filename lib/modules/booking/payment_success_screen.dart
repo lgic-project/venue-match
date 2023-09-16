@@ -24,7 +24,7 @@ class PaymentSucessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -58,7 +58,7 @@ class PaymentSucessScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 Container(
                   decoration: BoxDecoration(
                     color: lightColor,
