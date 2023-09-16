@@ -115,7 +115,7 @@ export default function DashHome() {
         </div>
         <div style={{ paddingTop: "20px" }}>
         <div className="listContainer">
-          <div className="listTitle">Latest Transaction</div>
+          <div className="listTitle">Latest Transactions</div>
           <BasicTable/>
         </div>
       </div>

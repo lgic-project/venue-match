@@ -15,13 +15,16 @@ import DashNavbar from "../../Components/Navabar/Navbar";
 import "./Edit.scss";
 import { IconChevronDown } from "@tabler/icons-react";
 import { useForm } from "@mantine/form";
-import SingleUserBookingsTable from "../../Components/Table/SingelUserBookingTable";
+import SingleUserBookingsTable from "../../Components/Table/SingleUserBookingTable";
 import SingleNormal from "../../Components/Charts/Normal/SingleNormal";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { showNotification } from "@mantine/notifications";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../../../Spinner/Spinner";
+import PublicBookingNormal from "../../../VenueOwner/Components/Charts/Normal/PublicBookingNormal";
+import PublicBookingTable from "../../Components/Table/PublicBookingTable";
+import UserVenue from "../../Components/Table/UserVenue";
 
 export default function Edit() {
   const form = useForm({
@@ -363,14 +366,78 @@ export default function Edit() {
               </Stack>
             </form>
           </div>
-          <SingleNormal aspect={3 / 1} title="User Spending (Last 6 Months)" totalSpent={totalAmountSum} />
+          {role === "venue_owner" ? (
+            <PublicBookingNormal
+              aspect={3 / 1}
+              title="User Revenue (Last 6 Months)"
+              totalSpent={totalAmountSum}
+            />
+          ) : role === "user" ? (
+            <SingleNormal
+              aspect={3 / 1}
+              title="User Spending (Last 6 Months)"
+              totalSpent={totalAmountSum}
+            />
+          ) : (
+            <div>
+              <PublicBookingNormal
+                aspect={3 / 1}
+                title="User Revenue (Last 6 Months)"
+                totalSpent={totalAmountSum}
+              />
+              <SingleNormal
+                aspect={3 / 1}
+                title="User Spending (Last 6 Months)"
+                totalSpent={totalAmountSum}
+              />
+            </div>
+          )}
         </SimpleGrid>
-        <div style={{ paddingTop: "20px" }}>
-          <div className="listContainer">
-            <div className="listTitle">Latest Transaction</div>
-            <SingleUserBookingsTable />
+        {role === "venue_owner" ? (
+          <div>
+            <div style={{ paddingTop: "20px" }}>
+              <div className="listContainer">
+              <div className="listTitle">User's Venues</div>
+                <UserVenue />
+              </div>
+            </div>
+          <div style={{ paddingTop: "20px" }}>
+            <div className="listContainer">
+            <div className="listTitle">Latest Bookings For User's Venues</div>
+              <PublicBookingTable />
+            </div>
           </div>
-        </div>
+          </div>
+          
+        ) : role === "user" ? (
+          <div style={{ paddingTop: "20px" }}>
+            <div className="listContainer">
+              <div className="listTitle">Latest Transactions</div>
+              <SingleUserBookingsTable />
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div style={{ paddingTop: "20px" }}>
+              <div className="listContainer">
+              <div className="listTitle">User's Venues</div>
+                <UserVenue />
+              </div>
+            </div>
+            <div style={{ paddingTop: "20px" }}>
+              <div className="listContainer">
+              <div className="listTitle">Latest Bookings For User's Venues</div>
+                <PublicBookingTable />
+              </div>
+            </div>
+            <div style={{ paddingTop: "20px" }}>
+              <div className="listContainer">
+                <div className="listTitle">Latest Transactions</div>
+                <SingleUserBookingsTable />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </AppShell>
   );

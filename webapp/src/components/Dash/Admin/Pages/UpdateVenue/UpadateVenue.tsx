@@ -13,13 +13,14 @@ import {
   Text,
   Grid,
   SimpleGrid,
+  Badge,
 } from "@mantine/core";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { PostQueryWithAPI } from "../../../../utils/ApiCall";
 import { UPLOAD_VENUE } from "../../../../utils/ApiRoutes";
 import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useForm } from "@mantine/form";
 import { IconChevronDown } from "@tabler/icons-react";
 import Spinner from "../../../../Spinner/Spinner";
@@ -39,7 +40,7 @@ export default function UpadateVenue() {
   const [image, setImage] = useState<File | null>(null);
   const { venueId } = useParams();
   const [venueImage, setVenueImage] = useState('');
-
+  const [bookingStatus,setBookingStatus] = useState('');
   useEffect(() => {
     axios
       .get(
@@ -54,17 +55,19 @@ export default function UpadateVenue() {
         const venueCategoryId = response.data.venues[0]?.category_id || "";
         const venueImage = response.data.venues.map(
           (venue: any) => venue.image
-        );
-        setVenueImage(venueImage);
-        form.setValues({
-          name: venueName,
-          location: venueLocation,
-          price: `${venuePrice}`,
-          description: venueDescription,
-          capacity: venueCapacity,
-          category_id: `${venueCategoryId}`,
-        });
-      })
+          );
+          setVenueImage(venueImage);
+          form.setValues({
+            name: venueName,
+            location: venueLocation,
+            price: `${venuePrice}`,
+            description: venueDescription,
+            capacity: venueCapacity,
+            category_id: `${venueCategoryId}`,
+          });
+          const bookingStatus=response.data.venues[0]?.booking_status || "Available";
+          setBookingStatus(bookingStatus)
+        })
       .catch((error) => {
         console.error("Error fetching data", error);
       });
@@ -114,7 +117,7 @@ export default function UpadateVenue() {
       },
       onError: (e: any) => {
         showNotification({
-          title: "Upload Error",
+          title: "Update Error",
           message: e.response.data.message,
           color: "red",
         });
@@ -192,7 +195,7 @@ export default function UpadateVenue() {
         mb={10}
         style={{ backgroundColor: "#f8f9fa" }}
       >
-        <Text>Add new venue</Text>
+        <Text>Update Venue</Text>
       </Paper>
       <section className="form-section overflow-hidden" style={{ padding: 0 }}>
         <Paper
@@ -375,6 +378,41 @@ export default function UpadateVenue() {
           </Grid>
         </Paper>
       </section>
+      <Paper
+        withBorder
+        shadow="md"
+        p={10}
+        radius="md"
+        mt={10}
+        style={{ backgroundColor: "#f8f9fa" }}
+      >
+      
+      <section className="form-section overflow-hidden" style={{ padding:"5px "}}>
+        <div
+          className="banner-btn discover-btn-banner"
+          style={{ display: "flex",justifyContent:"space-between",alignItems:"center" }}
+        >
+        <Text color="green">Update Venue Booking Status - current status <Badge variant="gradient" gradient={{ from: 'red', to: 'green' }}>{bookingStatus}</Badge></Text>
+          <Link to="update-bookings">
+          <button
+            type="button"
+            className="btn btn-primary"
+            style={{
+              paddingTop: "10px",
+              paddingBottom: "10px",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              backgroundColor:"green"
+            }}
+          >
+            Update Status{" "}
+            {/* {isDeleting && <Spinner width="25px" />} */}
+          </button>
+          </Link>
+        </div>
+      </section>
+      </Paper>
     </AppShell>
   );
 }

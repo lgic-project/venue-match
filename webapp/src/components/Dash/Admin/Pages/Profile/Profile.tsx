@@ -16,6 +16,8 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import MyBookingTable from "../../Components/Table/MyBookingTable";
 import SingleNormal from "../../Components/Charts/Normal/SingleNormal";
+import VenueOwnerBasicTable from "../../Components/Table/VenueOwnerBasicTable";
+import VenueOwnerNormal from "../../../VenueOwner/Components/Charts/Normal/VenueOwnerNormal";
 
 export default function Profile() {
   const theme = useMantineTheme();
@@ -198,12 +200,21 @@ export default function Profile() {
               </div>
             </div>
           </div>
+          <div>
           <SingleNormal aspect={3 / 1} title="My Spendings (Last 6 Months)" totalSpent={totalAmountSum} />
+          <VenueOwnerNormal aspect={2 / 1} title="Last 6 Months (Revenue)" />
+          </div>
         </SimpleGrid>
         <div style={{ paddingTop: "20px" }}>
           <div className="listContainer">
-            <div className="listTitle">Latest Transaction</div>
+            <div className="listTitle">Latest Transactions</div>
             <MyBookingTable/>
+          </div>
+        </div>
+        <div style={{ paddingTop: "20px" }}>
+          <div className="listContainer">
+            <div className="listTitle">Latest Bookings For My Venues</div>
+          <VenueOwnerBasicTable/>
           </div>
         </div>
       </div>

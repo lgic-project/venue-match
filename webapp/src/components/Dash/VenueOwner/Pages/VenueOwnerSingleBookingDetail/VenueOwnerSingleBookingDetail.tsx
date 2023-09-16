@@ -14,7 +14,7 @@ import {
   Stack,
   Image,
 } from "@mantine/core";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import khaltilogo from "../../../../../assets/images/khaltilogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -391,7 +391,7 @@ export default function VenueOwnerSingleBookingDetail() {
                       Booked By
                     </p>
                     <Text fz={"18px"} fw="400">
-                      {userFirstName} {userLastName}
+                     <Link to={`/show-user/${userId}`}>{userFirstName} {userLastName}</Link> 
                     </Text>
                   </div>
                   <div>

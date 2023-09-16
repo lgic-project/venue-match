@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AppShell,
   Navbar,
@@ -16,6 +16,7 @@ import {
   SimpleGrid,
   Group,
   Badge,
+  Paper,
 } from "@mantine/core";
 import "./VenueOwnerSingleVenue.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,7 +29,7 @@ import {
   faUserGroup,
   faUtensils,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link,useNavigate,useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { FetchQuery } from "../../../../utils/ApiCall";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../../../Spinner/Spinner";
@@ -37,6 +38,7 @@ import VenueOwnerNavbar from "../../Components/Navbar/VenueOwnerNavbar";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { showNotification } from "@mantine/notifications";
+import VenueBookedForDate from "../../../Admin/Components/Table/VenueBookedForDate";
 const useStyles = createStyles((theme) => ({
   root: {
     // backgroundColor: "#11284b",
@@ -192,87 +194,139 @@ export default function VenueOwnerSingleVenue() {
   };
   const { isLoading, data } = useQuery(["venues"], fetchMoreDetail);
 
-  const vegdishes = data?.data?.venues?.[0]?.dishes?.map((dish: any, index: number) => (
-    <Badge
-      key={index}
-      variant="outline"
-      mr={5}
-      style={{ display: dish.dish_type === "Veg" ? "inline-flex" : "none" }}
-    >
-      {dish.dish_name}
-    </Badge>
-  ));
-  
-  const nonvegdishes = data?.data?.venues?.[0]?.dishes?.map((dish: any, index: number) => (
-    <Badge
-      key={index}
-      variant="outline"
-      mr={5}
-      style={{ display: dish.dish_type === "Non-veg" ? "inline-flex" : "none" }}
-    >
-      {dish.dish_name}
-    </Badge>
-  ));
-  
-  const dessert = data?.data?.venues?.[0]?.dishes?.map((dish: any, index: number) => (
-    <Badge
-      key={index}
-      variant="outline"
-      mr={5}
-      style={{ display: dish.dish_type === "Dessert" ? "inline-flex" : "none" }}
-    >
-      {dish.dish_name}
-    </Badge>
-  ));
+  const vegdishes = data?.data?.venues?.[0]?.dishes?.map(
+    (dish: any, index: number) => (
+      <Badge
+        key={index}
+        variant="outline"
+        mr={5}
+        style={{ display: dish.dish_type === "Veg" ? "inline-flex" : "none" }}
+      >
+        {dish.dish_name}
+      </Badge>
+    )
+  );
+
+  const nonvegdishes = data?.data?.venues?.[0]?.dishes?.map(
+    (dish: any, index: number) => (
+      <Badge
+        key={index}
+        variant="outline"
+        mr={5}
+        style={{
+          display: dish.dish_type === "Non-veg" ? "inline-flex" : "none",
+        }}
+      >
+        {dish.dish_name}
+      </Badge>
+    )
+  );
+
+  const dessert = data?.data?.venues?.[0]?.dishes?.map(
+    (dish: any, index: number) => (
+      <Badge
+        key={index}
+        variant="outline"
+        mr={5}
+        style={{
+          display: dish.dish_type === "Dessert" ? "inline-flex" : "none",
+        }}
+      >
+        {dish.dish_name}
+      </Badge>
+    )
+  );
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const navigate = useNavigate();
-  const deleteVenue = async () => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this venue?");
-    if (confirmDelete){
-      setIsDeleting(true);
-    try {
-      // Send a DELETE request to the /delete-my-account endpoint
-      const response = await axios.delete(
-        `https://kritisubedi.com.np/SnTravels/api/index//delete-venue/${venueId}`,
-        {
-          headers: {
-            api_key: Cookies.get("apikey"),
-          },
+  const [userId, setUserId] = useState();
+  const [userFirstName, setUserFirstName] = useState();
+  const [userLastName, setUserLastName] = useState();
+  let userName = userFirstName + " " + userLastName;
+  const capitalizeFirstLetter = (word: any) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  };
+  useEffect(() => {
+    axios
+      .get(
+        `https://kritisubedi.com.np/SnTravels/api/index//user-by-venue/${venueId}`
+      )
+      .then((response) => {
+        const user_id = response.data.user_id;
+        const userId = user_id !== undefined ? user_id : 0;
+        setUserId(userId);
+      })
+      .catch((error) => {
+        console.error("Error fetching data", error);
+      });
+  });
+  useEffect(() => {
+    axios
+      .get(
+        `https://kritisubedi.com.np/SnTravels/api/index//get-users?user_id=${userId}`
+      )
+      .then((response) => {
+        const userArray = response.data.users;
+        if (userArray.length > 0) {
+          const user = userArray[0];
+          setUserFirstName(capitalizeFirstLetter(user.firstName));
+          setUserLastName(capitalizeFirstLetter(user.lastName));
         }
-      );
-  
-      // Check the response and handle it accordingly
-      if (response.status === 200 && response.data.error === false) {
+      })
+      .catch((error) => {
+        console.error("Error fetching data", error);
+      });
+  });
+  const deleteVenue = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this venue?"
+    );
+    if (confirmDelete) {
+      setIsDeleting(true);
+      try {
+        // Send a DELETE request to the /delete-my-account endpoint
+        const response = await axios.delete(
+          `https://kritisubedi.com.np/SnTravels/api/index//delete-venue/${venueId}`,
+          {
+            headers: {
+              api_key: Cookies.get("apikey"),
+            },
+          }
+        );
+
+        // Check the response and handle it accordingly
+        if (response.status === 200 && response.data.error === false) {
+          showNotification({
+            title: "Venue Deleted Successfully",
+            message: response.data.message,
+            color: "green",
+          });
+          navigate("/my-venues");
+        } else {
+          showNotification({
+            title: "Update Error",
+            message: response.data.message,
+            color: "red",
+          });
+          console.log(response.data.error);
+        }
+      } catch (error) {
+        // Handle network or request errors
         showNotification({
-          title: "Venue Deleted Successfully",
-          message: response.data.message,
-          color: "green",
-        });
-        navigate("/my-venues");
-      } else {
-        showNotification({
-          title: "Update Error",
-          message: response.data.message,
+          title: "Access Denied",
+          message: "You don't own this venue",
           color: "red",
         });
-        console.log(response.data.error);
+        setIsDeleting(false);
+        console.error("Error deleting venue", error);
+      } finally {
+        () => {
+          // Stop the loading state regardless of success or failure
+          setIsDeleting(false);
+        };
       }
-    } catch (error) {
-      // Handle network or request errors
-      showNotification({
-        title: "Access Denied",
-        message: "You don't own this venue",
-        color: "red",
-      });
-      setIsDeleting(false);
-      console.error("Error deleting venue", error);
-    } finally {() => {
-      // Stop the loading state regardless of success or failure
-      setIsDeleting(false);
-    }};
-  }
+    }
   };
   return (
     <AppShell
@@ -382,6 +436,14 @@ export default function VenueOwnerSingleVenue() {
                         //     { maxWidth: "36rem", cols: 1, spacing: "sm" },
                         //   ]}
                       >
+                        <Paper
+                            withBorder
+                            shadow="md"
+                            p={10}
+                            radius="md"
+                            mt={10}
+                            style={{ backgroundColor: "#f8f9fa" }}
+                          >
                         <div className={classes.aboutImage}>
                           <div className={classes.hoverCard}>
                             <Image
@@ -391,7 +453,16 @@ export default function VenueOwnerSingleVenue() {
                             />
                           </div>
                         </div>
+                        </Paper>
                         <div>
+                        <Paper
+                            withBorder
+                            shadow="md"
+                            p={10}
+                            radius="md"
+                            mt={10}
+                            style={{ backgroundColor: "#f8f9fa" }}
+                          >
                           <Group position="apart">
                             <Title
                               order={1}
@@ -409,7 +480,17 @@ export default function VenueOwnerSingleVenue() {
                                 },
                               })}
                             >
-                              {venue.name}
+                              {venue.name}{" "}
+                              <span
+                                style={{
+                                  fontWeight: 400,
+                                  fontSize: "1.1rem",
+                                  letterSpacing: "initial",
+                                  wordSpacing: "initial",
+                                }}
+                              >
+                                ( {userName ? userName : "No Owner"} )
+                              </span>
                             </Title>
                             <Text fz="lg" fw={500} color="#ff7b5f" size="lg">
                               Rs {venue.price}
@@ -570,26 +651,36 @@ export default function VenueOwnerSingleVenue() {
                           <Text className={classes.description} mt={0}>
                             {dessert}
                           </Text>
+                          </Paper>
+                          <Paper
+                            withBorder
+                            shadow="md"
+                            p={10}
+                            radius="md"
+                            mt={30}
+                            style={{ backgroundColor: "#f8f9fa" }}
+                          >
+                            <VenueBookedForDate />
+                          </Paper>
                           <SimpleGrid
-                              cols={3}
-                              spacing="28px"
-                              verticalSpacing="0px"
-                              mt={"25px"}
-                              mb={"20px"}
-                              breakpoints={[
-                                {
-                                  maxWidth: "70rem",
-                                  cols: 2,
-                                  spacing: "40px",
-                                  verticalSpacing: "30px",
-                                },
-                                { maxWidth: "48rem", cols: 2, spacing: "40px" },
-                                { maxWidth: "36rem", cols: 1, spacing: "sm" },
-                              ]}
-                            >
-                          
-                              {/* update venue button */}
-                          <Link to={"update-my-venue"}>
+                            cols={3}
+                            spacing="28px"
+                            verticalSpacing="0px"
+                            mt={"25px"}
+                            mb={"20px"}
+                            breakpoints={[
+                              {
+                                maxWidth: "70rem",
+                                cols: 2,
+                                spacing: "40px",
+                                verticalSpacing: "30px",
+                              },
+                              { maxWidth: "48rem", cols: 2, spacing: "40px" },
+                              { maxWidth: "36rem", cols: 1, spacing: "sm" },
+                            ]}
+                          >
+                            {/* update venue button */}
+                            <Link to={"update-my-venue"}>
                               <div
                                 className="form-section overflow-hidden"
                                 style={{
@@ -611,16 +702,16 @@ export default function VenueOwnerSingleVenue() {
                                       // width: "100%",
                                       paddingTop: "10px",
                                       paddingBottom: "10px",
-                                      backgroundColor:"Orange",
+                                      backgroundColor: "Orange",
                                     }}
                                   >
-                                     Update Venue
+                                    Update Venue
                                   </button>
                                 </div>
                               </div>
-                          </Link>
-                          {/* add dish */}
-                          <Link to={"dish"}>
+                            </Link>
+                            {/* add dish */}
+                            <Link to={"dish"}>
                               <div
                                 className="form-section overflow-hidden"
                                 style={{
@@ -648,38 +739,39 @@ export default function VenueOwnerSingleVenue() {
                                   </button>
                                 </div>
                               </div>
-                              </Link>
-                               {/* delete venue button */}
-                               <div
-                                className="form-section overflow-hidden"
+                            </Link>
+                            {/* delete venue button */}
+                            <div
+                              className="form-section overflow-hidden"
+                              style={{
+                                padding: 0,
+                                background: "transparent",
+                              }}
+                            >
+                              <div
+                                className="banner-btn discover-btn-banner"
                                 style={{
-                                  padding: 0,
-                                  background: "transparent",
+                                  display: "flex",
+                                  justifyContent: "center",
                                 }}
                               >
-                                <div
-                                  className="banner-btn discover-btn-banner"
+                                <button
+                                  type="button"
+                                  onClick={deleteVenue}
+                                  className="btn btn-primary venue venueUpdate"
                                   style={{
-                                    display: "flex",
-                                    justifyContent: "center",
+                                    // width: "100%",
+                                    paddingTop: "10px",
+                                    paddingBottom: "10px",
+                                    backgroundColor: "red",
                                   }}
                                 >
-                                  <button
-                                      type="button"
-                                      onClick={deleteVenue}
-                                    className="btn btn-primary venue venueUpdate"
-                                    style={{
-                                      // width: "100%",
-                                      paddingTop: "10px",
-                                      paddingBottom: "10px",
-                                      backgroundColor:"red",
-                                    }}
-                                  >
-                                     Delete Venue{" "} {isDeleting && <Spinner width="25px" />}
-                                  </button>
-                                </div>
+                                  Delete Venue{" "}
+                                  {isDeleting && <Spinner width="25px" />}
+                                </button>
                               </div>
-                            </SimpleGrid>
+                            </div>
+                          </SimpleGrid>
                         </div>
                       </SimpleGrid>
                     </div>

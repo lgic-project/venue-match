@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import khaltilogo from "../../../../../assets/images/khaltilogo.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
+import { useParams } from "react-router-dom";
 
 interface Booking {
   id: number;
@@ -22,53 +22,95 @@ interface Booking {
   venue_id:number;
 }
 
-export default function MyBookingTable() {
+export default function PublicBookingTable() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [totalAmountSum, setTotalAmountSum] = useState(0);
-
+  const [myVenueIds, setMyVenueIds] = useState([0]);
+  const  {userId} = useParams();
   useEffect(() => {
-    // Get the API key from cookies
-    const userApiKey = Cookies.get("apikey");
+    axios
+      .get(`https://kritisubedi.com.np/SnTravels/api/index//venue-by-user/${userId}`)
+      .then((response) => {
+        if (response.status === 200 && response.data && Array.isArray(response.data.venues)) {
+          // Extract venue IDs
+          const venueIds = response.data.venues.map((venueItem: any) => venueItem.id);
+          setMyVenueIds(venueIds);
+        } else {
+          console.error("Invalid response format: No 'venues' found in the response.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching venue data:", error);
+      });
+  }, []);
+  const fetchBookingDetailsForVenues = async (venueIds: number[]) => {
+    try {
+      const response = await axios.post(
+        "https://kritisubedi.com.np/SnTravels/api/index/bookings-for-venues",
+        { venueIds }
+      );
 
-    if (!userApiKey) {
-      console.error("API key not found in cookies.");
-      return;
-    }
-
-    const fetchBookingDetails = async () => {
-      try {
-        const response = await axios.get(
-          "https://kritisubedi.com.np/SnTravels/api/index/booking",
-          {
-            headers: {
-              api_key: userApiKey,
-            },
-          }
-        );
-
-        const bookingsArray = response.data.bookings;
-
-        if (bookingsArray && bookingsArray.length > 0) {
-          setBookings(bookingsArray);
-
-          const sum = bookingsArray.reduce(
+      if (response.status === 200) {
+        // Handle successful response here
+        const bookingDetails = response.data.bookings;
+        setBookings(bookingDetails);
+        const sum = bookingDetails.reduce(
             (total:any, booking:any) => total + booking.total_amount,
             0
           );
           setTotalAmountSum(sum);
-        }
-      } catch (error) {
-        console.error("Error fetching booking data", error);
+      } else {
+        // Handle error response here
+        console.error("Error fetching booking details for venues");
       }
-    };
+    } catch (error) {
+      // Handle network or other errors here
+      console.error("Error:", error);
+    }
+  };fetchBookingDetailsForVenues(myVenueIds);
+//   useEffect(() => {
+//     // Get the API key from cookies
+//     const userApiKey = Cookies.get("apikey");
 
-    fetchBookingDetails();
-  }, []);
+//     if (!userApiKey) {
+//       console.error("API key not found in cookies.");
+//       return;
+//     }
+
+//     const fetchBookingDetails = async () => {
+//       try {
+//         const response = await axios.get(
+//           "https://kritisubedi.com.np/SnTravels/api/index/booking",
+//           {
+//             headers: {
+//               api_key: userApiKey,
+//             },
+//           }
+//         );
+
+//         const bookingsArray = response.data.bookings;
+
+//         if (bookingsArray && bookingsArray.length > 0) {
+//           setBookings(bookingsArray);
+
+//           const sum = bookingsArray.reduce(
+//             (total:any, booking:any) => total + booking.total_amount,
+//             0
+//           );
+//           setTotalAmountSum(sum);
+//         }
+//       } catch (error) {
+//         console.error("Error fetching booking data", error);
+//       }
+//     };
+
+//     fetchBookingDetails();
+//   }, []);
 
   return (
     <div>
       {/* Display the sum of totalAmount */}
-      <p>Total Amount Spent: Nrs {totalAmountSum}</p>
+      <p>Total Amount Made: Nrs {totalAmountSum}</p>
 
       <TableContainer
         component={Paper}

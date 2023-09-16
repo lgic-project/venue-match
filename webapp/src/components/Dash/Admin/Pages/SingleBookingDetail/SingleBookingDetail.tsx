@@ -16,7 +16,7 @@ import {
 } from "@mantine/core";
 import { Sidebar } from "../../Components/Sidebar/Sidebar";
 import DashNavbar from "../../Components/Navabar/Navbar";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import khaltilogo from "../../../../../assets/images/khaltilogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -391,7 +391,7 @@ export default function SingleBookingDetail() {
                       Booked By
                     </p>
                     <Text fz={"18px"} fw="400">
-                      {userFirstName} {userLastName}
+                      <Link to = {`/users/${userId}`}>{userFirstName} {userLastName}</Link>
                     </Text>
                   </div>
                   <div>

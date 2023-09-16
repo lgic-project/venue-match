@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import khaltilogo from "../../../../../assets/images/khaltilogo.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
+import { useParams } from "react-router-dom";
 
 interface Booking {
   id: number;
@@ -22,48 +22,63 @@ interface Booking {
   venue_id:number;
 }
 
-export default function MyBookingTable() {
+export default function SingleUserBookingsTable() {
+  const { userId } = useParams();
+  const [userApiKey, setUserApiKey] = useState<string | undefined>();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [totalAmountSum, setTotalAmountSum] = useState(0);
 
   useEffect(() => {
-    // Get the API key from cookies
-    const userApiKey = Cookies.get("apikey");
-
-    if (!userApiKey) {
-      console.error("API key not found in cookies.");
-      return;
-    }
-
-    const fetchBookingDetails = async () => {
+    const fetchUserApiKey = async () => {
       try {
         const response = await axios.get(
-          "https://kritisubedi.com.np/SnTravels/api/index/booking",
-          {
-            headers: {
-              api_key: userApiKey,
-            },
-          }
+          `https://kritisubedi.com.np/SnTravels/api/index/get-users?user_id=${userId}`
         );
-
-        const bookingsArray = response.data.bookings;
-
-        if (bookingsArray && bookingsArray.length > 0) {
-          setBookings(bookingsArray);
-
-          const sum = bookingsArray.reduce(
-            (total:any, booking:any) => total + booking.total_amount,
-            0
-          );
-          setTotalAmountSum(sum);
+        const userArray = response.data.users;
+        if (userArray.length > 0) {
+          const user = userArray[0];
+          setUserApiKey(user.api_key);
         }
       } catch (error) {
-        console.error("Error fetching booking data", error);
+        console.error("Error fetching user API key", error);
+      }
+    };
+
+    fetchUserApiKey();
+  }, [userId]);
+
+  useEffect(() => {
+    const fetchBookingDetails = async () => {
+      if (userApiKey) {
+        try {
+          const response = await axios.get(
+            "https://kritisubedi.com.np/SnTravels/api/index/booking",
+            {
+              headers: {
+                api_key: userApiKey,
+              },
+            }
+          );
+
+          const bookingsArray = response.data.bookings;
+
+          if (bookingsArray && bookingsArray.length > 0) {
+            setBookings(bookingsArray);
+
+            const sum = bookingsArray.reduce(
+              (total:any, booking:any) => total + booking.total_amount,
+              0
+            );
+            setTotalAmountSum(sum);
+          } 
+        } catch (error) {
+          console.error("Error fetching booking data", error);
+        }
       }
     };
 
     fetchBookingDetails();
-  }, []);
+  }, [userApiKey]);
 
   return (
     <div>
