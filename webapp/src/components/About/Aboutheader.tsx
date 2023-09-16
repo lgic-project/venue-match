@@ -17,7 +17,7 @@ export default function Aboutheader() {
                             <div className="position-relative sub-banner-section aos-init aos-animate" data-aos="fade-up" id="myContentDIV">
                                 <h1>About<span className="h1-text"> Us!</span></h1>
                                 <p className="banner-paragraph">
-                                    Lorem ipsum dolor sit amet consectetur adipiscing elit sed doeiusm tempor incididunt 
+                                Welcome to Venue Match, where unforgettable events come to life. 
                                 </p>
                              
                                 <div className="banner-btn discover-btn-banner">
