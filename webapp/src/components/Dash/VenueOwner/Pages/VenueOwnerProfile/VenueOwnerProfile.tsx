@@ -13,9 +13,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { VenueOwnerSiderbar } from "../../Components/Sidebar/VenueOwnerSidebar";
-import SingleNormal from "../../../Admin/Components/Charts/Normal/SingleNormal";
-import MyBookingTable from "../../../Admin/Components/Table/MyBookingTable";
 import VenueOwnerNavbar from "../../Components/Navbar/VenueOwnerNavbar";
+import VenueOwnerBasicTable from "../../../Admin/Components/Table/VenueOwnerBasicTable";
+import VenueOwnerNormal from "../../Components/Charts/Normal/VenueOwnerNormal";
 
 export default function VenueOwnerProfile() {
   const theme = useMantineTheme();
@@ -25,7 +25,6 @@ export default function VenueOwnerProfile() {
   const [userLastName, setUserLastName] = useState();
   const [email, setEmail] = useState();
   const [role, setRole] = useState();
-  const [totalAmountSum, setTotalAmountSum] = useState(0);
   let userName = userFirstName + " " + userLastName;
   useEffect(() => {
     axios
@@ -68,11 +67,11 @@ export default function VenueOwnerProfile() {
         const bookingsArray = response.data.bookings;
 
         if (bookingsArray && bookingsArray.length > 0) {
-          const sum = bookingsArray.reduce(
-            (total:any, booking:any) => total + booking.total_amount,
-            0
-          );
-          setTotalAmountSum(sum);
+          // const sum = bookingsArray.reduce(
+          //   (total:any, booking:any) => total + booking.total_amount,
+          //   0
+          // );
+          // setTotalAmountSum(sum);
         }
       } catch (error) {
         console.error("Error fetching booking data", error);
@@ -198,12 +197,12 @@ export default function VenueOwnerProfile() {
               </div>
             </div>
           </div>
-          <SingleNormal aspect={3 / 1} title="My Spendings (Last 6 Months)" totalSpent={totalAmountSum} />
+          <VenueOwnerNormal aspect={2 / 1} title="Last 6 Months (Revenue)" />
         </SimpleGrid>
         <div style={{ paddingTop: "20px" }}>
           <div className="listContainer">
-            <div className="listTitle">Latest Transaction</div>
-            <MyBookingTable/>
+            <div className="listTitle">Latest Bookings For My Venues</div>
+          <VenueOwnerBasicTable/>
           </div>
         </div>
       </div>
